@@ -1,4 +1,4 @@
-package test;
+package src.test;
 
 public class BicycleTest {
     public static void main(String[] args) {
