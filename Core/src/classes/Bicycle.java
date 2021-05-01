@@ -1,3 +1,5 @@
+package classes;
+
 public class Bicycle {
     protected Integer Id;
     protected String typeOfBicycle;
