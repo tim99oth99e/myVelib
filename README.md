@@ -1,2 +1,2 @@
 # myVelib
-Project work 
+Project work for OOP class
