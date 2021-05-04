@@ -1,12 +1,12 @@
 package src.classes;
 
-import src.enums.*;
+
+import src.enums.TypeOfBicycle;
 
 public class Bicycle {
 
-    protected Integer Id;
     protected TypeOfBicycle type;
-
+    protected Integer Id;
     private static Integer uniqueId = 0; //Unique numerical ID
 
     //toString
