@@ -1,6 +1,8 @@
 package src.classes;
 
 
+import src.enums.TypeOfBicycle;
+
 public class Bicycle {
 
     protected TypeOfBicycle type;

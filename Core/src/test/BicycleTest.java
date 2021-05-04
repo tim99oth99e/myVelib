@@ -1,7 +1,7 @@
 package src.test;
 
 import src.classes.Bicycle;
-import src.classes.TypeOfBicycle;
+import src.enums.TypeOfBicycle;
 
 public class BicycleTest {
     public static void main(String[] args) {
