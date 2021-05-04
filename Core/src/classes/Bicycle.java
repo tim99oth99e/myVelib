@@ -7,8 +7,6 @@ public class Bicycle {
 
     protected TypeOfBicycle type;
     protected Integer Id;
-//    protected TypeOfBicycle typeOfBicycle;
-
     private static Integer uniqueId = 0; //Unique numerical ID
 
     //toString
