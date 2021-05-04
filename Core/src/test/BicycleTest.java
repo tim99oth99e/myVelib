@@ -5,13 +5,10 @@ import src.classes.TypeOfBicycle;
 
 public class BicycleTest {
     public static void main(String[] args) {
-        Bicycle mechanicalBicycle = new Bicycle(new TypeOfBicycle("Mechanical"));
+        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
         System.out.println(mechanicalBicycle);
 
-        Bicycle electricalBicycle = new Bicycle(new TypeOfBicycle("electrical"));
+        Bicycle electricalBicycle = new Bicycle(TypeOfBicycle.Electrical);
         System.out.println(electricalBicycle);
-
-        Bicycle nothingBicycle = new Bicycle(new TypeOfBicycle("djfhadsjklf"));
-        System.out.println(nothingBicycle);
     }
 }

@@ -1,10 +1,11 @@
 package src.classes;
 
-import src.classes.TypeOfBicycle;
 
 public class Bicycle {
+
+    protected TypeOfBicycle type;
     protected Integer Id;
-    protected TypeOfBicycle typeOfBicycle;
+//    protected TypeOfBicycle typeOfBicycle;
 
     private static Integer uniqueId = 0; //Unique numerical ID
 
@@ -12,27 +13,32 @@ public class Bicycle {
     @Override
     public String toString() {
         return "Bicycle :" + "\n" +
-                "Id : " + Id + "\n" + typeOfBicycle;
+                "Id : " + Id + "\n" +
+                "Type : " + this.type.name();
     }
 
     //Constructors
-    public Bicycle(TypeOfBicycle typeOfBicycle) {
+    public Bicycle(TypeOfBicycle type) {
         Id = uniqueId;
         uniqueId++;
-        this.typeOfBicycle = typeOfBicycle;
+        this.type = type;
     }
 
     //Getters and Setters
+
+    public TypeOfBicycle getType() {
+        return type;
+    }
+
+    public void setType(TypeOfBicycle type) {
+        this.type = type;
+    }
+
     public Integer getId() {
         return Id;
     }
+
     public void setId(Integer id) {
         Id = id;
-    }
-    public TypeOfBicycle getTypeOfBicycle() {
-        return typeOfBicycle;
-    }
-    public void setTypeOfBicycle(TypeOfBicycle typeOfBicycle) {
-        this.typeOfBicycle = typeOfBicycle;
     }
 }
