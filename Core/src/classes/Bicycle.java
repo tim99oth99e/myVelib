@@ -5,7 +5,7 @@ import src.enums.TypeOfBicycle;
 
 public class Bicycle {
 
-    protected TypeOfBicycle type;
+    protected TypeOfBicycle type; // protected or private ?
     protected Integer Id;
     private static Integer uniqueId = 0; //Unique numerical ID
 
