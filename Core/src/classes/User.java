@@ -1,5 +1,7 @@
 package src.classes;
 
+import src.enums.RegistrationCardType;
+
 import java.util.ArrayList;
 
 public class User {
@@ -8,7 +10,7 @@ public class User {
     private double latitude;
     private double longitude;
     private String creditCardNumber;
-    private RegistrationCard registrationCard;
+    private RegistrationCardType registrationCardType;
     private double timeCreditBalance;
     private double totalCharges;
 
@@ -24,12 +26,13 @@ public class User {
         return tempId;
     }
 
-    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) {
+
+    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCardType registrationCardType) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.creditCardNumber = creditCardNumber;
-        this.registrationCard = registrationCard;
+        this.registrationCardType = registrationCardType;
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
         this.id = getValidId();
@@ -47,7 +50,7 @@ public class User {
         this.latitude = latitude;
         this.longitude = longitude;
         this.creditCardNumber = creditCardNumber;
-        this.registrationCard = null; // can't we use enums directly ?
+        this.registrationCardType = RegistrationCardType.None;
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
         this.id = getValidId();
@@ -61,7 +64,7 @@ public class User {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", creditCardNumber='" + creditCardNumber + '\'' +
-                ", registrationCard=" + registrationCard +
+                ", registrationCard=" + registrationCardType +
                 ", timeCreditBalance=" + timeCreditBalance +
                 ", totalCharges=" + totalCharges +
                 '}';
@@ -111,12 +114,12 @@ public class User {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public RegistrationCard getRegistrationCard() {
-        return registrationCard;
+    public RegistrationCardType getRegistrationCardType() {
+        return registrationCardType;
     }
 
-    public void setRegistrationCard(RegistrationCard registrationCard) {
-        this.registrationCard = registrationCard;
+    public void setRegistrationCardType(RegistrationCardType registrationCardType) {
+        this.registrationCardType = registrationCardType;
     }
 
     public double getTimeCreditBalance() {
