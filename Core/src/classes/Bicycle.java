@@ -1,13 +1,11 @@
 package src.classes;
 
-
-import src.enums.TypeOfBicycle;
+import src.enums.*;
 
 public class Bicycle {
 
-    protected TypeOfBicycle type;
     protected Integer Id;
-//    protected TypeOfBicycle typeOfBicycle;
+    protected TypeOfBicycle type;
 
     private static Integer uniqueId = 0; //Unique numerical ID
 
