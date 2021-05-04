@@ -64,7 +64,7 @@ public class User {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", creditCardNumber='" + creditCardNumber + '\'' +
-                ", registrationCard=" + registrationCardType +
+                ", registrationCardType=" + registrationCardType +
                 ", timeCreditBalance=" + timeCreditBalance +
                 ", totalCharges=" + totalCharges +
                 '}';
