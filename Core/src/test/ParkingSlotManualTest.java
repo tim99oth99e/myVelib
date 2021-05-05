@@ -3,7 +3,7 @@ package src.test;
 import src.classes.ParkingSlot;
 import src.enums.*;
 
-public class ParkingSlotTest {
+public class ParkingSlotManualTest {
     public static void main(String[] args) {
         ParkingSlot parkingSlotFree = new ParkingSlot(ParkingSlotStatus.Free);
         System.out.println(parkingSlotFree);

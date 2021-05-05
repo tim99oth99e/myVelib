@@ -4,7 +4,7 @@ import src.classes.ParkingSlot;
 import src.classes.Station;
 import src.enums.*;
 
-public class StationTest {
+public class StationManualTest {
     public static void main(String[] args) {
         Station station1 = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
         //System.out.println(station1);
