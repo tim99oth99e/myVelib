@@ -13,7 +13,7 @@ public class User {
     private double timeCreditBalance;
     private double totalCharges;
 
-    private static ArrayList<Integer> usedIds = new ArrayList<Integer>(); // there are 2+ billion possible positive ids
+    private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
     // deal with the case where all ids are taken
     private static int getValidId(){
@@ -42,10 +42,6 @@ public class User {
 
     /**
      * Constructor without registration card parameter
-     * @param name
-     * @param latitude
-     * @param longitude
-     * @param creditCardNumber
      */
     public User(String name, double latitude, double longitude, String creditCardNumber) {
         this.name = name;
