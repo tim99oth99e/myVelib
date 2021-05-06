@@ -62,16 +62,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+        return  name +
+                ", id:" + id +
                 ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", creditCardNumber='" + creditCardNumber + '\'' +
-                ", registrationCardType=" + registrationCardType +
-                ", timeCreditBalance=" + timeCreditBalance +
-                ", totalCharges=" + totalCharges +
-                '}';
+                ", longitude=" + longitude + ", \n" +
+                "\tcredit card : " + creditCardNumber +
+                ", registration card : " + registrationCardType +
+                ", time credit balance : " + timeCreditBalance +
+                ", total charges : " + totalCharges;
     }
 
     // getters

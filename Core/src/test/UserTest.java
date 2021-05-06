@@ -8,6 +8,6 @@ public class UserTest {
         User user1 = new User("Jack", 123.0, 145.4, "12353849583740384",
                 RegistrationCardType.None);
         System.out.println(User.getUsedIds());
-        System.out.println(user1.getId());
+        System.out.println(user1);
     }
 }
