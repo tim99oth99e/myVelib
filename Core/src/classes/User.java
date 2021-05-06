@@ -83,7 +83,7 @@ public class User {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(int id) throws Exception {
         // if this id isn't used
         if (!usedIds.contains(id)) {
             // mark the new id as used
@@ -91,6 +91,8 @@ public class User {
             // remove the old id from the list
             usedIds.remove(this.id);
             this.id = id;
+        } else {
+            throw new Exception("The id " + id + " is already used.");
         }
         // else, return an error ?
     }

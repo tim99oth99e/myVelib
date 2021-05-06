@@ -12,10 +12,10 @@ class UserTest {
             RegistrationCardType.Vmax);
 
     @org.junit.jupiter.api.Test
-    void setId() {
+    void setId() throws Exception {
         user2.setId(0);
         user1.setId(16);
-        assertEquals(1, user2.getId());
+        assertEquals(1, user2.getId()); // users cannot have the same id
         assertEquals(16, user1.getId());
     }
 }
