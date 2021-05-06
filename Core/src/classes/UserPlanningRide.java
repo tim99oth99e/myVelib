@@ -12,7 +12,7 @@ public class UserPlanningRide extends User {
 
     @Override
     public String toString() {
-        return "User " + this.toString() + "\n" +
+        return "User " + super.toString() + "\n" +
                 "Plan to ride : " + "\n" +
                 "Avoid \"Plus\" stations : " + avoidPlusStation + "\n" +
                 "Prefer \"Plus\" stations : " + preferPlusStation + "\n" +
