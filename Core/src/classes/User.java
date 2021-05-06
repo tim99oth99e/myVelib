@@ -13,7 +13,7 @@ public class User {
     private double timeCreditBalance;
     private double totalCharges;
 
-    private static ArrayList<Integer> usedIds; // there are 2+ billion possible positive ids
+    private static ArrayList<Integer> usedIds = new ArrayList<Integer>(); // there are 2+ billion possible positive ids
 
     // deal with the case where all ids are taken
     private static int getValidId(){
@@ -30,8 +30,6 @@ public class User {
 
 
     public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCardType registrationCardType) {
-        usedIds = new ArrayList<Integer>();
-
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -62,17 +60,20 @@ public class User {
 
     @Override
     public String toString() {
-        return  name +
-                ", id:" + id +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude + ", \n" +
-                "\tcredit card : " + creditCardNumber +
-                ", registration card : " + registrationCardType +
-                ", time credit balance : " + timeCreditBalance +
-                ", total charges : " + totalCharges;
+        String baseString = "User " + name + " [id:" + id + "]\n" +
+                "Location : (latitude : " + latitude + ", longitude : " + longitude + ") \n" +
+                "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n";
+        // if the user has a registration card
+        if (this.registrationCardType != RegistrationCardType.None) {
+            return baseString + "Registration card : " + registrationCardType +
+                    ", time credit balance : " + timeCreditBalance;
+        } else {
+            return baseString + "No registration card.";
+        }
+
     }
 
-    // getters
+    // getters & setters
 
     public String getName() {
         return name;
@@ -101,8 +102,6 @@ public class User {
     public double getLongitude() {
         return longitude;
     }
-
-    // setters
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
