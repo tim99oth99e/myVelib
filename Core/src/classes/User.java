@@ -22,11 +22,16 @@ public class User {
         while (usedIds.contains(tempId)) {
             tempId ++;
         }
+        // add this id to the list of used ones
+        usedIds.add(tempId);
         return tempId;
+
     }
 
 
     public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCardType registrationCardType) {
+        usedIds = new ArrayList<Integer>();
+
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
