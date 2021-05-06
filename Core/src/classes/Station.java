@@ -1,9 +1,9 @@
 package src.classes;
 
 import src.enums.*;
-
 import java.util.HashMap;
-
+import java.util.Iterator;
+import java.util.Map;
 
 public class Station {
 
@@ -17,7 +17,7 @@ public class Station {
     private static Integer uniqueId = 0; //Unique numerical ID
 
     //ToString
-    public String DisplayHashMap(HashMap<Integer,ParkingSlot> parkingSlotHashMap){
+    public String displayHashMap(HashMap<Integer,ParkingSlot> parkingSlotHashMap){
         String string = new String();
         for (Integer keys : parkingSlotHashMap.keySet()) {
             string+= "\n" + parkingSlotHashMap.get(keys);
@@ -31,7 +31,7 @@ public class Station {
                  latitude + " latitude, " +
                  longitude + " longitude is " + stationStatus +
                 ". Type of station : " + typeOfStation + "\n" +
-                "Parking Slots : " + DisplayHashMap(parkingSlotHashMap) ;
+                "Parking Slots : " + displayHashMap(parkingSlotHashMap) ;
 
     }
 
@@ -49,8 +49,54 @@ public class Station {
     }
 
     //Methods
-    public void AddParkingSlot(ParkingSlot parkingSlot){
+    public void addParkingSlot(ParkingSlot parkingSlot){
        this.parkingSlotHashMap.put(parkingSlot.getId(),parkingSlot);
+    }
+
+    public Double computeDistance(Double currentLatitude, Double currentLongitude){
+        Double lat_a = this.latitude;
+        Double lng_a = this.longitude;
+        Double lat_b = currentLatitude;
+        Double lng_b = currentLongitude;
+
+        Double pk =  180/3.14169;
+
+        Double a1 = lat_a / pk;
+        Double a2 = lng_a / pk;
+        Double b1 = lat_b / pk;
+        Double b2 = lng_b / pk;
+
+        Double t1 = Math.cos(a1)*Math.cos(a2)*Math.cos(b1)*Math.cos(b2);
+        Double t2 = Math.cos(a1)*Math.sin(a2)*Math.cos(b1)*Math.sin(b2);
+        Double t3 = Math.sin(a1)*Math.sin(b1);
+        Double tt = Math.acos(t1 + t2 + t3);
+
+        return 6366000*tt;
+    }
+
+    public Boolean hasBike(TypeOfBicycle typeOfBicycle){
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            //System.out.println(entry.getKey() + " = " + entry.getValue());
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Occupied
+            && entry.getValue().getBicycle().getType() == typeOfBicycle){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasFreeParkingSlot(){
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            //System.out.println(entry.getKey() + " = " + entry.getValue());
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Free){
+                return true;
+            }
+        }
+        return false;
     }
 
     //Getters and Setters

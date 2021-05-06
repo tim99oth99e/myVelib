@@ -1,6 +1,6 @@
 package src.classes;
 
-import src.enums.RegistrationCardType;
+import src.enums.*;
 import java.util.ArrayList;
 
 public class User {

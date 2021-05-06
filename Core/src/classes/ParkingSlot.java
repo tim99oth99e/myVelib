@@ -6,6 +6,7 @@ public class ParkingSlot {
 
     protected Integer Id;
     protected ParkingSlotStatus parkingSlotStatus;
+    protected Bicycle bicycle;
 
     private static Integer uniqueId = 0; //Unique numerical ID
 
@@ -13,14 +14,20 @@ public class ParkingSlot {
     @Override
     public String toString() {
         return "Parking slot number " + Id +
-                " is " + parkingSlotStatus;
+                " is " + parkingSlotStatus + " with " + bicycle;
     }
 
     //Constructors
-    public ParkingSlot(ParkingSlotStatus parkingSlotStatus) {
+    public ParkingSlot(ParkingSlotStatus parkingSlotStatus, Bicycle bicycle) {
         Id = uniqueId;
         uniqueId++;
         this.parkingSlotStatus = parkingSlotStatus;
+        if (parkingSlotStatus == ParkingSlotStatus.Occupied){
+            this.bicycle = bicycle;
+        }
+        else {
+            this.bicycle = null;
+        }
     }
 
     //Getters and Setters
@@ -35,5 +42,12 @@ public class ParkingSlot {
     }
     public void setParkingSlotStatus(ParkingSlotStatus parkingSlotStatus) {
         this.parkingSlotStatus = parkingSlotStatus;
+    }
+    public Bicycle getBicycle() {
+        return bicycle;
+    }
+
+    public void setBicycle(Bicycle bicycle) {
+        this.bicycle = bicycle;
     }
 }

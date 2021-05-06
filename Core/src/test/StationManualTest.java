@@ -1,7 +1,6 @@
 package src.test;
 
-import src.classes.ParkingSlot;
-import src.classes.Station;
+import src.classes.*;
 import src.enums.*;
 
 public class StationManualTest {
@@ -9,13 +8,32 @@ public class StationManualTest {
         Station station1 = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
         //System.out.println(station1);
 
-        ParkingSlot parkingSlotFree = new ParkingSlot(ParkingSlotStatus.Free);
-        ParkingSlot parkingSlotOccupied = new ParkingSlot(ParkingSlotStatus.Occupied);
-        ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder);
+        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
-        station1.AddParkingSlot(parkingSlotFree);
-        station1.AddParkingSlot(parkingSlotOccupied);
-        station1.AddParkingSlot(parkingSlotOutOfOrder);
+
+        ParkingSlot parkingSlotFree = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotOccupied = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
+
+        station1.addParkingSlot(parkingSlotFree);
+        station1.addParkingSlot(parkingSlotOccupied);
+        station1.addParkingSlot(parkingSlotOutOfOrder);
+
+//        System.out.println(station1.hasBike(TypeOfBicycle.Mechanical));
+//        System.out.println(station1.hasBike(TypeOfBicycle.Electrical));
+
+        Station station2 = new Station(6.5, 7.5, StationStatus.OnService, TypeOfStation.Standard);
+//        System.out.println(station2.hasBike());
+
         System.out.println(station1);
+        System.out.println(station2);
+//
+//        Double distance1 = station1.computeDistance(56.5,17.5);
+//        System.out.println(distance1);
+//
+//        Double distance2 = station1.computeDistance(56.5133,17.5);
+//        System.out.println(distance2);
+
+
     }
 }
