@@ -5,14 +5,14 @@ import src.enums.*;
 
 import java.util.ArrayList;
 
-public class RidePlanningAvoidPlusStations implements RidePlanning {
+public class RidePlanningPreferPlusStations implements RidePlanning {
     protected Double startLatitude;
     protected Double startLongitude;
 
     protected Double destinationLatitude;
     protected Double destinationLongitude;
 
-    public RidePlanningAvoidPlusStations(Double startLatitude, Double startLongitude, Double destinationLatitude, Double destinationLongitude) {
+    public RidePlanningPreferPlusStations(Double startLatitude, Double startLongitude, Double destinationLatitude, Double destinationLongitude) {
         this.startLatitude = startLatitude;
         this.startLongitude = startLongitude;
         this.destinationLatitude = destinationLatitude;

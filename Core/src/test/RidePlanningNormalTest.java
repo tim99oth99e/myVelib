@@ -37,15 +37,17 @@ public class RidePlanningNormalTest {
 
 
         //Ride Planning
-        RidePlanning ridePlanning = new RidePlanningNormal(6.3,1.4,120.3,31.4);
+        RidePlanning ridePlanningNormal = new RidePlanningNormal(6.3,1.4,120.3,31.4);
+        RidePlanning ridePlanningAvoidPlus = new RidePlanningAvoidPlusStations(6.3,1.4,120.3,31.4);
 
         //Start
 //        System.out.println(ridePlanning.findStartStation(stations, TypeOfBicycle.Mechanical));
 //        System.out.println(ridePlanning.findStartStation(stations, TypeOfBicycle.Electrical));
 
         //Destination
-        System.out.println(ridePlanning.findDestinationStation(stations));
-
+        System.out.println(ridePlanningNormal.findDestinationStation(stations));
+        System.out.println("\n _____________________________");
+        System.out.println(ridePlanningAvoidPlus.findDestinationStation(stations));
 
     }
 }
