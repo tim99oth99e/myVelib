@@ -1,18 +1,21 @@
 package src.test;
 
-import src.classes.*;
-import src.enums.*;
+import src.classes.User;
+import src.enums.RegistrationCardType;
 
-public class UserTest {
-    public static void main(String[] args) {
-        User user1 = new User("Jack", 123.0, 145.4, "12353849583740384",
-                RegistrationCardType.None);
-        System.out.println(user1.getUsedIds());
-        System.out.println(user1);
+import static org.junit.jupiter.api.Assertions.*;
 
-        User user2 = new User("Mark", 12.0, 15.4, "12353849sfg740384",
-                RegistrationCardType.None);
-        System.out.println(user2.getUsedIds());
-        System.out.println(user2);
+class UserTest {
+    User user1 = new User("Billy Gates", 123.0, 145.4, "12353849583740384",
+            RegistrationCardType.None);
+    User user2 = new User("Marcus Zuckerberg", 12.0, 15.4, "12353849sfg740384",
+            RegistrationCardType.Vmax);
+
+    @org.junit.jupiter.api.Test
+    void setId() throws Exception {
+        user2.setId(0);
+        user1.setId(16);
+        assertEquals(1, user2.getId()); // users cannot have the same id
+        assertEquals(16, user1.getId());
     }
 }

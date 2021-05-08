@@ -13,7 +13,7 @@ public class User {
     private double timeCreditBalance;
     private double totalCharges;
 
-    private static ArrayList<Integer> usedIds; // there are 2+ billion possible positive ids
+    private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
     // deal with the case where all ids are taken
     private static int getValidId(){
@@ -30,8 +30,6 @@ public class User {
 
 
     public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCardType registrationCardType) {
-        usedIds = new ArrayList<Integer>();
-
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -44,10 +42,6 @@ public class User {
 
     /**
      * Constructor without registration card parameter
-     * @param name
-     * @param latitude
-     * @param longitude
-     * @param creditCardNumber
      */
     public User(String name, double latitude, double longitude, String creditCardNumber) {
         this.name = name;
@@ -62,17 +56,20 @@ public class User {
 
     @Override
     public String toString() {
-        return  name +
-                ", id:" + id +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude + ", \n" +
-                "\tcredit card : " + creditCardNumber +
-                ", registration card : " + registrationCardType +
-                ", time credit balance : " + timeCreditBalance +
-                ", total charges : " + totalCharges;
+        String baseString = "User " + name + " [id:" + id + "]\n" +
+                "Location : (latitude : " + latitude + ", longitude : " + longitude + ") \n" +
+                "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n";
+        // if the user has a registration card
+        if (this.registrationCardType != RegistrationCardType.None) {
+            return baseString + "Registration card : " + registrationCardType +
+                    ", time credit balance : " + timeCreditBalance;
+        } else {
+            return baseString + "No registration card.";
+        }
+
     }
 
-    // getters
+    // getters & setters
 
     public String getName() {
         return name;
@@ -83,11 +80,21 @@ public class User {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int id) throws Exception {
+        // if this id isn't used
+        if (!usedIds.contains(id)) {
+            // mark the new id as used
+            usedIds.add(id);
+            // remove the old id from the list
+            usedIds.remove(this.id);
+            this.id = id;
+        } else {
+            throw new Exception("The id " + id + " is already used.");
+        }
+        // else, return an error ?
     }
 
     public double getLatitude() {
@@ -101,8 +108,6 @@ public class User {
     public double getLongitude() {
         return longitude;
     }
-
-    // setters
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
