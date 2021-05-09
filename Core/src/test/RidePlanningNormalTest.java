@@ -17,7 +17,7 @@ public class RidePlanningNormalTest {
         ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
 
         //Stations
-        Station station1 = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station station1 = new Station(120.3, 31.4, StationStatus.OnService, TypeOfStation.Standard);
         station1.addParkingSlot(parkingSlotFree);
         station1.addParkingSlot(parkingSlotOccupied);
         station1.addParkingSlot(parkingSlotOutOfOrder);
@@ -26,7 +26,7 @@ public class RidePlanningNormalTest {
         station2.addParkingSlot(parkingSlotFree);
         station2.addParkingSlot(parkingSlotOccupied);
 
-        Station station3 = new Station(126.5, 34.5, StationStatus.OnService, TypeOfStation.Plus);
+        Station station3 = new Station(120.3,31.4, StationStatus.OnService, TypeOfStation.Plus);
         station3.addParkingSlot(parkingSlotFree);
         station3.addParkingSlot(parkingSlotOutOfOrder);
 
@@ -39,15 +39,18 @@ public class RidePlanningNormalTest {
         //Ride Planning
         RidePlanning ridePlanningNormal = new RidePlanningNormal(6.3,1.4,120.3,31.4);
         RidePlanning ridePlanningAvoidPlus = new RidePlanningAvoidPlusStations(6.3,1.4,120.3,31.4);
+        RidePlanning ridePlanningPreferPlus = new RidePlanningPreferPlusStations(6.3,1.4,120.3,31.4);
 
         //Start
 //        System.out.println(ridePlanning.findStartStation(stations, TypeOfBicycle.Mechanical));
 //        System.out.println(ridePlanning.findStartStation(stations, TypeOfBicycle.Electrical));
 
         //Destination
-        System.out.println(ridePlanningNormal.findDestinationStation(stations));
-        System.out.println("\n _____________________________");
+//        System.out.println(ridePlanningNormal.findDestinationStation(stations));
+//        System.out.println("\n _____________________________");
         System.out.println(ridePlanningAvoidPlus.findDestinationStation(stations));
+        System.out.println("\n _____________________________");
+        System.out.println(ridePlanningPreferPlus.findDestinationStation(stations));
 
     }
 }

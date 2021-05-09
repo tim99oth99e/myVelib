@@ -40,20 +40,33 @@ public class RidePlanningPreferPlusStations implements RidePlanning {
     @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
         Station destinationStation = null;
-        Double minDistance = stations.get(0).computeDistance(destinationLatitude,destinationLongitude);
-        for (Station station : stations){
-            if (station.getStationStatus() == StationStatus.OnService){
-                if (station.getTypeOfStation() == TypeOfStation.Standard){
-                    if (station.hasFreeParkingSlot()){
-                        Double distance = station.computeDistance(destinationLatitude,destinationLongitude);
-                        if (distance <= minDistance){
+        Double minDistance = stations.get(0).computeDistance(destinationLatitude, destinationLongitude);
+        Station destinationStationPlus = null;
+        Double minDistancePlus = stations.get(0).computeDistance(destinationLatitude, destinationLongitude);
+        for (Station station : stations) {
+            if (station.getStationStatus() == StationStatus.OnService) {
+                if (station.hasFreeParkingSlot()) {
+                    if (station.getTypeOfStation() == TypeOfStation.Standard) {
+                        Double distance = station.computeDistance(destinationLatitude, destinationLongitude);
+                        if (distance <= minDistance) {
                             destinationStation = station;
                             minDistance = distance;
+                        }
+                    }
+                    if (station.getTypeOfStation() == TypeOfStation.Plus) {
+                        Double distance = station.computeDistance(destinationLatitude, destinationLongitude);
+                        if (distance <= minDistancePlus) {
+                            destinationStationPlus = station;
+                            minDistancePlus = distance;
                         }
                     }
                 }
             }
         }
-        return destinationStation;
+        if (minDistancePlus <= 1.1 * minDistance) {
+            return destinationStationPlus;
+        } else {
+            return destinationStation;
+        }
     }
 }
