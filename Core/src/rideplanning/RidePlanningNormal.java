@@ -5,7 +5,7 @@ import src.enums.*;
 
 import java.util.ArrayList;
 
-public class RidePlanningNormal implements RidePlanning {
+public class RidePlanningNormal {
     protected Double startLatitude;
     protected Double startLongitude;
 
@@ -19,7 +19,6 @@ public class RidePlanningNormal implements RidePlanning {
         this.destinationLongitude = destinationLongitude;
     }
 
-    @Override
     public Station findStartStation(ArrayList<Station> stations, TypeOfBicycle typeOfBicycle) {
         Station startStation = null;
         Double minDistance = stations.get(0).computeDistance(startLatitude,startLongitude);
@@ -37,7 +36,6 @@ public class RidePlanningNormal implements RidePlanning {
         return startStation;
     }
 
-    @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
         Station destinationStation = null;
         Double minDistance = stations.get(0).computeDistance(destinationLatitude,destinationLongitude);

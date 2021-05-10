@@ -45,14 +45,15 @@ public class RidePlanningNormalTest {
 
 
         //Ride Planning
-        RidePlanning ridePlanningNormal = new RidePlanningNormal(6.3,1.4,120.3,31.4);
-        RidePlanning ridePlanningAvoidPlus = new RidePlanningAvoidPlusStations(6.3,1.4,120.3,31.4);
-        RidePlanning ridePlanningPreferPlus = new RidePlanningPreferPlusStations(6.3,1.4,120.3,31.4);
-        RidePlanning ridePlanningPreserveUniformityOfBicycle = new RidePlanningPreserveUniformityOfBicycle(6.3,1.4,120.3,31.4);
+        RidePlanningNormal ridePlanningNormal = new RidePlanningNormal(6.3,1.4,120.3,31.4);
+        RidePlanningNormal ridePlanningAvoidPlus = new RidePlanningAvoidPlusStations(6.3,1.4,120.3,31.4);
+        RidePlanningNormal ridePlanningPreferPlus = new RidePlanningPreferPlusStations(6.3,1.4,120.3,31.4);
+        RidePlanningNormal ridePlanningPreserveUniformityOfBicycle = new RidePlanningPreserveUniformityOfBicycle(6.3,1.4,120.3,31.4);
 
         //Start
 //        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Mechanical));
 //        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Electrical));
+//        System.out.println(ridePlanningAvoidPlus.findStartStation(stations, TypeOfBicycle.Mechanical));
 
 //        Destination
 //        System.out.println(ridePlanningNormal.findDestinationStation(stations));
@@ -67,6 +68,6 @@ public class RidePlanningNormalTest {
 //        System.out.println(station1.getNumberOfBike(TypeOfBicycle.Mechanical));
 //        System.out.println(station3.getNumberOfBike(TypeOfBicycle.Mechanical));
 
-        System.out.println(ridePlanningPreserveUniformityOfBicycle.findStartStation(stations, TypeOfBicycle.Mechanical));
+//        System.out.println(ridePlanningPreserveUniformityOfBicycle.findStartStation(stations, TypeOfBicycle.Mechanical));
     }
 }
