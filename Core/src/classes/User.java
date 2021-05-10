@@ -1,6 +1,8 @@
 package src.classes;
 
 import src.enums.*;
+import src.registrationCard.*;
+
 import java.util.ArrayList;
 
 public class User {
@@ -9,7 +11,7 @@ public class User {
     private double latitude;
     private double longitude;
     private String creditCardNumber;
-    private RegistrationCardType registrationCardType;
+    private RegistrationCard registrationCard;
     private double timeCreditBalance;
     private double totalCharges;
 
@@ -29,12 +31,12 @@ public class User {
     }
 
 
-    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCardType registrationCardType) {
+    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.creditCardNumber = creditCardNumber;
-        this.registrationCardType = registrationCardType;
+        this.registrationCard = registrationCard;
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
         this.id = getValidId();
@@ -48,7 +50,7 @@ public class User {
         this.latitude = latitude;
         this.longitude = longitude;
         this.creditCardNumber = creditCardNumber;
-        this.registrationCardType = RegistrationCardType.None;
+        this.registrationCard = new NoRegistrationCard();
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
         this.id = getValidId();
@@ -59,14 +61,18 @@ public class User {
         String baseString = "User " + name + " [id:" + id + "]\n" +
                 "Location : (latitude : " + latitude + ", longitude : " + longitude + ") \n" +
                 "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n";
-        // if the user has a registration card
-        if (this.registrationCardType != RegistrationCardType.None) {
-            return baseString + "Registration card : " + registrationCardType +
-                    ", time credit balance : " + timeCreditBalance;
-        } else {
+        // if the user has no registration card
+        if (this.registrationCard instanceof NoRegistrationCard) {
             return baseString + "No registration card.";
+        } else {
+            return baseString + "Registration card : " + registrationCard +
+                    ", time credit balance : " + timeCreditBalance;
         }
 
+    }
+
+    public double computeCost(double rideDuration, TypeOfBicycle bicycleType) {
+        return this.registrationCard.computeRideCost(rideDuration, bicycleType, this);
     }
 
     // getters & setters
@@ -121,12 +127,12 @@ public class User {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public RegistrationCardType getRegistrationCardType() {
-        return registrationCardType;
+    public RegistrationCard getRegistrationCard() {
+        return registrationCard;
     }
 
-    public void setRegistrationCardType(RegistrationCardType registrationCardType) {
-        this.registrationCardType = registrationCardType;
+    public void setRegistrationCard(RegistrationCard registrationCard) {
+        this.registrationCard = registrationCard;
     }
 
     public double getTimeCreditBalance() {
