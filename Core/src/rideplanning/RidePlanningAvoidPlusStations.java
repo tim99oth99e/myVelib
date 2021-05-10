@@ -39,7 +39,7 @@ public class RidePlanningAvoidPlusStations implements RidePlanning {
 
     @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
-        Station destinationStation = null;
+        Station destinationStation = stations.get(0);
         Double minDistance = stations.get(0).computeDistance(destinationLatitude,destinationLongitude);
         for (Station station : stations){
             if (station.getStationStatus() == StationStatus.OnService){

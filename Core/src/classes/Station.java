@@ -99,6 +99,34 @@ public class Station {
         return false;
     }
 
+    public Integer getNumberOfFreeParkingSlot(){
+        Integer numberOfFreeParkingSlot=0;
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            //System.out.println(entry.getKey() + " = " + entry.getValue());
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Free){
+                numberOfFreeParkingSlot++;
+            }
+        }
+        return numberOfFreeParkingSlot;
+    }
+
+    public Integer getNumberOfBike(TypeOfBicycle typeOfBicycle){
+        Integer numberOfBike=0;
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            //System.out.println(entry.getKey() + " = " + entry.getValue());
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Occupied){
+                if (entry.getValue().getBicycle().getType() == typeOfBicycle){
+                    numberOfBike++;
+                }
+            }
+        }
+        return numberOfBike;
+    }
+
     //Getters and Setters
     public Integer getId() {
         return Id;
