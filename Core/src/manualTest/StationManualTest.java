@@ -1,6 +1,8 @@
-package src.test;
+package src.manualTest;
 
-import src.classes.*;
+import src.coreClasses.Bicycle;
+import src.coreClasses.ParkingSlot;
+import src.coreClasses.Station;
 import src.enums.*;
 
 public class StationManualTest {

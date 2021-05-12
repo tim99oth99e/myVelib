@@ -1,6 +1,6 @@
-package src.rideplanning;
+package src.ridePlanning;
 
-import src.classes.*;
+import src.coreClasses.Station;
 import src.enums.*;
 
 import java.util.ArrayList;

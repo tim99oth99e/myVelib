@@ -1,6 +1,6 @@
 package src.registrationCard;
 
-import src.classes.User;
+import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
 
 public class VlibreRegistrationCard implements RegistrationCard {

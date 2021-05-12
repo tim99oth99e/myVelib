@@ -1,6 +1,6 @@
-package src.test;
+package src.manualTest;
 
-import src.classes.User;
+import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
 import src.registrationCard.*;
 

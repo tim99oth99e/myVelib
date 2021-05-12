@@ -1,8 +1,7 @@
-package src.test;
+package src.manualTest;
 
-import src.classes.*;
+import src.coreClasses.User;
 import src.registrationCard.*;
-import src.enums.*;
 
 public class UserManualTest {
     public static void main(String[] args) {

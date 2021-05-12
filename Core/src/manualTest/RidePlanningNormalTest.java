@@ -1,8 +1,10 @@
-package src.test;
+package src.manualTest;
 
-import src.classes.*;
+import src.coreClasses.Bicycle;
+import src.coreClasses.ParkingSlot;
+import src.coreClasses.Station;
 import src.enums.*;
-import src.rideplanning.*;
+import src.ridePlanning.*;
 
 import java.util.ArrayList;
 
