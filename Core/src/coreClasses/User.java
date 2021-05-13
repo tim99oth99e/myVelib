@@ -1,6 +1,9 @@
 package src.coreClasses;
 
 import src.enums.*;
+import src.exception.CreditCardNotValidException;
+import src.exception.LatitudeOutOfBoundsException;
+import src.exception.LongitudeOutOfBoundsException;
 import src.registrationCard.*;
 
 import java.util.ArrayList;
@@ -110,11 +113,11 @@ public class User {
         return latitude;
     }
 
-    public void setLatitude(double latitude) throws Exception {
+    public void setLatitude(double latitude) throws LatitudeOutOfBoundsException {
         if (-90.0 <= latitude && latitude <= 90.0) {
             this.latitude = latitude;
         } else {
-            throw new Exception("Latitude should be between -90\u00B0 and +90\u00B0 but is : " + latitude + "\u00B0");
+            throw new LatitudeOutOfBoundsException(latitude);
         }
     }
 
@@ -122,11 +125,11 @@ public class User {
         return longitude;
     }
 
-    public void setLongitude(double longitude) throws Exception {
+    public void setLongitude(double longitude) throws LongitudeOutOfBoundsException {
         if (-180.0 <= longitude && longitude <= 180.0) {
             this.longitude = longitude;
         } else {
-            throw new Exception("Longitude should be between -180 \u00B0 and +180\u00B0 but is :" + longitude + "\u00B0");
+            throw new LongitudeOutOfBoundsException(longitude);
         }
     }
 
@@ -134,12 +137,12 @@ public class User {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(String creditCardNumber) throws Exception {
+    public void setCreditCardNumber(String creditCardNumber) throws CreditCardNotValidException {
         // check if the credit card number is valid or not
         if (creditCardNumber.matches("[0-9]+") && creditCardNumber.length() == 16) {
             this.creditCardNumber = creditCardNumber;
         } else {
-            throw new Exception("Credit card number should only contain digits and be of length 16.");
+            throw new CreditCardNotValidException(creditCardNumber);
         }
 
     }
