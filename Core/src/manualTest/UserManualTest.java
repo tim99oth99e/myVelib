@@ -4,7 +4,7 @@ import src.coreClasses.User;
 import src.registrationCard.*;
 
 public class UserManualTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         User user1 = new User("Jack Wilson", 123.0, 145.4, "12353849583740384",
                 new NoRegistrationCard());
         System.out.println(User.getUsedIds());

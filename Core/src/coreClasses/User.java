@@ -31,11 +31,12 @@ public class User {
     }
 
 
-    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) {
+    public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) throws Exception {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.creditCardNumber = creditCardNumber;
+        // check if the card number is correct
+        this.setCreditCardNumber(creditCardNumber);
         this.registrationCard = registrationCard;
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
@@ -45,11 +46,12 @@ public class User {
     /**
      * Constructor without registration card parameter
      */
-    public User(String name, double latitude, double longitude, String creditCardNumber) {
+    public User(String name, double latitude, double longitude, String creditCardNumber) throws Exception {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.creditCardNumber = creditCardNumber;
+        // check if the card number is correct
+        this.setCreditCardNumber(creditCardNumber);
         this.registrationCard = new NoRegistrationCard();
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
@@ -100,7 +102,6 @@ public class User {
         } else {
             throw new Exception("The id " + id + " is already used.");
         }
-        // else, return an error ?
     }
 
     public double getLatitude() {
@@ -123,8 +124,14 @@ public class User {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+    public void setCreditCardNumber(String creditCardNumber) throws Exception {
+        // check if the credit card number is valid or not
+        if (creditCardNumber.matches("[0-9]+") && creditCardNumber.length() == 16) {
+            this.creditCardNumber = creditCardNumber;
+        } else {
+            throw new Exception("Credit card number should only contain digits and be of length 16.");
+        }
+
     }
 
     public RegistrationCard getRegistrationCard() {
