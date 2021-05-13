@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
-    User user1 = new User("Billy Gates", 123.0, 145.4, "1235384958374038",
+    User user1 = new User("Billy Gates", 0.0, 145.4, "1235384958374038",
             new NoRegistrationCard());
     User user2 = new User("Marcus Zuckerberg", 12.0, 15.4, "1235384939027403",
             new VlibreRegistrationCard());
@@ -16,6 +16,18 @@ class UserTest {
             new VmaxRegistrationCard());
 
     UserTest() throws Exception {
+    }
+
+    @Test
+    void setLatitude() {
+        assertThrows(Exception.class, () -> user1.setLatitude(-170.0));
+        assertThrows(Exception.class, () -> user2.setLatitude(210.0));
+    }
+
+    @Test
+    void setLongitude() {
+        assertThrows(Exception.class, () -> user1.setLongitude(-193.0));
+        assertThrows(Exception.class, () -> user2.setLongitude(345.0));
     }
 
     @Test
