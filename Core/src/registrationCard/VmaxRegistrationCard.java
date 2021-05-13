@@ -14,4 +14,9 @@ public class VmaxRegistrationCard implements RegistrationCard{
         }
         return cost;
     }
+
+    @Override
+    public String toString() {
+        return "Vmax";
+    }
 }

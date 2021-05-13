@@ -38,5 +38,10 @@ public class VlibreRegistrationCard implements RegistrationCard {
 
         return cost;
     }
+
+    @Override
+    public String toString() {
+        return "Vlibre";
+    }
 }
 

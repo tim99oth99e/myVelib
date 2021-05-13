@@ -63,7 +63,7 @@ public class User {
     @Override
     public String toString() {
         String baseString = "User " + name + " [id:" + id + "]\n" +
-                "Location : (latitude : " + latitude + ", longitude : " + longitude + ") \n" +
+                "Location : (latitude : " + latitude + "\u00B0, longitude : " + longitude + "\u00B0) \n" +
                 "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n";
         // if the user has no registration card
         if (this.registrationCard instanceof NoRegistrationCard) {
