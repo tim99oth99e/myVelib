@@ -33,8 +33,9 @@ public class User {
 
     public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) throws Exception {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        // check the values of lat and long
+        this.setLatitude(latitude);
+        this.setLongitude(longitude);
         // check if the card number is correct
         this.setCreditCardNumber(creditCardNumber);
         this.registrationCard = registrationCard;
@@ -48,8 +49,9 @@ public class User {
      */
     public User(String name, double latitude, double longitude, String creditCardNumber) throws Exception {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        // check the values of lat and long
+        this.setLatitude(latitude);
+        this.setLongitude(longitude);
         // check if the card number is correct
         this.setCreditCardNumber(creditCardNumber);
         this.registrationCard = new NoRegistrationCard();
@@ -108,16 +110,24 @@ public class User {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLatitude(double latitude) throws Exception {
+        if (-90.0 <= latitude && latitude <= 90.0) {
+            this.latitude = latitude;
+        } else {
+            throw new Exception("Latitude should be between -90\u00B0 and +90\u00B0 but is : " + latitude + "\u00B0");
+        }
     }
 
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLongitude(double longitude) throws Exception {
+        if (-180.0 <= longitude && longitude <= 180.0) {
+            this.longitude = longitude;
+        } else {
+            throw new Exception("Longitude should be between -180 \u00B0 and +180\u00B0 but is :" + longitude + "\u00B0");
+        }
     }
 
     public String getCreditCardNumber() {
