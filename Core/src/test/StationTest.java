@@ -1,7 +1,5 @@
 package src.test;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import src.coreClasses.*;
 import src.enums.*;
@@ -67,14 +65,111 @@ class StationTest {
     @Test
     @DisplayName("Test of the method hasBike")
     public void testHasBike() {
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
+
+        Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
+
+
+        ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
+        ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        stationFree.addParkingSlot(parkingSlotFree1);
+        stationFree.addParkingSlot(parkingSlotFree2);
+
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical2);
+
+        stationMix.addParkingSlot(parkingSlotFree1);
+        stationMix.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationMix.addParkingSlot(parkingSlotOccupiedMechanical);
+        stationMix.addParkingSlot(parkingSlotFree2);
+
+        assertAll("Correct number of bicycle within the station",
+                () -> assertFalse(stationFree.hasBike(TypeOfBicycle.Mechanical)),
+                () -> assertFalse(stationFull.hasBike(TypeOfBicycle.Mechanical)),
+                () -> assertTrue(stationFull.hasBike(TypeOfBicycle.Electrical)),
+                () -> assertTrue(stationMix.hasBike(TypeOfBicycle.Electrical)),
+                () -> assertTrue(stationMix.hasBike(TypeOfBicycle.Mechanical))
+        );
     }
 
     @Test
-    void hasFreeParkingSlot() {
+    @DisplayName("Test of the method hasFreeParkingSlot")
+    void testHasFreeParkingSlot() {
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
+
+        Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
+
+
+        ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
+        ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        stationFree.addParkingSlot(parkingSlotFree1);
+        stationFree.addParkingSlot(parkingSlotFree2);
+
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical2);
+
+        stationMix.addParkingSlot(parkingSlotFree1);
+        stationMix.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationMix.addParkingSlot(parkingSlotOccupiedMechanical);
+        stationMix.addParkingSlot(parkingSlotFree2);
+
+        assertAll("Correct number of bicycle within the station",
+                () -> assertTrue(stationFree.hasFreeParkingSlot()),
+                () -> assertFalse(stationFull.hasFreeParkingSlot()),
+                () -> assertTrue(stationMix.hasFreeParkingSlot())
+        );
     }
 
     @Test
-    void getNumberOfFreeParkingSlot() {
+    @DisplayName("Test of the method getNumberOfFreeParkingSlot")
+    void testGetNumberOfFreeParkingSlot() {
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
+
+        Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
+        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
+
+
+        ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
+        ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        stationFree.addParkingSlot(parkingSlotFree1);
+        stationFree.addParkingSlot(parkingSlotFree2);
+
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationFull.addParkingSlot(parkingSlotOccupiedElectrical2);
+
+        stationMix.addParkingSlot(parkingSlotFree1);
+        stationMix.addParkingSlot(parkingSlotOccupiedElectrical1);
+        stationMix.addParkingSlot(parkingSlotOccupiedMechanical);
+        stationMix.addParkingSlot(parkingSlotFree2);
+
+        assertAll("Correct number of bicycle within the station",
+                () -> assertTrue(stationFree.getNumberOfFreeParkingSlot() == 2),
+                () -> assertTrue(stationFull.getNumberOfFreeParkingSlot() == 0),
+                () -> assertTrue(stationMix.getNumberOfFreeParkingSlot() == 2)
+        );
     }
 
     @Test
