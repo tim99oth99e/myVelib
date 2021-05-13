@@ -1,4 +1,4 @@
-package src.manualTest;
+package src.test;
 
 import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
@@ -8,10 +8,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
-    User user1 = new User("Billy Gates", 123.0, 145.4, "12353849583740384",
+    User user1 = new User("Billy Gates", 123.0, 145.4, "1235384958374038",
             new NoRegistrationCard());
-    User user2 = new User("Marcus Zuckerberg", 12.0, 15.4, "12353849sfg740384",
+    User user2 = new User("Marcus Zuckerberg", 12.0, 15.4, "1235384939027403",
             new VlibreRegistrationCard());
+    User user3 = new User("Larri Pages", 22.0, 100.4, "3538493204740384",
+            new VmaxRegistrationCard());
+
+    UserTest() throws Exception {
+    }
+
+    @Test
+    void setCreditCardNumber() {
+        assertThrows(Exception.class, () -> user1.setCreditCardNumber("abcdefghijklmnop"));
+        assertThrows(Exception.class, () -> user2.setCreditCardNumber("392"));
+    }
 
     @Test
     void setId() throws Exception {
@@ -43,5 +54,9 @@ class UserTest {
         assertEquals(0.0, cost4);
 
         // Vmax
+        double cost5 = user3.computeCost(70.0, TypeOfBicycle.Electrical);
+        double cost6 = user3.computeCost(30.0, TypeOfBicycle.Mechanical);
+        assertEquals(1.0 + 2.0, cost3);
+        assertEquals(0.0, cost4);
     }
 }
