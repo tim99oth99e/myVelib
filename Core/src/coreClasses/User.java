@@ -2,6 +2,7 @@ package src.coreClasses;
 
 import src.enums.*;
 import src.exception.CreditCardNotValidException;
+import src.exception.IdAlreadyTakenException;
 import src.exception.LatitudeOutOfBoundsException;
 import src.exception.LongitudeOutOfBoundsException;
 import src.registrationCard.*;
@@ -105,7 +106,7 @@ public class User {
             usedIds.remove(this.id);
             this.id = id;
         } else {
-            throw new Exception("The id " + id + " is already used.");
+            throw new IdAlreadyTakenException(id);
         }
     }
 
