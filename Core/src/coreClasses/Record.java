@@ -64,10 +64,10 @@ public class Record {
 
         // change the way it is displayed
         System.out.println(user.getName() + " statistics : \n\t" +
-                            numberOfRides + " ride(s),\n\t" +
-                            totalRentTimeInMinutes + " minute(s) spent on a bike,\n\t" +
-                            "total charges : " + totalCharges + " euros,\n\t" +
-                            timeCredit + " min of time-credit.");
+                            "- number of rides : " + numberOfRides + ",\n\t" +
+                            "- time spent on a bike : " + totalRentTimeInMinutes + " minute(s),\n\t" +
+                            "- total charges : " + totalCharges + " \u20AC,\n\t" +
+                            "- time-credit balance : " + timeCredit + " minute(s).");
     }
 
     @Override
