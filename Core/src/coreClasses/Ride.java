@@ -1,5 +1,6 @@
 package src.coreClasses;
 
+import src.enums.TypeOfBicycle;
 import src.exception.IdAlreadyTakenException;
 import src.exception.ReturnDateNotValidException;
 
@@ -23,20 +24,23 @@ public class Ride {
     private Station returnStation;
     private LocalDateTime rentDateTime;
     private LocalDateTime returnDateTime;
+    private TypeOfBicycle bicycleType;
+    private double rideCharge;
     private int id;
 
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
 
-    public Ride(User user, Station startStation, Station droppingStation, LocalDateTime rentDateTime, LocalDateTime returnDateTime) throws Exception {
+    public Ride(User user, Station startStation, Station droppingStation, LocalDateTime rentDateTime, LocalDateTime returnDateTime, TypeOfBicycle bicycleType) throws Exception {
         this.user = user;
         this.rentStation = startStation;
         this.returnStation = droppingStation;
         this.rentDateTime = rentDateTime;
         // check if the end date is greater than the start date
         this.setReturnDateTime(returnDateTime);
+        this.bicycleType = bicycleType;
+        this.rideCharge = user.computeCost(this.getDurationInMinutes(), this.bicycleType);
         this.id = getValidId();
-
     }
 
     @Override
@@ -136,5 +140,21 @@ public class Ride {
 
     public static void setUsedIds(ArrayList<Integer> usedIds) {
         Ride.usedIds = usedIds;
+    }
+
+    public TypeOfBicycle getBicycleType() {
+        return bicycleType;
+    }
+
+    public void setBicycleType(TypeOfBicycle bicycleType) {
+        this.bicycleType = bicycleType;
+    }
+
+    public double getRideCharge() {
+        return rideCharge;
+    }
+
+    public void setRideCharge(double rideCharge) {
+        this.rideCharge = rideCharge;
     }
 }

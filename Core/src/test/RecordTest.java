@@ -6,6 +6,7 @@ import src.coreClasses.Ride;
 import src.coreClasses.Station;
 import src.coreClasses.User;
 import src.enums.StationStatus;
+import src.enums.TypeOfBicycle;
 import src.enums.TypeOfStation;
 import src.registrationCard.NoRegistrationCard;
 
@@ -28,8 +29,9 @@ class RecordTest {
         LocalDateTime dateTime1 = LocalDateTime.of(2021, 2,11,8,20,30);
         LocalDateTime dateTime2 = LocalDateTime.of(2021, 2,11,10,20,44);
         // Test rides
-        Ride ride1 = new Ride(user1, station1, station2, dateTime1, dateTime2);
+        Ride ride1 = new Ride(user1, station1, station2, dateTime1, dateTime2, TypeOfBicycle.Mechanical);
         record1.addRideIfNotExists(ride1);
-        System.out.println(record1);
+        record1.getUserStatistics(user1);
+//        System.out.println(record1);
     }
 }

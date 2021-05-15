@@ -21,6 +21,7 @@ public class Record {
         this.rides = rides;
     }
 
+    // custom methods
 
     public void addUserIfNotExists(User user) {
         if (!users.containsValue(user)) {
@@ -46,6 +47,27 @@ public class Record {
             this.addStationIfNotExists(ride.getReturnStation());
             rides.put(ride.getId(), ride);
         }
+    }
+
+    public void getUserStatistics(User user) {
+        int numberOfRides = 0;
+        int totalRentTimeInMinutes = 0;
+        // time credit
+        for (Ride ride : this.rides.values()) {
+            if (ride.getUser() == user) {
+                numberOfRides ++;
+                totalRentTimeInMinutes += ride.getDurationInMinutes();
+            }
+        }
+        double totalCharges =user.getTotalCharges();
+        double timeCredit = user.getTimeCreditBalance();
+
+        // change the way it is displayed
+        System.out.println(user.getName() + " statistics : \n\t" +
+                            numberOfRides + " ride(s),\n\t" +
+                            totalRentTimeInMinutes + " minute(s) spent on a bike,\n\t" +
+                            "total charges : " + totalCharges + " euros,\n\t" +
+                            timeCredit + " min of time-credit.");
     }
 
     @Override
