@@ -1,6 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
+import src.coreClasses.Bicycle;
 import src.coreClasses.Ride;
 import src.coreClasses.Station;
 import src.coreClasses.User;
@@ -24,8 +25,10 @@ class RideTest {
     // define dates
     LocalDateTime dateTime1 = LocalDateTime.of(2021, 2,11,8,20,30);
     LocalDateTime dateTime2 = LocalDateTime.of(2021, 2,11,10,20,44);
+    // define bicycle
+    Bicycle bicycle1 = new Bicycle(TypeOfBicycle.Electrical);
     // Test rides
-    Ride ride1 = new Ride(user1, station1, station2, dateTime1, dateTime2, TypeOfBicycle.Electrical);
+    Ride ride1 = new Ride(user1, station1, station2, dateTime1, dateTime2, bicycle1);
 
     RideTest() throws Exception {
     }

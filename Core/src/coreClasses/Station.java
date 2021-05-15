@@ -18,7 +18,7 @@ public class Station {
 
     //ToString
     public String displayHashMap(HashMap<Integer,ParkingSlot> parkingSlotHashMap){
-        String string = new String();
+        String string = "";
         for (Integer keys : parkingSlotHashMap.keySet()) {
             string+= "\n" + parkingSlotHashMap.get(keys);
         }
@@ -97,6 +97,10 @@ public class Station {
             }
         }
         return false;
+    }
+
+    public int getNumberOfParkingSlots(){
+        return this.parkingSlotHashMap.size();
     }
 
     public Integer getNumberOfFreeParkingSlot(){

@@ -12,10 +12,16 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /** TODO
- * create a History class
  * code all statistics functions
+ * code equals methods
  *
- * Exceptions : - avoid renting 2 bikes at the same time
+ * Refactor :
+ *  - create location class (or latt/lon classes)
+ *  - create unique objects classes -> to extend them with user, station, ...
+ *
+ * Exceptions :
+ *  - 1 user renting 2 bikes at the same time
+ *  - a bike cannot be rent from a station if it has no slot with bikes
  */
 
 public class Ride {
@@ -24,22 +30,22 @@ public class Ride {
     private Station returnStation;
     private LocalDateTime rentDateTime;
     private LocalDateTime returnDateTime;
-    private TypeOfBicycle bicycleType;
+    private Bicycle bicycle;
     private double rideCharge;
     private int id;
 
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
 
-    public Ride(User user, Station startStation, Station droppingStation, LocalDateTime rentDateTime, LocalDateTime returnDateTime, TypeOfBicycle bicycleType) throws Exception {
+    public Ride(User user, Station startStation, Station droppingStation, LocalDateTime rentDateTime, LocalDateTime returnDateTime, Bicycle bicycle) throws Exception {
         this.user = user;
         this.rentStation = startStation;
         this.returnStation = droppingStation;
         this.rentDateTime = rentDateTime;
         // check if the end date is greater than the start date
         this.setReturnDateTime(returnDateTime);
-        this.bicycleType = bicycleType;
-        this.rideCharge = user.computeCost(this.getDurationInMinutes(), this.bicycleType);
+        this.bicycle = bicycle;
+        this.rideCharge = user.computeCost(this.getDurationInMinutes(), this.bicycle.getType());
         this.id = getValidId();
     }
 
@@ -142,12 +148,12 @@ public class Ride {
         Ride.usedIds = usedIds;
     }
 
-    public TypeOfBicycle getBicycleType() {
-        return bicycleType;
+    public Bicycle getBicycle() {
+        return bicycle;
     }
 
-    public void setBicycleType(TypeOfBicycle bicycleType) {
-        this.bicycleType = bicycleType;
+    public void setBicycle(Bicycle bicycle) {
+        this.bicycle = bicycle;
     }
 
     public double getRideCharge() {
