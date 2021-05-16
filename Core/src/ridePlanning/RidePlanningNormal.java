@@ -21,7 +21,7 @@ public class RidePlanningNormal {
 
     public Station findStartStation(ArrayList<Station> stations, TypeOfBicycle typeOfBicycle) {
         Station startStation = null;
-        Double minDistance = stations.get(0).computeDistance(startLatitude,startLongitude);
+        Double minDistance = Double.POSITIVE_INFINITY;
         for (Station station : stations){
             if (station.getStationStatus() == StationStatus.OnService){
                 if (station.hasBike(typeOfBicycle)){
@@ -38,7 +38,7 @@ public class RidePlanningNormal {
 
     public Station findDestinationStation(ArrayList<Station> stations) {
         Station destinationStation = null;
-        Double minDistance = stations.get(0).computeDistance(destinationLatitude,destinationLongitude);
+        Double minDistance = Double.POSITIVE_INFINITY;
         for (Station station : stations){
             if (station.getStationStatus() == StationStatus.OnService){
                 if (station.hasFreeParkingSlot()){

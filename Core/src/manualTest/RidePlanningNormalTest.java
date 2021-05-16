@@ -53,9 +53,9 @@ public class RidePlanningNormalTest {
         RidePlanningNormal ridePlanningPreserveUniformityOfBicycle = new RidePlanningPreserveUniformityOfBicycle(6.3,1.4,120.3,31.4);
 
         //Start
-//        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Mechanical));
-//        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Electrical));
-//        System.out.println(ridePlanningAvoidPlus.findStartStation(stations, TypeOfBicycle.Mechanical));
+        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Mechanical));
+        System.out.println(ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Electrical));
+        System.out.println(ridePlanningAvoidPlus.findStartStation(stations, TypeOfBicycle.Mechanical));
 
 //        Destination
 //        System.out.println(ridePlanningNormal.findDestinationStation(stations));

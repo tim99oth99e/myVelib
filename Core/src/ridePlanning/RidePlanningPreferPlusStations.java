@@ -13,10 +13,10 @@ public class RidePlanningPreferPlusStations extends RidePlanningNormal {
 
     @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
-        Station destinationStation = stations.get(0);
-        Double minDistance = stations.get(0).computeDistance(super.destinationLatitude, super.destinationLongitude);
-        Station destinationStationPlus = stations.get(0);
-        Double minDistancePlus = stations.get(0).computeDistance(super.destinationLatitude, super.destinationLongitude);
+        Station destinationStation = null;
+        Double minDistance = Double.POSITIVE_INFINITY;
+        Station destinationStationPlus = null;
+        Double minDistancePlus = Double.POSITIVE_INFINITY;
         for (Station station : stations) {
             if (station.getStationStatus() == StationStatus.OnService) {
                 if (station.hasFreeParkingSlot()) {

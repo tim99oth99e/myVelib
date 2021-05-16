@@ -13,8 +13,8 @@ public class RidePlanningAvoidPlusStations extends RidePlanningNormal {
 
     @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
-        Station destinationStation = stations.get(0);
-        Double minDistance = stations.get(0).computeDistance(super.destinationLatitude,super.destinationLongitude);
+        Station destinationStation = null;
+        Double minDistance = Double.POSITIVE_INFINITY;
         for (Station station : stations){
             if (station.getStationStatus() == StationStatus.OnService){
                 if (station.getTypeOfStation() == TypeOfStation.Standard){

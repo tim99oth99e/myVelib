@@ -13,10 +13,10 @@ public class RidePlanningPreserveUniformityOfBicycle extends RidePlanningNormal 
 
     @Override
     public Station findStartStation(ArrayList<Station> stations, TypeOfBicycle typeOfBicycle) {
-        Station startStation = stations.get(0);
-        Double minDistance = stations.get(0).computeDistance(super.startLatitude, super.startLongitude);
-        Station startStationWithMoreBicycle = stations.get(0);
-        Double minDistanceWithMoreBicycle = stations.get(0).computeDistance(super.startLatitude, super.startLongitude);
+        Station startStation = null;
+        Double minDistance = Double.POSITIVE_INFINITY;
+        Station startStationWithMoreBicycle = null;
+        Double minDistanceWithMoreBicycle = Double.POSITIVE_INFINITY;
         for (Station station : stations) {
             if (station.getStationStatus() == StationStatus.OnService) {
                 if (station.hasBike(typeOfBicycle)) {
