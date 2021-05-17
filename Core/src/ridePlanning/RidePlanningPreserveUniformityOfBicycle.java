@@ -15,8 +15,9 @@ public class RidePlanningPreserveUniformityOfBicycle extends RidePlanningNormal 
     public Station findStartStation(ArrayList<Station> stations, TypeOfBicycle typeOfBicycle) {
         Station startStation = null;
         Double minDistance = Double.POSITIVE_INFINITY;
-        Station startStationWithMoreBicycle = null;
-        Double minDistanceWithMoreBicycle = Double.POSITIVE_INFINITY;
+        Station startStationWithMoreBicycle = stations.get(0);
+        Double minDistanceWithMoreBicycle = stations.get(0).computeDistance(super.destinationLatitude, super.destinationLongitude);
+
         for (Station station : stations) {
             if (station.getStationStatus() == StationStatus.OnService) {
                 if (station.hasBike(typeOfBicycle)) {
@@ -42,10 +43,11 @@ public class RidePlanningPreserveUniformityOfBicycle extends RidePlanningNormal 
 
     @Override
     public Station findDestinationStation(ArrayList<Station> stations) {
-        Station destinationStation = stations.get(0);
-        Double minDistance = stations.get(0).computeDistance(super.destinationLatitude, super.destinationLongitude);
+        Station destinationStation = null;
+        Double minDistance = Double.POSITIVE_INFINITY;
         Station destinationStationWithMoreBicycle = stations.get(0);
         Double minDistanceWithMoreBicycle = stations.get(0).computeDistance(super.destinationLatitude, super.destinationLongitude);
+
         for (Station station : stations) {
             if (station.getStationStatus() == StationStatus.OnService) {
                 if (station.hasFreeParkingSlot()) {

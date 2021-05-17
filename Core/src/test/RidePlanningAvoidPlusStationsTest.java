@@ -15,7 +15,7 @@ public class RidePlanningAvoidPlusStationsTest {
 
     @Test
     @DisplayName("Test of the method findDestinationStation for RidePlanningAvoidPlusStations")
-    public void testFindDestinationStationNormal() {
+    public void testFindDestinationStation() {
 
         //Parking Slots
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);

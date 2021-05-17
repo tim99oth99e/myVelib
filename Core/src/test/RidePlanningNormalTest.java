@@ -13,7 +13,7 @@ public class RidePlanningNormalTest {
 
     @Test
     @DisplayName("Test of the method findStartStation for for RidePlanningNormal")
-    public void testFindStartStationNormal() {
+    public void testFindStartStation() {
 
         //Parking Slots
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
@@ -62,7 +62,7 @@ public class RidePlanningNormalTest {
     }
     @Test
     @DisplayName("Test of the method findDestinationStation for RidePlanningNormal")
-    public void testFindDestinationStationNormal() {
+    public void testFindDestinationStation() {
 
         //Parking Slots
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
