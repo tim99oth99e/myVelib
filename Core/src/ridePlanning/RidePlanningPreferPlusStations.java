@@ -39,6 +39,7 @@ public class RidePlanningPreferPlusStations extends RidePlanningNormal {
         }
         if (minDistancePlus <= 1.1 * minDistance) {
             return destinationStationPlus;
+
         } else {
             return destinationStation;
         }

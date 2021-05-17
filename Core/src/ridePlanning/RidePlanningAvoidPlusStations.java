@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class RidePlanningAvoidPlusStations extends RidePlanningNormal {
     public RidePlanningAvoidPlusStations(Double startLatitude, Double startLongitude, Double destinationLatitude, Double destinationLongitude) {
         super(startLatitude,startLongitude,destinationLatitude,destinationLongitude);
-
     }
 
     @Override

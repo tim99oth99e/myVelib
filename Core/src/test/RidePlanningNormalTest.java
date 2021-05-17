@@ -55,8 +55,6 @@ public class RidePlanningNormalTest {
         Station startStationMechanical = ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Mechanical);
         Station startStationElectrical = ridePlanningNormal.findStartStation(stations, TypeOfBicycle.Electrical);
 
-        System.out.println(startStationElectrical);
-
         assertAll("Station returned must be the closest stations from start with the choosen type of bicycle available",
                 () -> assertTrue(startStationMechanical.equals(station1)),
                 () -> assertTrue(startStationElectrical.equals(station3))
