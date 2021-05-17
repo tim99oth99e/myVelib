@@ -121,7 +121,6 @@ public class Station {
         Iterator it = parkingSlotHashMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
-            //System.out.println(entry.getKey() + " = " + entry.getValue());
             if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Occupied){
                 if (entry.getValue().getBicycle().getType() == typeOfBicycle){
                     numberOfBike++;
