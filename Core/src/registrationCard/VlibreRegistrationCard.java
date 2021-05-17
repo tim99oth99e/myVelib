@@ -4,39 +4,58 @@ import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
 
 public class VlibreRegistrationCard implements RegistrationCard {
+
+    public int getTimeCredit(int rideDuration){
+            return 60 - (rideDuration % 60);
+    }
+
+    /**
+     * computes how many hours are charged for this ride
+     */
+    public int computeChargedHours(int rideDurationInMinutes) {
+        return rideDurationInMinutes / 60 + 1;
+    }
+
+    /**
+     * computes the cost of the ride without timeCredit reduction
+     */
+    public int getHoursCost(int billedHours, TypeOfBicycle bicycleType){
+        if (billedHours == 0) {
+            return 0;
+        }
+        if (bicycleType == TypeOfBicycle.Mechanical) {
+            return billedHours - 1;
+        } else {
+            if (billedHours > 1) {
+                return 1 + 2 * (billedHours - 1);
+            }
+            return 1;
+        }
+    }
+
     @Override
     public double computeRideCost(double rideDuration, TypeOfBicycle bicycleType, User user) {
-        double rideDurationToPay = rideDuration;
-        double cost;
-        double timeCreditBalance = user.getTimeCreditBalance();
+        // compute the timeCredit gained
+        int earnedTimeCredit = this.getTimeCredit((int) rideDuration);
+        // add it to the user balance
+        user.setTimeCreditBalance(user.getTimeCreditBalance() + earnedTimeCredit);
 
-        // compute time-credit reduction
-        if (timeCreditBalance > 0.0 && rideDuration > 60.0) {
-            double minutesAfter1h = rideDuration - 60.0;
-            if (timeCreditBalance > minutesAfter1h) {
-                rideDurationToPay =  60.0;
-                // update timeCredit
-                timeCreditBalance -= minutesAfter1h;
-            } else {
-                // time credit doesn't cover everything
-                rideDurationToPay = 60.0 + (minutesAfter1h - timeCreditBalance);
-                timeCreditBalance = 0;
-            }
-        }
-        // update user's time credit balance
-        user.setTimeCreditBalance(timeCreditBalance);
+        int billedHours = computeChargedHours((int) rideDuration);
 
-        // compute base cost
-        if (bicycleType == TypeOfBicycle.Mechanical) {
-            cost = (int) (rideDurationToPay/60);
-        }   else {
-            cost = 1;
-            if (rideDurationToPay > 60.0) {
-                cost += 2 * (int) (rideDurationToPay / 60);
-            }
+        // if timeCredit > 60 and rideDuration > 60 : get a reduction
+        if (user.getTimeCreditBalance() >= 60 && rideDuration > 60) {
+            // compute how many hours can be removed from the final cost
+            int possibleCreditHours = (int) user.getTimeCreditBalance() / 60;
+            // and how many hours above 1 were ridden
+            int discountableHours = (int) rideDuration / 60;
+
+            int nbFreeHours = Math.min(possibleCreditHours, discountableHours);
+            billedHours -= nbFreeHours;
+            //update user balance
+            user.setTimeCreditBalance(user.getTimeCreditBalance() - nbFreeHours * 60);
         }
 
-        return cost;
+        return getHoursCost(billedHours, bicycleType);
     }
 
     @Override
