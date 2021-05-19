@@ -3,16 +3,15 @@ package src.registrationCard;
 import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
 
-public class NoRegistrationCard implements RegistrationCard{
+public class NoRegistrationCard extends RegistrationCard{
 
-    @Override
-    public double computeRideCost(double rideDuration, TypeOfBicycle bicycleType, User user) {
-        double cost = ((int) (rideDuration/60)) + 1; // when you start a new hour, you pay for it
-        // ride duration is in minutes
-        if (bicycleType == TypeOfBicycle.Electrical) {
-            cost *= 2;
-        }
-        return cost;
+    public NoRegistrationCard() {
+        super(false, 1, 1, 2, 2);
     }
 
+    @Override
+    public String toString() {
+        return "No registration card";
+    }
 }
+

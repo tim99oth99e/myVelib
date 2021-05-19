@@ -3,20 +3,14 @@ package src.registrationCard;
 import src.coreClasses.User;
 import src.enums.TypeOfBicycle;
 
-public class VmaxRegistrationCard implements RegistrationCard{
+public class VmaxRegistrationCard extends RegistrationCard {
 
-    @Override
-    public double computeRideCost(double rideDuration, TypeOfBicycle bicycleType, User user) {
-        int cost = 0;
-        if (rideDuration > 60.0) {
-            // rounds at the lower integer
-            cost = (int) rideDuration;
-        }
-        return cost;
+    public VmaxRegistrationCard() {
+        super(true, 0, 1, 0, 1);
     }
 
     @Override
     public String toString() {
-        return "Vmax";
+        return "Vmax registration card";
     }
 }

@@ -21,13 +21,8 @@ class RegistrationCardTest {
     void getTimeCredit(){
         assertEquals(27, regCard1.getTimeCredit(33));
         assertEquals(54, regCard1.getTimeCredit(126));
-        assertEquals(0, regCard1.getTimeCredit(60));
-    }
-
-    @Test
-    void computeChargedHours() {
-        assertEquals(1, regCard1.computeChargedHours(33));
-        assertEquals(3 , regCard1.computeChargedHours(125));
+        // 60 mins of credit for the next hour
+        assertEquals(60, regCard1.getTimeCredit(60));
     }
 
     @Test
@@ -52,5 +47,8 @@ class RegistrationCardTest {
         larry.setTimeCreditBalance(0);
         // 3h billed, 1h free
         assertEquals(1, regCard1.computeRideCost(120, TypeOfBicycle.Mechanical, larry));
+
+        larry.setTimeCreditBalance(0);
+        assertEquals(1, regCard1.computeRideCost(60, TypeOfBicycle.Electrical, larry));
     }
 }
