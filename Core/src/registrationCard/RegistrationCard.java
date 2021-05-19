@@ -44,9 +44,6 @@ public abstract class RegistrationCard {
      * computes the cost of the ride after having dealt with the timeCredit
      */
     public int getHoursCost(int billedHours, TypeOfBicycle bicycleType){
-        if (billedHours == 0) {
-            return 0;
-        }
         int basePrice = getFirstHourFare(bicycleType);
         if (billedHours > 1) {
             return basePrice + (billedHours - 1) * getNextHoursFare(bicycleType);
@@ -65,7 +62,10 @@ public abstract class RegistrationCard {
     /**
      * returns the price the user has to pay for this ride
      */
-    public double computeRideCost(double rideDuration, TypeOfBicycle bicycleType, User user) {
+    public double computeRideCost(double rideDuration, TypeOfBicycle bicycleType, User user){
+        if (rideDuration == 0) {
+            return 0;
+        }
 
         // convert minutes in hours, (+1 because (int) floors)
         int billedHours = (int) rideDuration/60 + 1;
@@ -91,7 +91,6 @@ public abstract class RegistrationCard {
             }
 
         }
-
         return this.getHoursCost(billedHours, bicycleType);
     }
 
