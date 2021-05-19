@@ -83,11 +83,6 @@ public class User {
         this.setTotalCharges(this.getTotalCharges() + charge);
     }
 
-    public double computeCost(double rideDuration, TypeOfBicycle bicycleType) {
-        double rideCost = this.registrationCard.computeRideCost(rideDuration, bicycleType, this);
-        this.addCharge(rideCost);
-        return rideCost;
-    }
 
     // getters & setters
 

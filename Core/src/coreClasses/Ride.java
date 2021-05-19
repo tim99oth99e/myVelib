@@ -45,7 +45,7 @@ public class Ride {
         // check if the end date is greater than the start date
         this.setReturnDateTime(returnDateTime);
         this.bicycle = bicycle;
-        this.rideCharge = user.computeCost(this.getDurationInMinutes(), this.bicycle.getType());
+        this.rideCharge = this.computeCost();
         this.id = getValidId();
     }
 
@@ -68,6 +68,12 @@ public class Ride {
         usedIds.add(tempId);
         return tempId;
 
+    }
+
+    public double computeCost() {
+        double rideCost = this.user.getRegistrationCard().computeRideCost(this.getDurationInMinutes(), this.bicycle.getType(), this.getUser());
+        this.user.addCharge(rideCost);
+        return rideCost;
     }
 
     public int getDurationInMinutes(){
