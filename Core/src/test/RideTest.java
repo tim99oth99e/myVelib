@@ -43,4 +43,17 @@ class RideTest {
     void setReturnDateTime() throws Exception {
         ride1.setReturnDateTime(dateTime1);
     }
+
+    @Test
+    void computeCost() {
+        // add more test cases
+
+        // No registration card
+        assertEquals(6, ride1.computeCost());
+
+        // Vlibre
+
+        // Vmax
+
+    }
 }
