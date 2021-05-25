@@ -19,8 +19,7 @@ class EventTest {
     ParkingSlot ps1 = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
     ParkingSlot ps2 = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
     ParkingSlot ps3 = new ParkingSlot(ParkingSlotStatus.Free, new Bicycle(TypeOfBicycle.Mechanical));
-    // add it to the station
-//    station1.addParkingSlot(ps1);
+    // add them to a station inside a test method
 
     // define dates
     LocalDateTime dateTime1 = LocalDateTime.of(2021, 2,11,8,20,30);
