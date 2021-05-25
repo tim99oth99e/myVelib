@@ -13,6 +13,8 @@ public class RideEvent extends Event {
         this.user = user;
     }
 
+
+    // getter & setter
     public User getUser() {
         return user;
     }

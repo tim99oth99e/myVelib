@@ -7,6 +7,8 @@ import src.exception.LatitudeOutOfBoundsException;
 import src.exception.LongitudeOutOfBoundsException;
 import src.registrationCard.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class User {
@@ -89,6 +91,15 @@ public class User {
     public void addCharge(double charge) {
         this.setTotalCharges(this.getTotalCharges() + charge);
     }
+
+    public double computeCost(TypeOfBicycle bicycleType, LocalDateTime rentDateTime, LocalDateTime returnDateTime) {
+        int rideDurationInMinutes = (int) rentDateTime.until(returnDateTime, ChronoUnit.MINUTES);
+        double rideCost = this.getRegistrationCard().computeRideCost(rideDurationInMinutes, bicycleType, this);
+        this.addCharge(rideCost);
+        return rideCost;
+    }
+
+
 
 
     // getters & setters
