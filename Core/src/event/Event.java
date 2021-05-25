@@ -17,6 +17,12 @@ public class Event {
         this.station = station;
     }
 
+    @Override
+    public String toString() {
+        return "Event of type " + eventType +
+                " that took place " + eventTime + " at station #" + station.getId() ;
+    }
+
     // getters & setters
 
     public LocalDateTime getEventTime() {
