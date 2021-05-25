@@ -1,59 +1,36 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.coreClasses.Bicycle;
-import src.coreClasses.Ride;
-import src.coreClasses.Station;
-import src.coreClasses.User;
-import src.enums.StationStatus;
-import src.enums.TypeOfBicycle;
-import src.enums.TypeOfStation;
+import src.coreClasses.*;
+import src.enums.*;
+import src.event.Event;
 import src.registrationCard.NoRegistrationCard;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class RideTest {
+class EventTest {
     // define users
     User user1 = new User("Billy Gates", 0.0, 145.4, "1235384958374038",
             new NoRegistrationCard());
     // define stations
     Station station1 = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
     Station station2 = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
+    // define parking Slots
+    ParkingSlot ps1 = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
+    ParkingSlot ps2 = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
+    ParkingSlot ps3 = new ParkingSlot(ParkingSlotStatus.Free, new Bicycle(TypeOfBicycle.Mechanical));
+    // add it to the station
+//    station1.addParkingSlot(ps1);
+
     // define dates
     LocalDateTime dateTime1 = LocalDateTime.of(2021, 2,11,8,20,30);
     LocalDateTime dateTime2 = LocalDateTime.of(2021, 2,11,10,20,44);
     // define bicycle
     Bicycle bicycle1 = new Bicycle(TypeOfBicycle.Electrical);
-    // Test rides
-    Ride ride1 = new Ride(user1, station1, station2, dateTime1, dateTime2, bicycle1);
+    // Test events
+    Event e1 = new Event(dateTime1, EventType.RentBicycle, station1);
 
-    RideTest() throws Exception {
+    EventTest() throws Exception {
     }
 
-    @Test
-    void getDurationInMinutes() {
-        assertEquals(120, ride1.getDurationInMinutes());
-        System.out.println(ride1);
-    }
-
-    @Test
-    void setReturnDateTime() throws Exception {
-        ride1.setReturnDateTime(dateTime1);
-    }
-
-    @Test
-    void computeCost() {
-        // add more test cases
-
-        // No registration card
-        assertEquals(6, ride1.computeCost());
-
-        // Vlibre
-
-        // Vmax
-
-    }
 }
