@@ -16,8 +16,11 @@ public class User {
     private double longitude;
     private String creditCardNumber;
     private RegistrationCard registrationCard;
+    // statistics
     private double timeCreditBalance;
     private double totalCharges;
+    private int numberOfRides;
+    private int totalRentTimeInMinutes;
 
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
@@ -45,6 +48,8 @@ public class User {
         this.registrationCard = registrationCard;
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
+        this.numberOfRides = 0;
+        this.totalRentTimeInMinutes = 0;
         this.id = getValidId();
     }
 
@@ -61,6 +66,8 @@ public class User {
         this.registrationCard = new NoRegistrationCard();
         this.timeCreditBalance = 0;
         this.totalCharges = 0;
+        this.numberOfRides = 0;
+        this.totalRentTimeInMinutes = 0;
         this.id = getValidId();
     }
 
@@ -181,4 +188,19 @@ public class User {
         User.usedIds = usedIds;
     }
 
+    public int getNumberOfRides() {
+        return numberOfRides;
+    }
+
+    public void setNumberOfRides(int numberOfRides) {
+        this.numberOfRides = numberOfRides;
+    }
+
+    public int getTotalRentTimeInMinutes() {
+        return totalRentTimeInMinutes;
+    }
+
+    public void setTotalRentTimeInMinutes(int totalRentTimeInMinutes) {
+        this.totalRentTimeInMinutes = totalRentTimeInMinutes;
+    }
 }

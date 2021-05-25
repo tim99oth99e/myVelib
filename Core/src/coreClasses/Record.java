@@ -1,30 +1,31 @@
 package src.coreClasses;
+import src.event.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Record {
     private HashMap<Integer, User> users;
     private HashMap<Integer, Station> stations;
-    private HashMap<Integer, Ride> rides;
+    private ArrayList<Event> events;
 
     // constructors
 
     public Record() {
         this.users = new HashMap<>();
         this.stations = new HashMap<>();
-        this.rides = new HashMap<>();
+        this.events = new ArrayList<>();
     }
 
-    public Record(HashMap<Integer, User> users, HashMap<Integer, Station> stations, HashMap<Integer, Ride> rides) {
+    public Record(HashMap<Integer, User> users, HashMap<Integer, Station> stations, ArrayList<Event> events) {
         this.users = users;
         this.stations = stations;
-        this.rides = rides;
+        this.events = events;
     }
 
     // custom methods
-
     public void addUserIfNotExists(User user) {
         if (!users.containsValue(user)) {
             users.put(user.getId(), user);
@@ -40,34 +41,35 @@ public class Record {
         }
     }
 
-    public void addRideIfNotExists(Ride ride) {
-        if (!rides.containsValue(ride)) {
-            // check if the user is registered
-            this.addUserIfNotExists(ride.getUser());
-            // same with the stations
-            this.addStationIfNotExists(ride.getRentStation());
-            this.addStationIfNotExists(ride.getReturnStation());
-            rides.put(ride.getId(), ride);
+    public void addEventIfNotExists(Event event) {
+        if (!events.contains(event)) {
+
+            // check if the station is registered
+            this.addStationIfNotExists(event.getStation());
+
+            if (event instanceof RideEvent) {
+                // check if the user is registered
+                this.addUserIfNotExists( ((RideEvent) event).getUser() );
+            }
+
+            events.add(event);
         }
     }
 
+
+    /**
+     * Prints statistics about a user
+     */
     public void printUserStatistics(User user) {
-        int numberOfRides = 0;
-        int totalRentTimeInMinutes = 0;
-        // time credit
-        for (Ride ride : this.rides.values()) {
-            if (ride.getUser() == user) {
-                numberOfRides ++;
-                totalRentTimeInMinutes += ride.getDurationInMinutes();
-            }
-        }
+        int numberOfRides = user.getNumberOfRides();
+        int totalRentTimeInMinutes = user.getTotalRentTimeInMinutes();
         double totalCharges =user.getTotalCharges();
         double timeCredit = user.getTimeCreditBalance();
 
         // change the way it is displayed
         System.out.println(user.getName() + " statistics : \n\t" +
                             "- number of rides : " + numberOfRides + ",\n\t" +
-                            "- time spent on a bike : " + (int) totalRentTimeInMinutes/60 + " hour(s) and "+ totalRentTimeInMinutes%60 +" minute(s),\n\t" +
+                            "- time spent on a bike : " + totalRentTimeInMinutes/60 + " hour(s) and "+ totalRentTimeInMinutes%60 +" minute(s),\n\t" +
                             "- total charges : " + totalCharges + " \u20AC,\n\t" +
                             "- time-credit balance : " + timeCredit + " minute(s).");
     }
@@ -75,18 +77,25 @@ public class Record {
     public void printStationBalance(Station station){
         int numberOfRent = 0;
         int numberOfReturn = 0;
-        for (Ride ride : this.rides.values()) {
-            if (ride.getRentStation() == station) {
-                numberOfRent++;
-            } else if (ride.getReturnStation() == station) {
-                numberOfReturn++;
+        for (Event event : this.events) {
+            if (event.getStation() == station) {
+                switch (event.getEventType()) {
+                    case RentBicycle:
+                        numberOfRent++;
+                        break;
+                    case ReturnBicycle:
+                        numberOfReturn++;
+                        break;
+                }
             }
         }
         int balance = numberOfReturn - numberOfRent;
-        System.out.println("Station balance : " + balance + " (+"+ numberOfRent + " rent.s, -" + numberOfReturn + " return.s)");
+        System.out.println("Station balance : " + balance + " (+" + numberOfReturn + " return.s, -" + numberOfRent + " rent.s)");
     }
 
+
     public double computeAvgOccupationRate(Station station, LocalDateTime ts, LocalDateTime te) {
+
         double delta = ts.until(te, ChronoUnit.MINUTES);
         int numberOfParkingSlots = station.getNumberOfParkingSlots();
 
@@ -95,33 +104,61 @@ public class Record {
             return 0;
         }
 
-        int stationOccupation = 0;
-        // for each ride in the system, (could be changed to for each ride between te and ts)
-        for (Ride ride : this.rides.values()) {
-            if (ride.getRentStation()==station) {
-                // if the ride happened after the left window bound
-                if (ride.getRentDateTime().isAfter(ts)) {
-                    stationOccupation += ts.until(ride.getRentDateTime(), ChronoUnit.MINUTES);
+        int stationOccupationInMinutes = 0;
+        LocalDateTime lastEventDateTime = ts;
+
+        // from the creation of the station, rebuild the different states of the station
+        // those variables represent the state of the station
+        int nbOccupiedSlots = station.getNumberOfParkingSlots(); // we initialize it full of bikes
+        for (Event event : events) {
+            if (!event.getEventTime().isAfter(te) && event.getStation() == station) {
+                // if the event happens between the two time limits
+                if (!event.getEventTime().isBefore(ts)) {
+                    // add time to station occupation accordingly
+                    int minutesSpentSinceLastEvent = (int) lastEventDateTime.until(event.getEventTime(), ChronoUnit.MINUTES);
+                    stationOccupationInMinutes += minutesSpentSinceLastEvent * nbOccupiedSlots;
                 }
-            }
-            // not an else if because a ride can start and stop at the same place
-            if (ride.getReturnStation()==station) {
-                // te == returnDate, occupation = 0
-                if (ride.getReturnDateTime().isBefore(te)) {
-                    stationOccupation += ride.getReturnDateTime().until(te, ChronoUnit.MINUTES);
+                else if (event.getEventTime().isAfter(te)) {
+                    // we passed the end of time
+                    // add the final occupation
+                    int minutesSpentSinceLastEvent = (int) lastEventDateTime.until(te, ChronoUnit.MINUTES);
+                    stationOccupationInMinutes += minutesSpentSinceLastEvent * nbOccupiedSlots;
+                    // exit the for loop
+                    break;
                 }
+
+                // update state
+                switch (event.getEventType()) { // put this in a function
+                    // we suppose that all those events have been controlled (a station is not online 2 times)
+                    case RentBicycle:
+                    case SlotTurnsOutOfOrder:
+                        nbOccupiedSlots -= 1;
+                        break;
+                    case ReturnBicycle:
+                    case SlotRepairedToOccupied:
+                        nbOccupiedSlots += 1;
+                        break;
+                    case SlotRepairedToFree:
+                        ;
+                        break;
+                    // deal with Station turning offline
+                }
+                // update last event dateTime
+                lastEventDateTime = event.getEventTime();
             }
         }
-        double avgOccupationRate = stationOccupation / (delta * numberOfParkingSlots);
+
+        double avgOccupationRate = stationOccupationInMinutes / (delta * numberOfParkingSlots);
         return avgOccupationRate;
     }
+
 
     @Override
     public String toString() {
         return "Record containing :\n" +
                 "\t " + users.size() + " users,\n" +
                 "\t " + stations.size() + " stations,\n" +
-                "\t " + rides.size() + " rides.";
+                "\t " + events.size() + " events.";
     }
 
     // getters & setters
@@ -142,11 +179,11 @@ public class Record {
         this.stations = stations;
     }
 
-    public HashMap<Integer, Ride> getRides() {
-        return rides;
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
-    public void setRides(HashMap<Integer, Ride> rides) {
-        this.rides = rides;
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
     }
 }
