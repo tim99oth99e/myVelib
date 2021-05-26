@@ -23,7 +23,9 @@ public class User {
     private double totalCharges;
     private int numberOfRides;
     private int totalRentTimeInMinutes;
+    // rental
     private Bicycle rentedBicycle;
+    private LocalDateTime rentDateTime;
 
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
@@ -102,20 +104,44 @@ public class User {
         return rideCost;
     }
 
-    public String rent(ParkingSlot parkingSlot){
+    public void rent(ParkingSlot parkingSlot){
         if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Occupied){
             if (this.rentedBicycle == null){
                 this.rentedBicycle = parkingSlot.getBicycle();
                 parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Free);
                 parkingSlot.setBicycle(null);
-                return rentedBicycle.getType() + " successfully rented.";
+                rentDateTime = LocalDateTime.now();
+                System.out.println("Bicycle successfully rented.");
             }
             else {
-                return "Error: a user can only rent at most one bicycle";
+                System.out.println("Error: a user can only rent at most one bicycle");
             }
         }
         else {
-            return "Error: this parking slot has no available bicycle.";
+            System.out.println("Error: this parking slot has no available bicycle.");
+        }
+    }
+
+    public void park(ParkingSlot parkingSlot, LocalDateTime returnDateTime){
+        if (this.rentedBicycle == null){
+            System.out.println("Error: this user has no bicycle to park.");
+        }
+        else {
+            if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Free){
+                // To complete :
+                // charge the user OK
+                // change the parking slot : bicycle and status OK
+                // modifier les stats de l'utilisateur
+                parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Occupied);
+                parkingSlot.setBicycle(rentedBicycle);
+                double computeCost = computeCost(rentedBicycle.getType(), rentDateTime, returnDateTime);
+                rentedBicycle = null;
+                System.out.println("Bicycle successfully park.");
+            }
+            else {
+                System.out.println("Error: you can only park bicycle on free parking slot.");
+            }
+
         }
     }
 
