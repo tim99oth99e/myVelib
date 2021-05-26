@@ -3,8 +3,9 @@ import src.event.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
+import static src.enums.EventType.*;
 
 public class Record {
     private HashMap<Integer, User> users;
@@ -150,6 +151,37 @@ public class Record {
 
         double avgOccupationRate = stationOccupationInMinutes / (delta * numberOfParkingSlots);
         return avgOccupationRate;
+    }
+
+
+    public Map<Integer, Integer>  computeStationsOrder() {
+        // < station id, number of operations >
+        Map<Integer, Integer> numberOfOperations = new LinkedHashMap<>();
+        // fill the map with all the stations
+        for (Integer stationId: this.stations.keySet()) {
+            numberOfOperations.put(stationId, 0);
+        }
+        // add all operations to this map
+        for (Event e : events) {
+            // if the event is a rent or a park
+            if (e.getEventType() == RentBicycle || e.getEventType() == ReturnBicycle) {
+                int stationId = e.getStation().getId();
+                numberOfOperations.put(stationId, numberOfOperations.get(stationId) + 1);
+            }
+        }
+
+        // convert the map to list
+        List<Map.Entry<Integer, Integer>> stationsOperationsList = new ArrayList<>(numberOfOperations.entrySet());
+        // sort by values
+        stationsOperationsList.sort(Map.Entry.comparingByValue());
+
+        // convert back to map
+        Map<Integer, Integer> sortedStations = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Integer> entry : stationsOperationsList) {
+            sortedStations.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedStations;
     }
 
 
