@@ -128,15 +128,18 @@ public class User {
         }
         else {
             if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Free){
-                // To complete :
-                // charge the user OK
-                // change the parking slot : bicycle and status OK
-                // modifier les stats de l'utilisateur
                 parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Occupied);
                 parkingSlot.setBicycle(rentedBicycle);
-                double computeCost = computeCost(rentedBicycle.getType(), rentDateTime, returnDateTime);
-                rentedBicycle = null;
+                double computeCost = computeCost(rentedBicycle.getType(), this.rentDateTime, returnDateTime);
                 System.out.println("Bicycle successfully park.");
+                // update user statistics
+                // time credit and charges are updated when computing cost
+                this.numberOfRides ++;
+                this.totalRentTimeInMinutes += this.rentDateTime.until(returnDateTime, ChronoUnit.MINUTES);
+
+                // reset rent attributes
+                this.rentedBicycle = null;
+                this.rentDateTime = null;
             }
             else {
                 System.out.println("Error: you can only park bicycle on free parking slot.");

@@ -48,6 +48,7 @@ class UserTest {
     void setId() throws Exception {
 //        assertThrows(new Exception(), user2.setId(0));
         user1.setId(16);
+        assertThrows(Exception.class, () -> user2.setId(16));
         assertNotEquals(16, user2.getId()); // users cannot have the same id
         assertEquals(16, user1.getId());
     }
@@ -113,15 +114,12 @@ class UserTest {
         user1.park(parkingSlotFree2, LocalDateTime.now().plusMinutes(25)); // user1 parks his bicycle on a free parking slot 25 minutes later.
         user2.park(parkingSlotFree2, LocalDateTime.now().plusMinutes(145)); // user2 tries to park his bicycle on an occupied parking slot 145 minutes later.
 
-        assertAll(
-                () -> assertTrue(user1.getRentedBicycle() == null), // assert user1 has no more bicycle.
-                () -> assertTrue(parkingSlotFree2.getParkingSlotStatus() == ParkingSlotStatus.Occupied), // assert the parking slot is now Occupied.
-                () -> assertTrue(parkingSlotFree2.getBicycle() == mechanicalBicycle), // assert the parking slot is occupied with mechanicalBicycle.
-                () -> assertTrue(user2.getRentedBicycle() == mechanicalBicycle2), // assert user2 still has his bicycle.
-                () -> assertTrue(user1.getTotalCharges() == 1.0),// assert user1 has been charged for his ride.
-                () -> assertTrue(user2.getTotalCharges() == 0.0) // assert user2 has not been charged since his ride is not finished.
-
-        );
+        assertTrue(user1.getRentedBicycle() == null); // assert user1 has no more bicycle.
+        assertTrue(parkingSlotFree2.getParkingSlotStatus() == ParkingSlotStatus.Occupied); // assert the parking slot is now Occupied.
+        assertTrue(parkingSlotFree2.getBicycle() == mechanicalBicycle); // assert the parking slot is occupied with mechanicalBicycle.
+        assertTrue(user2.getRentedBicycle() == mechanicalBicycle2); // assert user2 still has his bicycle.
+        assertTrue(user1.getTotalCharges() == 1.0); // assert user1 has been charged for his ride.
+        assertTrue(user2.getTotalCharges() == 0.0); // assert user2 has not been charged since his ride is not finished.
     }
 
 }
