@@ -39,7 +39,7 @@ public class ParkingSlot {
         Id = uniqueId;
         uniqueId++;
         this.parkingSlotStatus = parkingSlotStatus;
-        if (parkingSlotStatus == ParkingSlotStatus.Occupied){ // One can only instantiates a bicycle to a parking slot if the parkin slot is set Occupied
+        if (parkingSlotStatus == ParkingSlotStatus.Occupied){ // One can only instantiates a bicycle to a parking slot if the parking slot is set Occupied
             this.bicycle = bicycle;
         }
         else { // Otherwise the bicycle is set to null
