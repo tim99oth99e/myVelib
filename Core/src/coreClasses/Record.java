@@ -1,5 +1,6 @@
 package src.coreClasses;
 import src.event.*;
+import src.stationsSorting.StationSortingPolicy;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -95,7 +96,7 @@ public class Record {
     }
 
 
-    public double computeAvgOccupationRate(Station station, LocalDateTime ts, LocalDateTime te) {
+    public static double computeAvgOccupationRate(Station station, LocalDateTime ts, LocalDateTime te, ArrayList<Event> events) {
 
         double delta = ts.until(te, ChronoUnit.MINUTES);
         int numberOfParkingSlots = station.getNumberOfParkingSlots();
@@ -151,6 +152,10 @@ public class Record {
 
         double avgOccupationRate = stationOccupationInMinutes / (delta * numberOfParkingSlots);
         return avgOccupationRate;
+    }
+
+    public Map<Integer, Double> getSortedStations(StationSortingPolicy sortingPolicy) {
+        return sortingPolicy.sortStations(this.events, this.stations);
     }
 
 
