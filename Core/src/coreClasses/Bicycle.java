@@ -30,7 +30,7 @@ public class Bicycle {
     /**
      * Instantiates a new Bicycle.
      *
-     * @param type the bicycle type can be electrical or mechanical.
+     * @param type the bicycle type can be Electrical or Mechanical.
      */
 
     public Bicycle(TypeOfBicycle type) {
