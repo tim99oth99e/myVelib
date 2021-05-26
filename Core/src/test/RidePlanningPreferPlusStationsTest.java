@@ -58,7 +58,7 @@ public class RidePlanningPreferPlusStationsTest {
         Station destinationStationLess10 = ridePlanningPreferPlusStationLess10.findDestinationStation(stations);
         Station destinationStationMore10 = ridePlanningPreferPlusStationMore10.findDestinationStation(stations);
 
-        assertAll("Return station should be a “plus” station (given a “plus” station no further away than 10% " +
+        assertAll("Return station should be a plus station (given a plus station no further away than 10% " +
                         "of the distance of the closest station to the destination location exists).",
                 () -> assertTrue(destinationStationLess10.equals(station2)),
                 () -> assertTrue(destinationStationMore10.equals(station3))
