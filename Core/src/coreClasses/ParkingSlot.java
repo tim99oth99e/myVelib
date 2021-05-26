@@ -37,7 +37,7 @@ public class ParkingSlot {
     public void setId(Integer id) {
         Id = id;
     }
-    public ParkingSlotStatus getParkingSlotStatus() {
+    public ParkingSlotStatus    getParkingSlotStatus() {
         return parkingSlotStatus;
     }
     public void setParkingSlotStatus(ParkingSlotStatus parkingSlotStatus) {

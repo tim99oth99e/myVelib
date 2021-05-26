@@ -23,6 +23,7 @@ public class User {
     private double totalCharges;
     private int numberOfRides;
     private int totalRentTimeInMinutes;
+    private Bicycle rentedBicycle;
 
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
@@ -53,6 +54,7 @@ public class User {
         this.numberOfRides = 0;
         this.totalRentTimeInMinutes = 0;
         this.id = getValidId();
+        this.rentedBicycle = null;
     }
 
     /**
@@ -71,13 +73,14 @@ public class User {
         this.numberOfRides = 0;
         this.totalRentTimeInMinutes = 0;
         this.id = getValidId();
+        this.rentedBicycle = null;
     }
 
     @Override
     public String toString() {
         String baseString = "User " + name + " [id:" + id + "]\n" +
                 "Location : (latitude : " + latitude + "\u00B0, longitude : " + longitude + "\u00B0) \n" +
-                "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n";
+                "Credit card : " + creditCardNumber + ", total charges : " + totalCharges + "\n" + "rented " + rentedBicycle + "\n";
         // if the user has no registration card
         if (this.registrationCard instanceof NoRegistrationCard) {
             return baseString + "No registration card.";
@@ -99,8 +102,22 @@ public class User {
         return rideCost;
     }
 
-
-
+    public String rent(ParkingSlot parkingSlot){
+        if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Occupied){
+            if (this.rentedBicycle == null){
+                this.rentedBicycle = parkingSlot.getBicycle();
+                parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Free);
+                parkingSlot.setBicycle(null);
+                return rentedBicycle.getType() + " successfully rented.";
+            }
+            else {
+                return "Error: a user can only rent at most one bicycle";
+            }
+        }
+        else {
+            return "Error: this parking slot has no available bicycle.";
+        }
+    }
 
     // getters & setters
 
@@ -213,5 +230,13 @@ public class User {
 
     public void setTotalRentTimeInMinutes(int totalRentTimeInMinutes) {
         this.totalRentTimeInMinutes = totalRentTimeInMinutes;
+    }
+
+    public Bicycle getRentedBicycle() {
+        return rentedBicycle;
+    }
+
+    public void setRentedBicycle(Bicycle rentedBicycle) {
+        this.rentedBicycle = rentedBicycle;
     }
 }
