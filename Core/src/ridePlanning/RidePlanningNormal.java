@@ -83,7 +83,7 @@ public class RidePlanningNormal {
     public Station findDestinationStation(ArrayList<Station> stations) {
         Station destinationStation = null;
         Double minDistance = Double.POSITIVE_INFINITY;
-        for (Station station : stations){
+        for (Station station : stations){ // Parsing through the stations
             if (station.getStationStatus() == StationStatus.OnService){ // If the station is on service
                 if (station.hasFreeParkingSlot()){ // If the station has at least one parking slot
                     Double distance = station.computeDistance(destinationLatitude,destinationLongitude);
