@@ -9,13 +9,13 @@ import java.util.ArrayList;
  * This class describes a ride planning that avoid -plus- stations.
  *
  * A ride planning helps users to plan a ride from a starting location to a destination location :
- * Given the starting and destination GPS coordinates the ride planning functionality will identify the “optimal” start and end stations
+ * Given the starting and destination GPS coordinates the ride planning functionality will identify the optimal start and end stations
  * from/to where the bike should be taken/dropped according to the following criteria:
- * • the start, respectively the end, station, for a ride should be as close as possible to
+ * - the start, respectively the end, station, for a ride should be as close as possible to
  * the starting, respectively to the destination, location of the ride.
- * • the start station should have one bike of the desired kind (electrical or mechanical)
+ * - the start station should have one bike of the desired kind (electrical or mechanical)
  * available for renting
- * • the end station should have at least one free parking slot and cannot be a -plus- station.
+ * - the end station should have at least one free parking slot and cannot be a -plus- station.
  */
 public class RidePlanningAvoidPlusStations extends RidePlanningNormal {
 

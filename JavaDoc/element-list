@@ -4,8 +4,8 @@ src.coreClasses
 src.enums
 src.event
 src.exception
-src.manualTest
 src.registrationCard
 src.ridePlanning
+src.stationsSorting
 src.test
 test
