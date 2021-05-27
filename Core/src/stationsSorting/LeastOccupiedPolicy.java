@@ -4,18 +4,14 @@ import src.coreClasses.Record;
 import src.coreClasses.Station;
 import src.event.Event;
 
-import java.lang.ref.ReferenceQueue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static src.enums.EventType.RentBicycle;
-import static src.enums.EventType.ReturnBicycle;
-
 public class LeastOccupiedPolicy extends StationSortingPolicy {
-    public Map<Integer, Double> getStationsScore(ArrayList<Event> events, HashMap<Integer, Station> stations) {
+    public Map<Integer, Double> getStationsAvgOccupationRate(ArrayList<Event> events, HashMap<Integer, Station> stations) {
         // < station id, number of operations >
         Map<Integer, Double> numberOfOperations = new LinkedHashMap<>();
 
@@ -33,10 +29,9 @@ public class LeastOccupiedPolicy extends StationSortingPolicy {
         return numberOfOperations;
     }
 
-    // method that does everything
     public Map<Integer, Double> sortStations(ArrayList<Event> events, HashMap<Integer, Station> stations) {
         // get values based on which we sort the stations
-        Map<Integer, Double> stationsScore = getStationsScore(events, stations);
+        Map<Integer, Double> stationsScore = getStationsAvgOccupationRate(events, stations);
         return this.sortHashMap(stationsScore, false);
     };
 }

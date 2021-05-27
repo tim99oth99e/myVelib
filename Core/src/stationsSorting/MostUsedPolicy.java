@@ -10,7 +10,7 @@ import static src.enums.EventType.ReturnBicycle;
 
 public class MostUsedPolicy extends StationSortingPolicy {
 
-    public Map<Integer, Double> getStationsScore(ArrayList<Event> events, HashMap<Integer, Station> stations) {
+    public Map<Integer, Double> getStationsOccupation(ArrayList<Event> events, HashMap<Integer, Station> stations) {
         // < station id, number of operations >
         Map<Integer, Double> avgOccupationRates = new LinkedHashMap<>();
         // fill the map with all the stations
@@ -31,7 +31,7 @@ public class MostUsedPolicy extends StationSortingPolicy {
     // method that does everything
     public Map<Integer, Double> sortStations(ArrayList<Event> events, HashMap<Integer, Station> stations) {
         // get values based on which we sort the stations
-        Map<Integer, Double> stationsScore = getStationsScore(events, stations);
+        Map<Integer, Double> stationsScore = getStationsOccupation(events, stations);
         return this.sortHashMap(stationsScore, true);
     };
 

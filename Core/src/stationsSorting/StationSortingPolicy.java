@@ -7,8 +7,6 @@ import java.util.*;
 
 public abstract class StationSortingPolicy {
 
-    public abstract Map<Integer, Double> getStationsScore(ArrayList<Event> events, HashMap<Integer, Station> stations);
-
     public abstract Map<Integer, Double> sortStations(ArrayList<Event> events, HashMap<Integer, Station> stations);
 
     public Map<Integer, Double> sortHashMap(Map<Integer, Double> stationValues, Boolean reversed) {
