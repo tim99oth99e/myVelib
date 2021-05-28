@@ -6,6 +6,9 @@ import src.enums.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for class Station
+ */
 class StationTest {
 
     @Test
@@ -14,7 +17,7 @@ class StationTest {
         Station stationStandard = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
         Station stationPlus = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
-        assertAll("Type",
+        assertAll("Assert all types are correct",
                 () -> assertTrue(stationPlus.getTypeOfStation() == TypeOfStation.Plus),
                 () -> assertTrue(stationStandard.getTypeOfStation() == TypeOfStation.Standard)
         );
@@ -27,7 +30,7 @@ class StationTest {
         Station stationStandard = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
         Station stationStandardOffline = new Station(56.5, 17.5, StationStatus.Offline, TypeOfStation.Standard);
 
-        assertAll("Type",
+        assertAll("Assert all status are correct",
                 () -> assertTrue(stationStandardOffline.getStationStatus() == StationStatus.Offline),
                 () -> assertTrue(stationStandard.getStationStatus() == StationStatus.OnService)
         );
@@ -40,13 +43,11 @@ class StationTest {
         Station stationStandardOffline = new Station(56.5, 17.5, StationStatus.Offline, TypeOfStation.Standard);
         Station stationPlus = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
-        assertAll("unique ID",
+        assertAll("Assert all ID are unique",
                 () -> assertTrue(stationStandard.getId() != stationStandardOffline.getId()),
                 () -> assertTrue(stationStandard.getId() != stationPlus.getId())
         );
     }
-
-
 
     @Test
     @DisplayName("Test of the method computeDistance")
@@ -65,20 +66,23 @@ class StationTest {
     @Test
     @DisplayName("Test of the method hasBike")
     public void testHasBike() {
-        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
+        // Create bicycles of two different type
         Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
-
+        // Create free and occupied parking slot
         ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
         ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        // Create 3 stations and fill them with parking slots :
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
         stationFree.addParkingSlot(parkingSlotFree1);
         stationFree.addParkingSlot(parkingSlotFree2);
@@ -103,20 +107,22 @@ class StationTest {
     @Test
     @DisplayName("Test of the method hasFreeParkingSlot")
     void testHasFreeParkingSlot() {
-        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
-
+        // Create bicycles of two different type
         Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
-
+        // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
         ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        // Create 3 stations and fill them with parking slots :
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
         stationFree.addParkingSlot(parkingSlotFree1);
         stationFree.addParkingSlot(parkingSlotFree2);
@@ -139,20 +145,22 @@ class StationTest {
     @Test
     @DisplayName("Test of the method getNumberOfFreeParkingSlot")
     void testGetNumberOfFreeParkingSlot() {
-        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
-
+        // Create bicycles of two different type
         Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
-
+        // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
         ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        // Create 3 stations and fill them with parking slots :
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
         stationFree.addParkingSlot(parkingSlotFree1);
         stationFree.addParkingSlot(parkingSlotFree2);
@@ -175,13 +183,16 @@ class StationTest {
     @Test
     @DisplayName("Test of the method addParkingSlot")
     public void testAddParkingSlot() {
-        Station stationStandard = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-
+        // Create mechanical bicycle
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
+        // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupied = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
+
+        // Create a station and fill it with parking slots :
+        Station stationStandard = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
 
         stationStandard.addParkingSlot(parkingSlotFree);
         stationStandard.addParkingSlot(parkingSlotOccupied);
@@ -194,20 +205,22 @@ class StationTest {
     @Test
     @DisplayName("Test of the method getNumberOfBike")
     public void testGetNumberOfBike() {
-        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
-        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
-
+        // Create bicycles of two different type
         Bicycle electricalBicycle1 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle electricalBicycle2 = new Bicycle(TypeOfBicycle.Electrical);
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
 
-
+        // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical1 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle1);
         ParkingSlot parkingSlotOccupiedElectrical2 = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle2);
+
+        // Create 3 stations and fill them with parking slots :
+        Station stationFree = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationFull = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Standard);
+        Station stationMix = new Station(56.5, 17.5, StationStatus.OnService, TypeOfStation.Plus);
 
         stationFree.addParkingSlot(parkingSlotFree1);
         stationFree.addParkingSlot(parkingSlotFree2);
