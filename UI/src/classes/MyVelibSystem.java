@@ -62,15 +62,18 @@ public class MyVelibSystem {
     }
 
     private static void readEvalPrintLoop() {
+        VelibCommand CMD = new VelibCommand();
+
         do {
             // Read a command
-            VelibCommand CMD = readFromConsole();
+            CMD = readFromConsole();
 
             // Eval the command
             String STATUS = CMD.eval();
 
             // Print result (sysout) or error message (syserr)
-            STATUS.printMessage();
+//            STATUS.printMessage();
+            System.out.println(STATUS);
         }
         while( CMD.isNotExit() );
     }
