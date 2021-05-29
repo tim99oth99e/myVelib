@@ -12,6 +12,7 @@ import src.enums.TypeOfStation;
 import java.util.ArrayList;
 
 public class MyVelibSystem {
+    static Record myVelibRecord = new Record();
 
     public static void main(String[] args) {
         // Initialization of the Velib System
@@ -27,8 +28,6 @@ public class MyVelibSystem {
     private static void initialization() {
         // Code for Loading my_velib.ini  and the Systeme creation !
 
-        // create record
-        Record myVelibRecord = new Record();
 
         // Create bicycles of two different type
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
@@ -68,7 +67,7 @@ public class MyVelibSystem {
             VelibCommand CMD = readFromConsole();
 
             // Eval the command
-            STATUS = CMD.eval();
+            String STATUS = CMD.eval(myVelibRecord);
 
             // Print result (sysout) or error message (syserr)
             STATUS.printMessage();
