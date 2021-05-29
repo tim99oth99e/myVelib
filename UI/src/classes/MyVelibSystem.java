@@ -67,7 +67,7 @@ public class MyVelibSystem {
             VelibCommand CMD = readFromConsole();
 
             // Eval the command
-            String STATUS = CMD.eval(myVelibRecord);
+            String STATUS = CMD.eval();
 
             // Print result (sysout) or error message (syserr)
             STATUS.printMessage();

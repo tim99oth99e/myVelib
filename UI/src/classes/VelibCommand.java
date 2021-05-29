@@ -1,5 +1,4 @@
 package src.classes;
-
 import java.util.ArrayList;
 
 public class VelibCommand {
@@ -11,13 +10,12 @@ public class VelibCommand {
         this.arguments = arguments;
     }
 
-    public void eval() {
-//        switch (commandName) {
-//            case "addUser":
-                // ajouter
-//                Record.addUser(....)
-//                break;
-//            case "":
+    public String eval() {
+        switch (commandName) {
+            case "addUser":
+                MyVelibSystem.myVelibRecord.addUserIfNotExists();
+                break;
+            case "":
 
         }
     }
