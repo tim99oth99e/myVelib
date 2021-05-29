@@ -75,8 +75,10 @@ public class MyVelibSystem {
             if (STATUS != "") {
                 System.out.println(STATUS);
             }
+
         }
-        while( CMD.isNotExit() );
+
+        while(CMD.isNotExit());
     }
 
     private static VelibCommand readFromConsole() {

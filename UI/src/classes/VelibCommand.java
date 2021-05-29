@@ -20,7 +20,7 @@ public class VelibCommand {
 
     // custom methods
     public boolean isNotExit(){
-        return commandName != "exit";
+        return !commandName.equals("exit");
     }
 
     // main method
@@ -50,7 +50,7 @@ public class VelibCommand {
                 return "Exiting the system.";
 
             default:
-                return "Unknown command entered. Type -h to display help.";
+                return "Unknown command entered. Type -help to display help.";
         }
     }
 
