@@ -11,24 +11,27 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for class RidePlanningAvoidPlusStation
+ */
 public class RidePlanningAvoidPlusStationsTest {
 
     @Test
     @DisplayName("Test of the method findDestinationStation for RidePlanningAvoidPlusStations")
     public void testFindDestinationStation() {
 
-        //Parking Slots
+        // Create bicycles of two different type
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
         Bicycle electricalBicycle = new Bicycle(TypeOfBicycle.Electrical);
 
+        // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
-        ParkingSlot parkingSlotFree3 = new ParkingSlot(ParkingSlotStatus.Free, null);
         ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle);
         ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
 
-        //Stations
+        // Create 3 stations and fill them with parking slots :
         Station station1 = new Station(125.4, 30.1, StationStatus.OnService, TypeOfStation.Standard);
         station1.addParkingSlot(parkingSlotFree);
         station1.addParkingSlot(parkingSlotOccupiedMechanical);
@@ -43,16 +46,18 @@ public class RidePlanningAvoidPlusStationsTest {
         station3.addParkingSlot(parkingSlotOutOfOrder);
         station3.addParkingSlot(parkingSlotOccupiedElectrical);
 
-        //Array of station
+        // Create an Array of stations
         ArrayList<Station> stations = new ArrayList<>();
         stations.add(station1);
         stations.add(station2);
         stations.add(station3);
 
-        //Ride Planning
+        // Create a ride planning with a destination point close to station2
         RidePlanningAvoidPlusStations ridePlanningAvoidPlusStations = new RidePlanningAvoidPlusStations(6.3, 1.4, 123.3, 30.4);
         Station destinationStation = ridePlanningAvoidPlusStations.findDestinationStation(stations);
 
-        assertTrue(destinationStation.equals(station1));
+        // station2 must not be returned as it is the closest station from destination point but it is a -plus- station
+        assertTrue(destinationStation.equals(station1)); // Asserts that the destination station is station1
+
     }
 }
