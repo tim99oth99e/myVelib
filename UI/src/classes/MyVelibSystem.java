@@ -72,7 +72,9 @@ public class MyVelibSystem {
 
             // Print result (sysout) or error message (syserr)
 //            STATUS.printMessage();
-            System.out.println(STATUS);
+            if (STATUS != "") {
+                System.out.println(STATUS);
+            }
         }
         while( CMD.isNotExit() );
     }
