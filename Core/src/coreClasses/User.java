@@ -104,13 +104,14 @@ public class User {
         return rideCost;
     }
 
-    public void rent(ParkingSlot parkingSlot){
+
+    public void rent(ParkingSlot parkingSlot, LocalDateTime rentDateTime){
         if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Occupied){
             if (this.rentedBicycle == null){
                 this.rentedBicycle = parkingSlot.getBicycle();
                 parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Free);
                 parkingSlot.setBicycle(null);
-                rentDateTime = LocalDateTime.now();
+                this.rentDateTime = rentDateTime;
                 System.out.println("Bicycle successfully rented.");
             }
             else {
@@ -120,6 +121,13 @@ public class User {
         else {
             System.out.println("Error: this parking slot has no available bicycle.");
         }
+    }
+
+    /** constructor for renting at the exact hour.
+     *
+     */
+    public void rent(ParkingSlot parkingSlot){
+        this.rent(parkingSlot, LocalDateTime.now());
     }
 
     public void park(ParkingSlot parkingSlot, LocalDateTime returnDateTime){
@@ -146,6 +154,10 @@ public class User {
             }
 
         }
+    }
+
+    public void park(ParkingSlot parkingSlot) {
+        this.park(parkingSlot, LocalDateTime.now());
     }
 
     // getters & setters
