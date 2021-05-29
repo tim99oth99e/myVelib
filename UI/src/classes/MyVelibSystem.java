@@ -2,6 +2,7 @@ package src.classes;
 
 import src.coreClasses.Bicycle;
 import src.coreClasses.ParkingSlot;
+import src.coreClasses.Record;
 import src.coreClasses.Station;
 import src.enums.ParkingSlotStatus;
 import src.enums.StationStatus;
@@ -25,6 +26,10 @@ public class MyVelibSystem {
 
     private static void initialization() {
         // Code for Loading my_velib.ini  and the Systeme creation !
+
+        // create record
+        Record myVelibRecord = new Record();
+
         // Create bicycles of two different type
         Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
         Bicycle electricalBicycle = new Bicycle(TypeOfBicycle.Electrical);
@@ -38,32 +43,29 @@ public class MyVelibSystem {
 
         // Create 3 stations and fill them with parking slots :
         Station station1 = new Station(6.3001, 1.4, StationStatus.OnService, TypeOfStation.Standard);
+        myVelibRecord.addStationIfNotExists(station1); // add to the record
         station1.addParkingSlot(parkingSlotFree1);
         station1.addParkingSlot(parkingSlotOccupiedMechanical);
         station1.addParkingSlot(parkingSlotOccupiedMechanical2);
         station1.addParkingSlot(parkingSlotOutOfOrder);
 
         Station station2 = new Station(6.3, 1.4, StationStatus.OnService, TypeOfStation.Plus);
+        myVelibRecord.addStationIfNotExists(station2); // add to the record
         station2.addParkingSlot(parkingSlotFree1);
         station2.addParkingSlot(parkingSlotOccupiedMechanical);
 
         Station station3 = new Station(10.0, 1.4, StationStatus.OnService, TypeOfStation.Standard);
+        myVelibRecord.addStationIfNotExists(station3); // add to the record
         station3.addParkingSlot(parkingSlotOutOfOrder);
         station3.addParkingSlot(parkingSlotOccupiedElectrical);
         station3.addParkingSlot(parkingSlotOccupiedMechanical);
         station3.addParkingSlot(parkingSlotFree1);
-
-        // Create an Array of stations
-        ArrayList<Station> stations = new ArrayList<>();
-        stations.add(station1);
-        stations.add(station2);
-        stations.add(station3);
     }
 
     private static void readEvalPrintLoop() {
         do {
             // Read a command
-            CMD = readFromConsole();
+            VelibCommand CMD = readFromConsole();
 
             // Eval the command
             STATUS = CMD.eval();
@@ -75,7 +77,7 @@ public class MyVelibSystem {
     }
 
     private static VelibCommand readFromConsole() {
-        // Read a commandd's String from Console
+        // Read a command's String from Console
         // ....
         // Decode the String to determine the Command class to instantiate
         // ....
