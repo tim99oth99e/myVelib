@@ -43,6 +43,9 @@ public class VelibCommand {
             case "offline":
                 return "Offline command entered.";
 
+            case "exit":
+                return "Exiting the system.";
+
             default:
                 return "Unknown command entered. Type -h to display help.";
         }
