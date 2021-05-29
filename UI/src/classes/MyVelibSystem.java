@@ -80,8 +80,6 @@ public class MyVelibSystem {
     }
 
     private static VelibCommand readFromConsole() {
-
-
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
@@ -89,7 +87,7 @@ public class MyVelibSystem {
                 System.out.print(">>> ");
                 String line = scanner.nextLine();
                 // Decode the String to determine the Command class to instantiate
-                String[] parts = line.split(" ");
+                String[] parts = line.split(" "); // Split the string on spaces
                 ArrayList<String> arguments = new ArrayList<String>();
                 for (int i=1; i<parts.length; i++){
                     arguments.add(parts[i]);
