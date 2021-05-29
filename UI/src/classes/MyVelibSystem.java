@@ -2,6 +2,7 @@ package src.classes;
 
 import src.coreClasses.Bicycle;
 import src.coreClasses.ParkingSlot;
+import src.coreClasses.Record;
 import src.coreClasses.Station;
 import src.enums.ParkingSlotStatus;
 import src.enums.StationStatus;
@@ -12,8 +13,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MyVelibSystem {
+    static Record myVelibRecord = new Record();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // Initialization of the Velib System
         initialization();
 
@@ -39,29 +41,26 @@ public class MyVelibSystem {
 
         // Create 3 stations and fill them with parking slots :
         Station station1 = new Station(6.3001, 1.4, StationStatus.OnService, TypeOfStation.Standard);
+        myVelibRecord.addStationIfNotExists(station1); // add station to Record
         station1.addParkingSlot(parkingSlotFree1);
         station1.addParkingSlot(parkingSlotOccupiedMechanical);
         station1.addParkingSlot(parkingSlotOccupiedMechanical2);
         station1.addParkingSlot(parkingSlotOutOfOrder);
 
         Station station2 = new Station(6.3, 1.4, StationStatus.OnService, TypeOfStation.Plus);
+        myVelibRecord.addStationIfNotExists(station2); // add station to Record
         station2.addParkingSlot(parkingSlotFree1);
         station2.addParkingSlot(parkingSlotOccupiedMechanical);
 
         Station station3 = new Station(10.0, 1.4, StationStatus.OnService, TypeOfStation.Standard);
+        myVelibRecord.addStationIfNotExists(station3); // add station to Record
         station3.addParkingSlot(parkingSlotOutOfOrder);
         station3.addParkingSlot(parkingSlotOccupiedElectrical);
         station3.addParkingSlot(parkingSlotOccupiedMechanical);
         station3.addParkingSlot(parkingSlotFree1);
-
-        // Create an Array of stations
-        ArrayList<Station> stations = new ArrayList<>();
-        stations.add(station1);
-        stations.add(station2);
-        stations.add(station3);
     }
 
-    private static void readEvalPrintLoop() {
+    private static void readEvalPrintLoop() throws Exception {
         VelibCommand CMD = new VelibCommand();
 
         do {
@@ -69,7 +68,7 @@ public class MyVelibSystem {
             CMD = readFromConsole();
 
             // Eval the command
-            STATUS = CMD.eval();
+            String STATUS = CMD.eval();
 
             // Print result (sysout) or error message (syserr)
 //            STATUS.printMessage();

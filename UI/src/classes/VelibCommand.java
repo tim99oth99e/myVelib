@@ -1,4 +1,6 @@
 package src.classes;
+import src.coreClasses.User;
+
 import java.util.ArrayList;
 
 public class VelibCommand {
@@ -22,10 +24,17 @@ public class VelibCommand {
     }
 
     // main method
-    public String eval() {
+    public String eval() throws Exception {
         switch (commandName) {
             case "addUser":
-                MyVelibSystem.myVelibRecord.addUserIfNotExists();
+                // write exception to deal with a wrong number of arguments
+                // get arguments
+                String name = arguments.get(0);
+                // add method to parse card type
+                // velibNetwork
+                // create the user
+                User userToAdd = new User(name, 20.0, 20.0,"1234123412341234");
+                MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
                 break;
 //            case "":
         }
