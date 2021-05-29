@@ -84,9 +84,8 @@ public class MyVelibSystem {
         try {
             while (true) {
                 // Read a command String from Console
-                System.out.println("Please input a line");
+                System.out.print(">>> ");
                 String line = scanner.nextLine();
-                System.out.printf("User input was: %s%n", line);
                 // Decode the String to determine the Command class to instantiate
                 String[] parts = line.split(" ");
                 ArrayList<String> arguments = new ArrayList<String>();
