@@ -78,27 +78,34 @@ public class MyVelibSystem {
     }
 
     private static VelibCommand readFromConsole() {
-        VelibCommand velibCommand = new VelibCommand();
-        // Read a command String from Console
+
+
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
+                // Read a command String from Console
                 System.out.println("Please input a line");
                 String line = scanner.nextLine();
                 System.out.printf("User input was: %s%n", line);
-                velibCommand.setCommandName(line);
                 // Decode the String to determine the Command class to instantiate
                 String[] parts = line.split(" ");
+                ArrayList<String> arguments = new ArrayList<String>();
+                for (int i=1; i<parts.length; i++){
+                    arguments.add(parts[i]);
+                }
+                VelibCommand velibCommand = new VelibCommand(parts[0],arguments);
+                return velibCommand;
             }
         } catch(IllegalStateException e) {
             // System.in has been closed
             System.out.println("System.in was closed; exiting");
+            return null;
         }
 
         // ....
         // Return the instantiated command with user in-line parameters, and the Current System instance
         // ....
-        return velibCommand;
+
     }
 
     private static void finalization() {
