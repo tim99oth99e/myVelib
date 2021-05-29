@@ -26,6 +26,9 @@ public class VelibCommand {
     // main method
     public String eval() throws Exception {
         switch (commandName) {
+            case "setup":
+                return "Setup command completed.";
+
             case "addUser":
                 // write exception to deal with a wrong number of arguments
                 // get arguments
@@ -35,10 +38,14 @@ public class VelibCommand {
                 // create the user
                 User userToAdd = new User(name, 20.0, 20.0,"1234123412341234");
                 MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
-                break;
-//            case "":
+                return "Added user " + userToAdd.getName() + ", id = " + userToAdd.getId();
+
+            case "offline":
+                return "Offline command entered.";
+
+            default:
+                return "Unknown command entered. Type -h to display help.";
         }
-        return "Finished evaluation";
     }
 
 

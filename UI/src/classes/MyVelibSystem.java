@@ -106,6 +106,7 @@ public class MyVelibSystem {
         // ....
         // Code for cleaning the system before leaving
         // ....
+        System.out.println("Finalization complete.");
     }
 
 }
