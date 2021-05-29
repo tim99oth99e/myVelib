@@ -26,6 +26,9 @@ public class VelibCommand {
     // main method
     public String eval() throws Exception {
         switch (commandName) {
+            case "":
+                return "";
+
             case "setup":
                 return "Setup command completed.";
 
