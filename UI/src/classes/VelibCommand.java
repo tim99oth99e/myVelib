@@ -62,7 +62,7 @@ public class VelibCommand {
                         "the myVelib network velibnetworkName\n \n"
 
                         + "rentBike <userID, stationID, typeOfBicycle> :" +
-                        "\n \t to let the user userID renting a bike of type typeOfBicycle from station\n" +
+                        "\n \t to let the user userID renting a bike of type typeOfBicycle (mechanical or electrical) from station\n" +
                         "stationID (if no bikes are available should behave accordingly)\n \n"
 
                         + "returnBike <userID, stationID, time> :" +
@@ -106,41 +106,45 @@ public class VelibCommand {
                 }
 
             case "rentBike":
-                // To add : handle when arguments are wrong type
                 if (arguments.size() == 3){
-                    // Get arguments
-                    Integer userId = Integer.parseInt(arguments.get(0));
-                    Integer stationId = Integer.parseInt(arguments.get(1));
-                    String type = arguments.get(2);
+                    try {
+                        // Get arguments
+                        Integer userId = Integer.parseInt(arguments.get(0));
+                        Integer stationId = Integer.parseInt(arguments.get(1));
+                        String type = arguments.get(2);
 
-                    if (userId >= MyVelibSystem.myVelibRecord.getUsers().size()){
-                        return "Unknown user";
-                    }
-                    else if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
-                        return "Unknown station";
-                    }
-                    else {
-                        // The wanted user
-                        User user = MyVelibSystem.myVelibRecord.getUsers().get(userId);
-                        // The wanted station
-                        Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
-                        if (type.equals("mechanical") && station.getParkingSlotWithOneBike(TypeOfBicycle.Mechanical) != null && station.getStationStatus() == StationStatus.OnService){
-                            // A parking slot with mechanical bicycle
-                            ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Mechanical);
-                            user.rent(parkingSlot,LocalDateTime.now());
-                            MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
-                            return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + "has successfully rent a " + type + " bicycle.";
+                        if (userId >= MyVelibSystem.myVelibRecord.getUsers().size()){
+                            return "Unknown user";
                         }
-                        else if (type.equals("electrical") && station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical) != null && station.getStationStatus() == StationStatus.OnService) {
-                            // A parking slot with electrical bicycle
-                            ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical);
-                            user.rent(parkingSlot,LocalDateTime.now());
-                            MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
-                            return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName() + "has successfully rent a " + type + " bicycle.";
+                        else if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
+                            return "Unknown station";
                         }
                         else {
-                            return "No bicycle of type " + type + " available at station " + station.getId() + ".";
+                            // The wanted user
+                            User user = MyVelibSystem.myVelibRecord.getUsers().get(userId);
+                            // The wanted station
+                            Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                            if (type.equals("mechanical") && station.getParkingSlotWithOneBike(TypeOfBicycle.Mechanical) != null && station.getStationStatus() == StationStatus.OnService){
+                                // A parking slot with mechanical bicycle
+                                ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Mechanical);
+                                user.rent(parkingSlot,LocalDateTime.now());
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
+                                return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has a " + type + " bicycle.";
+                            }
+                            else if (type.equals("electrical") && station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical) != null && station.getStationStatus() == StationStatus.OnService) {
+                                // A parking slot with electrical bicycle
+                                ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical);
+                                user.rent(parkingSlot,LocalDateTime.now());
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
+                                return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName() + " has a " + type + " bicycle.";
+                            }
+                            else {
+                                return "No bicycle of type " + type + " available at station " + station.getId() + ".";
+                            }
                         }
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
                     }
                 }
                 else {

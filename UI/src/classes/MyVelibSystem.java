@@ -34,30 +34,35 @@ public class MyVelibSystem {
 
         // Create free, occupied and out of order parking slot
         ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
-        ParkingSlot parkingSlotOccupiedMechanical = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotFree3 = new ParkingSlot(ParkingSlotStatus.Free, null);
+        ParkingSlot parkingSlotOccupiedMechanical1 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedMechanical2 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOccupiedMechanical3 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
+        ParkingSlot parkingSlotOccupiedMechanical4 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
         ParkingSlot parkingSlotOccupiedElectrical = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle);
-        ParkingSlot parkingSlotOutOfOrder = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
+        ParkingSlot parkingSlotOutOfOrder1 = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
+        ParkingSlot parkingSlotOutOfOrder2 = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
 
         // Create 3 stations and fill them with parking slots :
         Station station1 = new Station(6.3001, 1.4, StationStatus.OnService, TypeOfStation.Standard);
         myVelibRecord.addStationIfNotExists(station1); // add station to Record
         station1.addParkingSlot(parkingSlotFree1);
-        station1.addParkingSlot(parkingSlotOccupiedMechanical);
+        station1.addParkingSlot(parkingSlotOccupiedMechanical1);
         station1.addParkingSlot(parkingSlotOccupiedMechanical2);
-        station1.addParkingSlot(parkingSlotOutOfOrder);
+        station1.addParkingSlot(parkingSlotOutOfOrder1);
 
         Station station2 = new Station(6.3, 1.4, StationStatus.Offline, TypeOfStation.Plus);
         myVelibRecord.addStationIfNotExists(station2); // add station to Record
-        station2.addParkingSlot(parkingSlotFree1);
-        station2.addParkingSlot(parkingSlotOccupiedMechanical);
+        station2.addParkingSlot(parkingSlotFree2);
+        station2.addParkingSlot(parkingSlotOccupiedMechanical3);
 
         Station station3 = new Station(10.0, 1.4, StationStatus.OnService, TypeOfStation.Standard);
         myVelibRecord.addStationIfNotExists(station3); // add station to Record
-        station3.addParkingSlot(parkingSlotOutOfOrder);
+        station3.addParkingSlot(parkingSlotOutOfOrder2);
         station3.addParkingSlot(parkingSlotOccupiedElectrical);
-        station3.addParkingSlot(parkingSlotOccupiedMechanical);
-        station3.addParkingSlot(parkingSlotFree1);
+        station3.addParkingSlot(parkingSlotOccupiedMechanical4);
+        station3.addParkingSlot(parkingSlotFree3);
 
         // Create 3 users
         User user1 = new User("Billy Gates", 0.0, 145.4, "1235384958374038",
