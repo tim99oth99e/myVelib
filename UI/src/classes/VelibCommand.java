@@ -65,9 +65,9 @@ public class VelibCommand {
                         "\n \t to let the user userID renting a bike of type typeOfBicycle (mechanical or electrical) from station\n" +
                         "stationID (if no bikes are available should behave accordingly)\n \n"
 
-                        + "returnBike <userID, stationID, time> :" +
+                        + "returnBike <userID, stationID, timeInMinute> :" +
                         "\n \t to let the user userID returning a bike\n" +
-                        "to station stationID at a given instant of time time (if no parking bay is available\n" +
+                        "to station stationID at a given instant of time timeInMinute (if no parking bay is available\n" +
                         "should behave accordingly). This command should display the cost of the rent \n \n"
 
                         + "displayStation<velibnetworkName, stationID> :" +
@@ -140,6 +140,53 @@ public class VelibCommand {
                             }
                             else {
                                 return "No bicycle of type " + type + " available at station " + station.getId() + ".";
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                }
+                else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+
+            case "parkBike":
+                if (arguments.size() == 3){
+                    try {
+                        // Get arguments
+                        Integer userId = Integer.parseInt(arguments.get(0));
+                        Integer stationId = Integer.parseInt(arguments.get(1));
+                        long timeInMinutes = Long.parseLong(arguments.get(2));
+
+                        if (userId >= MyVelibSystem.myVelibRecord.getUsers().size()){
+                            return "Unknown user";
+                        }
+                        else if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
+                            return "Unknown station";
+                        }
+                        else {
+                            // The wanted user
+                            User user = MyVelibSystem.myVelibRecord.getUsers().get(userId);
+                            // The wanted station
+                            Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                            if (user.getRentedBicycle() == null){
+                                return "Error: this user has no bicycle to park.";
+                            }
+                            else if (station.hasFreeParkingSlot() && station.getStationStatus() == StationStatus.OnService){
+                                // A free parking slot
+                                ParkingSlot parkingSlot = station.getFreeParkingSlot();
+
+                                Double totalChargeBefore = user.getTotalCharges();
+                                user.park(parkingSlot,LocalDateTime.now().plusMinutes(timeInMinutes));
+                                Double totalChargeAfter = user.getTotalCharges();
+                                Double cost = totalChargeAfter-totalChargeBefore;
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.ReturnBicycle,station));
+                                return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has successfully returned his bicycle."
+                                        + " Cost of the rent: " + cost + " $.";
+                            }
+                            else {
+                                return "No free parking slot available at station " + station.getId() + ".";
                             }
                         }
                     }

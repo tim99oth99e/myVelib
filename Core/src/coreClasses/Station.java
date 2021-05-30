@@ -220,6 +220,22 @@ public class Station {
         return null;
     }
 
+    /**
+     * Get a free parking slot.
+     *
+     * @return a free parking slot within the station
+     */
+    public ParkingSlot getFreeParkingSlot(){
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Free){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     //Getters and Setters
     /**
      * Gets id.
