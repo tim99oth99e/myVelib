@@ -53,13 +53,13 @@ public class VelibCommand {
                         "\n \t to add a user with name\n" +
                         "userName and card cardType (i.e. ‘‘none’’ if the user has no card) to a myVelib network velibnetworkName \n \n"
 
-                        + "offline <velibnetworkName, stationID> :" +
+                        + "offline <stationID> :" +
                         "\n \t to put offline the station stationID\n" +
-                        "of the myVelib network velibnetworkName \n \n"
+                        "of the myVelib network \n \n"
 
-                        + "online <velibnetworkName, stationID> :" +
+                        + "online <stationID> :" +
                         "\n \t to put online the station stationID of\n" +
-                        "the myVelib network velibnetworkName\n \n"
+                        "the myVelib network \n \n"
 
                         + "rentBike <userID, stationID, typeOfBicycle> :" +
                         "\n \t to let the user userID renting a bike of type typeOfBicycle (mechanical or electrical) from station\n" +
@@ -100,6 +100,64 @@ public class VelibCommand {
                     User userToAdd = new User(name, 20.0, 20.0,"1234123412341234");
                     MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
                     return "Added user " + userToAdd.getName() + ", id = " + userToAdd.getId();
+                }
+                else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+            case "online":
+                if (arguments.size() == 1){
+                    try {
+                        // Get arguments
+                        Integer stationId = Integer.parseInt(arguments.get(0));
+
+                        if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
+                            return "Unknown station";
+                        }
+                        else {
+                            // The wanted station
+                            Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                            if (station.getStationStatus() == StationStatus.Offline){
+                                station.setStationStatus(StationStatus.OnService);
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOnline,station));
+                                return "Station number " + stationId   + " is now online";
+                            }
+                            else {
+                                return "Error: station number " + stationId   + " was already online";
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                }
+                else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+            case "offline":
+                if (arguments.size() == 1){
+                    try {
+                        // Get arguments
+                        Integer stationId = Integer.parseInt(arguments.get(0));
+
+                        if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
+                            return "Unknown station";
+                        }
+                        else {
+                            // The wanted station
+                            Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                            if (station.getStationStatus() == StationStatus.OnService){
+                                station.setStationStatus(StationStatus.Offline);
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOffline,station));
+                                return "Station number " + stationId   + " is now offline";
+                            }
+                            else {
+                                return "Error: station number " + stationId   + " was already offline";
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
                 }
                 else {
                     return "Unknown command entered. Type help to display help.";
@@ -197,10 +255,6 @@ public class VelibCommand {
                 else {
                     return "Unknown command entered. Type help to display help.";
                 }
-
-            case "offline":
-                return "Offline command entered.";
-
 
             case "exit":
                 return "Exiting the system.";
