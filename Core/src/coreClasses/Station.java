@@ -201,6 +201,41 @@ public class Station {
         return numberOfBike;
     }
 
+    /**
+     * Get a parking slot with the given type of bicycle available.
+     *
+     * @param typeOfBicycle the type of bicycle
+     * @return a parking slot with the given type of bicycle available
+     */
+    public ParkingSlot getParkingSlotWithOneBike(TypeOfBicycle typeOfBicycle){
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Occupied){
+                if (entry.getValue().getBicycle().getType() == typeOfBicycle){
+                    return entry.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a free parking slot.
+     *
+     * @return a free parking slot within the station
+     */
+    public ParkingSlot getFreeParkingSlot(){
+        Iterator it = parkingSlotHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer,ParkingSlot> entry = (Map.Entry)it.next();
+            if (entry.getValue().getParkingSlotStatus() == ParkingSlotStatus.Free){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     //Getters and Setters
     /**
      * Gets id.
