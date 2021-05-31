@@ -112,6 +112,7 @@ public class Record {
         // from the creation of the station, rebuild the different states of the station
         // those variables represent the state of the station
         int nbOccupiedSlots = station.getNumberOfParkingSlots(); // we initialize it full of bikes
+
         for (Event event : events) {
             if (!event.getEventTime().isAfter(te) && event.getStation() == station) {
                 // if the event happens between the two time limits
@@ -120,11 +121,8 @@ public class Record {
                     int minutesSpentSinceLastEvent = (int) lastEventDateTime.until(event.getEventTime(), ChronoUnit.MINUTES);
                     stationOccupationInMinutes += minutesSpentSinceLastEvent * nbOccupiedSlots;
                 }
+                // if the event happens after the end time
                 else if (event.getEventTime().isAfter(te)) {
-                    // we passed the end of time
-                    // add the final occupation
-                    int minutesSpentSinceLastEvent = (int) lastEventDateTime.until(te, ChronoUnit.MINUTES);
-                    stationOccupationInMinutes += minutesSpentSinceLastEvent * nbOccupiedSlots;
                     // exit the for loop
                     break;
                 }
@@ -150,6 +148,12 @@ public class Record {
             }
         }
 
+        // add the time between the last event and the stop time
+        // add the final occupation
+        int minutesSpentSinceLastEvent = (int) lastEventDateTime.until(te, ChronoUnit.MINUTES);
+        stationOccupationInMinutes += minutesSpentSinceLastEvent * nbOccupiedSlots;
+
+        // compute the complete rate
         double avgOccupationRate = stationOccupationInMinutes / (delta * numberOfParkingSlots);
         return avgOccupationRate;
     }

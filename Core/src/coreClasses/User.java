@@ -139,7 +139,7 @@ public class User {
                 parkingSlot.setParkingSlotStatus(ParkingSlotStatus.Occupied);
                 parkingSlot.setBicycle(rentedBicycle);
                 double computeCost = computeCost(rentedBicycle.getType(), this.rentDateTime, returnDateTime);
-                System.out.println("Bicycle successfully park.");
+                System.out.println("Bicycle successfully parked.");
                 // update user statistics
                 // time credit and charges are updated when computing cost
                 this.numberOfRides ++;
