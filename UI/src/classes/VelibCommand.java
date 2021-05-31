@@ -36,7 +36,7 @@ public class VelibCommand {
     }
 
     public TypeOfBicycle getRandomBicycleType(){
-        if (Math.random() < 0.75){
+        if (Math.random() < 0.5){
             return TypeOfBicycle.Mechanical;
         }
         else {
@@ -146,7 +146,7 @@ public class VelibCommand {
 
             case "setup":
                 if (arguments.size() == 0) {
-                    setup(10, 10, 4000.0, 70);
+                    setup(10, 10, 4000.0, 75);
                     return "Successfully setted up the default myVelib network.";
                 }
                 if (arguments.size() == 4){
