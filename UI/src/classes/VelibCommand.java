@@ -6,8 +6,13 @@ import src.coreClasses.User;
 import src.enums.*;
 import src.event.Event;
 
+import javax.swing.text.View;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class VelibCommand {
@@ -39,7 +44,7 @@ public class VelibCommand {
         }
     }
 
-    public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer  numberOfBike){
+    public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
         ArrayList<Station> stations= new ArrayList<Station>();
         ArrayList<ParkingSlot> parkingSlots= new ArrayList<ParkingSlot>();
         // Place stations uniformly on a square grid whose the side is of length sideLength
@@ -53,12 +58,17 @@ public class VelibCommand {
                 parkingSlots.add(parkingSlot);
             }
         }
-        // Randomly distribute bicycles
+        // Generate numberOfBike randomly distributed index between 0 and numberOfStation*numberOfSlotPerStation
+        List<Integer> randomParkingSlot = new ArrayList<Integer>();
+        for (int i = 0; i < numberOfStation*numberOfSlotPerStation; i++) {
+            randomParkingSlot.add(i);
+        }
+        Collections.shuffle(randomParkingSlot);
         for (int i = 0; i < numberOfBike; i++) {
-            // Randomly select the parking slot
-            int randomNum = ThreadLocalRandom.current().nextInt(0, numberOfSlotPerStation*numberOfStation);
-            parkingSlots.get(randomNum).setParkingSlotStatus(ParkingSlotStatus.Occupied);
-            parkingSlots.get(randomNum).setBicycle( new Bicycle(getRandomBicycleType()));
+            parkingSlots.get(randomParkingSlot.get(i)).setParkingSlotStatus(ParkingSlotStatus.Occupied);
+            parkingSlots.get(randomParkingSlot.get(i)).setBicycle( new Bicycle(getRandomBicycleType()));
+            // AJOUTER AU RECORD
+            System.out.println(stations);
         }
     }
 
@@ -136,7 +146,7 @@ public class VelibCommand {
 
             case "setup":
                 if (arguments.size() == 0) {
-                    setup(10, 10, 4000.0, 100);
+                    setup(10, 10, 4000.0, 70);
                     return "Successfully setted up the default myVelib network.";
                 }
                 if (arguments.size() == 4){
