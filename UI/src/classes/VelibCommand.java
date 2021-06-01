@@ -1,14 +1,19 @@
 package src.classes;
+import src.coreClasses.Bicycle;
 import src.coreClasses.ParkingSlot;
 import src.coreClasses.Station;
 import src.coreClasses.User;
-import src.enums.EventType;
-import src.enums.StationStatus;
-import src.enums.TypeOfBicycle;
+import src.enums.*;
 import src.event.Event;
 
+import javax.swing.text.View;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class VelibCommand {
     private String commandName;
@@ -28,6 +33,43 @@ public class VelibCommand {
     // custom methods
     public boolean isNotExit(){
         return !commandName.equals("exit");
+    }
+
+    public TypeOfBicycle getRandomBicycleType(){
+        if (Math.random() < 0.5){
+            return TypeOfBicycle.Mechanical;
+        }
+        else {
+            return TypeOfBicycle.Electrical;
+        }
+    }
+
+    public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
+        ArrayList<Station> stations= new ArrayList<Station>();
+        ArrayList<ParkingSlot> parkingSlots= new ArrayList<ParkingSlot>();
+        // Place stations uniformly on a square grid whose the side is of length sideLength
+        for (int i = 0; i < numberOfStation; i++) {
+            Station station = new Station(Math.random()*sideLength,Math.random()*sideLength,StationStatus.OnService, TypeOfStation.Standard);
+            stations.add(station);
+            // Create numberOfSlotPerStation free slots per stations
+            for (int j = 0; j < numberOfSlotPerStation; j++) {
+                ParkingSlot parkingSlot = new ParkingSlot(ParkingSlotStatus.Free, null);
+                station.addParkingSlot(parkingSlot);
+                parkingSlots.add(parkingSlot);
+            }
+        }
+        // Generate numberOfBike randomly distributed index between 0 and numberOfStation*numberOfSlotPerStation
+        List<Integer> randomParkingSlot = new ArrayList<Integer>();
+        for (int i = 0; i < numberOfStation*numberOfSlotPerStation; i++) {
+            randomParkingSlot.add(i);
+        }
+        Collections.shuffle(randomParkingSlot);
+        for (int i = 0; i < numberOfBike; i++) {
+            parkingSlots.get(randomParkingSlot.get(i)).setParkingSlotStatus(ParkingSlotStatus.Occupied);
+            parkingSlots.get(randomParkingSlot.get(i)).setBicycle( new Bicycle(getRandomBicycleType()));
+            // AJOUTER AU RECORD
+            System.out.println(stations);
+        }
     }
 
     // main method
@@ -87,9 +129,6 @@ public class VelibCommand {
             case "":
                 return "";
 
-            case "setup":
-                return "Setup command completed.";
-
             case "addUser":
                 if (arguments.size() == 1){
                     // get arguments
@@ -104,6 +143,32 @@ public class VelibCommand {
                 else {
                     return "Unknown command entered. Type help to display help.";
                 }
+
+            case "setup":
+                if (arguments.size() == 0) {
+                    setup(10, 10, 4000.0, 75);
+                    return "Successfully setted up the default myVelib network.";
+                }
+                if (arguments.size() == 4){
+                    try {
+                        // Get arguments
+                        Integer numberOfStation = Integer.parseInt(arguments.get(0));
+                        Integer numberOfSlotPerStation = Integer.parseInt(arguments.get(1));
+                        Double sideLength = Double.parseDouble(arguments.get(2));
+                        Integer numberOfBike = Integer.parseInt(arguments.get(3));
+
+                        // Setup
+                        setup(numberOfStation, numberOfSlotPerStation, sideLength, numberOfBike);
+                        return "Successfully setted up a myVelib network.";
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                }
+                else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+
             case "online":
                 if (arguments.size() == 1){
                     try {
@@ -133,6 +198,7 @@ public class VelibCommand {
                 else {
                     return "Unknown command entered. Type help to display help.";
                 }
+
             case "offline":
                 if (arguments.size() == 1){
                     try {
