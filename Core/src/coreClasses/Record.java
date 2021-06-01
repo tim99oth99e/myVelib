@@ -111,7 +111,7 @@ public class Record {
 
         // from the creation of the station, rebuild the different states of the station
         // those variables represent the state of the station
-        int nbOccupiedSlots = station.getNumberOfParkingSlots(); // we initialize it full of bikes
+        int nbOccupiedSlots = station.getInitialNumberOfBikes(); // we initialize it full of bikes
 
         for (Event event : events) {
             if (!event.getEventTime().isAfter(te) && event.getStation() == station) {

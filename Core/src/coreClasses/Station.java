@@ -35,6 +35,11 @@ public class Station {
      */
     protected HashMap<Integer,ParkingSlot> parkingSlotHashMap;
 
+    /**
+     * THe initial population of bikes in this station.
+     */
+    private int initialNumberOfBikes;
+
     private static Integer uniqueId = 0; //Unique numerical ID
 
     /**
@@ -84,12 +89,15 @@ public class Station {
 
     //Methods
     /**
-     * Add a parking slot to a station.
+     * Adds a parking slot to a station. This must be done before any rent or return in this station.
      *
      * @param parkingSlot the parking slot
      */
     public void addParkingSlot(ParkingSlot parkingSlot){
        this.parkingSlotHashMap.put(parkingSlot.getId(),parkingSlot);
+       if (parkingSlot.getParkingSlotStatus() != ParkingSlotStatus.Free) {
+           this.initialNumberOfBikes ++;
+       }
     }
 
     /**
@@ -343,5 +351,14 @@ public class Station {
      */
     public void setParkingSlotHashMap(HashMap<Integer, ParkingSlot> parkingSlotHashMap) {
         this.parkingSlotHashMap = parkingSlotHashMap;
+    }
+
+    /**
+     * Gets the initial number of bikes in the station.
+     *
+     * @return the number of bikes initially parked in the station.
+     */
+    public int getInitialNumberOfBikes() {
+        return initialNumberOfBikes;
     }
 }

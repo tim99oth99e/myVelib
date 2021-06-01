@@ -84,14 +84,14 @@ class RecordTest {
         // add parking slots to the stations
         ParkingSlot ps1Chatelet = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
         ParkingSlot ps2Chatelet = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Mechanical));
-        ParkingSlot ps3Chatelet = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Mechanical));
+        ParkingSlot ps3Chatelet = new ParkingSlot(ParkingSlotStatus.Free, null);
         chatelet.addParkingSlot(ps1Chatelet);
         chatelet.addParkingSlot(ps2Chatelet);
         chatelet.addParkingSlot(ps3Chatelet);
 
         ParkingSlot ps1Barbes = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Electrical));
         ParkingSlot ps2Barbes = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Mechanical));
-        ParkingSlot ps3Barbes = new ParkingSlot(ParkingSlotStatus.Occupied, new Bicycle(TypeOfBicycle.Mechanical));
+        ParkingSlot ps3Barbes = new ParkingSlot(ParkingSlotStatus.Free, null);
         barbes.addParkingSlot(ps1Barbes);
         barbes.addParkingSlot(ps2Barbes);
         barbes.addParkingSlot(ps3Barbes);
@@ -102,11 +102,11 @@ class RecordTest {
         myVelibRecord.addEventIfNotExists(new Event(date1, EventType.RentBicycle, chatelet));
         wilson.rent(ps2Chatelet, date1);
         myVelibRecord.addEventIfNotExists(new Event(date1, EventType.RentBicycle, chatelet));
-        rachel.rent(ps1Barbes);
-        myVelibRecord.addEventIfNotExists(new Event(date1, EventType.RentBicycle, barbes));
+//        rachel.rent(ps1Barbes);
+//        myVelibRecord.addEventIfNotExists(new Event(date1, EventType.RentBicycle, barbes));
 
         LocalDateTime date2 = LocalDateTime.of(2021, 2,11,10,20);
-        thomas.park(ps1Barbes, date2);
+        thomas.park(ps3Barbes, date2);
         myVelibRecord.addEventIfNotExists(new Event(date2, EventType.ReturnBicycle, barbes));
         wilson.park(ps1Chatelet, date2);
         myVelibRecord.addEventIfNotExists(new Event(date2, EventType.ReturnBicycle, chatelet));
@@ -115,8 +115,8 @@ class RecordTest {
 
 
         // test avg occupation rate method
-        assertEquals(1.0 / 3.0 , Record.computeAvgOccupationRate(chatelet, date1, date2, myVelibRecord.getEvents()));
-        assertEquals((120.0 + 240.0 ) / (3 * 240) , Record.computeAvgOccupationRate(chatelet, date1, date3, myVelibRecord.getEvents()));
+        assertEquals(0 , Record.computeAvgOccupationRate(chatelet, date1, date2, myVelibRecord.getEvents()));
+        assertEquals(120.0 / (3 * 240) , Record.computeAvgOccupationRate(chatelet, date1, date3, myVelibRecord.getEvents()));
         assertEquals(( 240.00 + 240.0 + 120.0 ) / (3 * 240) , Record.computeAvgOccupationRate(barbes, date1, date3, myVelibRecord.getEvents()));
     }
 
