@@ -72,7 +72,11 @@ public class User {
      */
     private static ArrayList<Integer> usedIds = new ArrayList<>(); // there are 2+ billion possible positive ids
 
-    // deal with the case where all ids are taken
+    /**
+     * Gets an ID that is not already used by a user.
+     *
+     * @return The first ID that is not in the usedIds ArrayList.
+     */
     private static int getValidId(){
         int tempId=0;
         // find the first id that is not used
@@ -84,15 +88,14 @@ public class User {
         return tempId;
     }
 
-
     /**
-     * Instantiates a new User.
+     * Instantiates a new User with a registration card
      *
-     * @param name             the name
-     * @param latitude         the latitude
-     * @param longitude        the longitude
-     * @param creditCardNumber the credit card number
-     * @param registrationCard the registration card
+     * @param name             the name (first name and last name or username) of the user
+     * @param latitude         the latitude coordinate of the user's location
+     * @param longitude        the longitude coordinate of the user's location
+     * @param creditCardNumber the credit card number of the user
+     * @param registrationCard the registration that the user has
      * @throws Exception the exception
      */
     public User(String name, double latitude, double longitude, String creditCardNumber, RegistrationCard registrationCard) throws Exception {
@@ -112,7 +115,7 @@ public class User {
     }
 
     /**
-     * Instantiates a new User.
+     * Instantiates a new User with no registration card.
      *
      * @param name             the name
      * @param latitude         the latitude
@@ -152,21 +155,21 @@ public class User {
     }
 
     /**
-     * Add charge.
+     * Adds a charge to the total of all charges paid by the user.
      *
-     * @param charge the charge
+     * @param charge the charge to add
      */
     public void addCharge(double charge) {
         this.setTotalCharges(this.getTotalCharges() + charge);
     }
 
     /**
-     * Compute cost double.
+     * Computes the cost of a ride.
      *
-     * @param bicycleType    the bicycle type
-     * @param rentDateTime   the rent date time
-     * @param returnDateTime the return date time
-     * @return the double
+     * @param bicycleType    the type of the bicycle rented
+     * @param rentDateTime   the rent datetime
+     * @param returnDateTime the return datetime
+     * @return the ride cost
      */
     public double computeCost(TypeOfBicycle bicycleType, LocalDateTime rentDateTime, LocalDateTime returnDateTime) {
         int rideDurationInMinutes = (int) rentDateTime.until(returnDateTime, ChronoUnit.MINUTES);
@@ -177,10 +180,11 @@ public class User {
 
 
     /**
-     * Rent.
+     * Rents a bike if possible at a particular date.
+     * This means : if the user isn't renting a bike already, and if the parking slot has a bicycle on it.
      *
      * @param parkingSlot  the parking slot
-     * @param rentDateTime the rent date time
+     * @param rentDateTime the rent datetime
      */
     public void rent(ParkingSlot parkingSlot, LocalDateTime rentDateTime){
         if (parkingSlot.getParkingSlotStatus() == ParkingSlotStatus.Occupied){
@@ -200,8 +204,10 @@ public class User {
         }
     }
 
+
     /**
-     * Rent.
+     * Rents a bike if possible at the exact datetime this method was called.
+     * This means : if the user isn't renting a bike already, and if the parking slot has a bicycle on it.
      *
      * @param parkingSlot the parking slot
      */
@@ -209,8 +215,10 @@ public class User {
         this.rent(parkingSlot, LocalDateTime.now());
     }
 
+
     /**
-     * Park.
+     * Parks a bike if possible at a particular date.
+     * This means : if the user is currently renting a bike, and if the parking slot has no bicycle on it.
      *
      * @param parkingSlot    the parking slot
      * @param returnDateTime the return date time
@@ -242,36 +250,38 @@ public class User {
     }
 
     /**
-     * Park.
+     * Parks a bike if possible at the exact datetime this method was called.
+     * This means : if the user is currently renting a bike, and if the parking slot has no bicycle on it.
      *
-     * @param parkingSlot the parking slot
+     * @param parkingSlot    the parking slot
      */
     public void park(ParkingSlot parkingSlot) {
         this.park(parkingSlot, LocalDateTime.now());
     }
 
+
     // getters & setters
 
     /**
-     * Gets name.
+     * Gets user's username.
      *
-     * @return the name
+     * @return the username
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets name.
+     * Sets user's username.
      *
-     * @param name the name
+     * @param name the username
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Gets id.
+     * Gets the user's id.
      *
      * @return the id
      */
@@ -280,7 +290,7 @@ public class User {
     }
 
     /**
-     * Sets id.
+     * Sets the user's id.
      *
      * @param id the id
      * @throws Exception the exception
@@ -299,7 +309,7 @@ public class User {
     }
 
     /**
-     * Gets latitude.
+     * Gets the user's latitude.
      *
      * @return the latitude
      */
@@ -308,10 +318,10 @@ public class User {
     }
 
     /**
-     * Sets latitude.
+     * Sets the user's latitude.
      *
      * @param latitude the latitude
-     * @throws LatitudeOutOfBoundsException the latitude out of bounds exception
+     * @throws LatitudeOutOfBoundsException if the latitude value entered is out of bounds
      */
     public void setLatitude(double latitude) throws LatitudeOutOfBoundsException {
         if (-90.0 <= latitude && latitude <= 90.0) {
@@ -322,7 +332,7 @@ public class User {
     }
 
     /**
-     * Gets longitude.
+     * Gets the user's longitude.
      *
      * @return the longitude
      */
@@ -331,10 +341,10 @@ public class User {
     }
 
     /**
-     * Sets longitude.
+     * Sets the user's longitude.
      *
      * @param longitude the longitude
-     * @throws LongitudeOutOfBoundsException the longitude out of bounds exception
+     * @throws LongitudeOutOfBoundsException if the longitude value entered is out of bounds
      */
     public void setLongitude(double longitude) throws LongitudeOutOfBoundsException {
         if (-180.0 <= longitude && longitude <= 180.0) {
@@ -345,7 +355,7 @@ public class User {
     }
 
     /**
-     * Gets credit card number.
+     * Gets the user's credit card number.
      *
      * @return the credit card number
      */
@@ -354,10 +364,10 @@ public class User {
     }
 
     /**
-     * Sets credit card number.
+     * Sets the user's credit card number.
      *
      * @param creditCardNumber the credit card number
-     * @throws CreditCardNotValidException the credit card not valid exception
+     * @throws CreditCardNotValidException if the credit card number is not valid (length or content)
      */
     public void setCreditCardNumber(String creditCardNumber) throws CreditCardNotValidException {
         // check if the credit card number is valid or not
@@ -370,7 +380,7 @@ public class User {
     }
 
     /**
-     * Gets registration card.
+     * Gets the user's registration card.
      *
      * @return the registration card
      */
@@ -379,7 +389,7 @@ public class User {
     }
 
     /**
-     * Sets registration card.
+     * Sets the user's registration card.
      *
      * @param registrationCard the registration card
      */
@@ -388,7 +398,7 @@ public class User {
     }
 
     /**
-     * Gets time credit balance.
+     * Gets the user's time credit balance.
      *
      * @return the time credit balance
      */
@@ -397,7 +407,7 @@ public class User {
     }
 
     /**
-     * Sets time credit balance.
+     * Sets the user's time credit balance.
      *
      * @param timeCreditBalance the time credit balance
      */
@@ -406,7 +416,7 @@ public class User {
     }
 
     /**
-     * Gets total charges.
+     * Gets the user's total charges.
      *
      * @return the total charges
      */
@@ -415,7 +425,7 @@ public class User {
     }
 
     /**
-     * Sets total charges.
+     * Sets the user's total charges.
      *
      * @param totalCharges the total charges
      */
@@ -424,7 +434,7 @@ public class User {
     }
 
     /**
-     * Gets used ids.
+     * Gets the used id's ArrayList.
      *
      * @return the used ids
      */
@@ -433,7 +443,7 @@ public class User {
     }
 
     /**
-     * Sets used ids.
+     * Sets the used id's ArrayList.
      *
      * @param usedIds the used ids
      */
@@ -442,7 +452,7 @@ public class User {
     }
 
     /**
-     * Gets number of rides.
+     * Gets the total number of rides the user has done.
      *
      * @return the number of rides
      */
@@ -451,7 +461,7 @@ public class User {
     }
 
     /**
-     * Sets number of rides.
+     * Sets the total number of rides the user has done.
      *
      * @param numberOfRides the number of rides
      */
@@ -460,7 +470,7 @@ public class User {
     }
 
     /**
-     * Gets total rent time in minutes.
+     * Gets the total rent time of the user in minutes.
      *
      * @return the total rent time in minutes
      */
@@ -469,7 +479,7 @@ public class User {
     }
 
     /**
-     * Sets total rent time in minutes.
+     * Sets the total rent time of the user in minutes.
      *
      * @param totalRentTimeInMinutes the total rent time in minutes
      */
@@ -478,7 +488,7 @@ public class User {
     }
 
     /**
-     * Gets rented bicycle.
+     * Gets the current bicycle that the user is renting, or null if he is not doing so.
      *
      * @return the rented bicycle
      */
@@ -487,7 +497,7 @@ public class User {
     }
 
     /**
-     * Sets rented bicycle.
+     * Sets the current bicycle that the user is renting or null if he is not doing so.
      *
      * @param rentedBicycle the rented bicycle
      */
