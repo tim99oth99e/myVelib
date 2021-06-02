@@ -5,14 +5,13 @@ import src.coreClasses.Station;
 import src.coreClasses.User;
 import src.enums.*;
 import src.event.Event;
+import src.registrationCard.VlibreRegistrationCard;
+import src.registrationCard.VmaxRegistrationCard;
 
 import javax.swing.text.View;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class VelibCommand {
@@ -45,8 +44,8 @@ public class VelibCommand {
     }
 
     public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
-        ArrayList<Station> stations= new ArrayList<Station>();
-        ArrayList<ParkingSlot> parkingSlots= new ArrayList<ParkingSlot>();
+        ArrayList<Station> stations= new ArrayList<>();
+        ArrayList<ParkingSlot> parkingSlots= new ArrayList<>();
         // Place stations uniformly on a square grid whose the side is of length sideLength
         for (int i = 0; i < numberOfStation; i++) {
             Station station = new Station(Math.random()*sideLength,Math.random()*sideLength,StationStatus.OnService, TypeOfStation.Standard);
@@ -59,7 +58,7 @@ public class VelibCommand {
             }
         }
         // Generate numberOfBike randomly distributed index between 0 and numberOfStation*numberOfSlotPerStation
-        List<Integer> randomParkingSlot = new ArrayList<Integer>();
+        List<Integer> randomParkingSlot = new ArrayList<>();
         for (int i = 0; i < numberOfStation*numberOfSlotPerStation; i++) {
             randomParkingSlot.add(i);
         }
@@ -73,11 +72,12 @@ public class VelibCommand {
     }
 
     // main method
+    // executes the given command and returns a STATUS message
     public String eval() throws Exception {
         switch (commandName) {
             case "help":
                 return " A command consists of the command-name followed by a blank-separated list of (string) arguments:\n" +
-                        "command-name <arg1> <arg2> ... <argN> \n \n " + "Command available : \n \n"
+                        "command-name <arg1> <arg2> ... <argN> \n \n " + "Commands available : \n \n"
 
                         + "setup <velibnetworkName> : " +
                         "\n \t to create a myVelib network with given name and\n" +
@@ -91,7 +91,7 @@ public class VelibCommand {
                         "over an squared area of side s. Furthermore the network should\n" +
                         "be initially populated with a nbikes bikes randomly distributed over the nstations stations\n \n"
 
-                        + "addUser <userName,cardType, velibnetworkName> :" +
+                        + "addUser <userName, latitude, longitude, creditCardNumber, cardType> :" +
                         "\n \t to add a user with name\n" +
                         "userName and card cardType (i.e. ‘‘none’’ if the user has no card) to a myVelib network velibnetworkName \n \n"
 
@@ -130,17 +130,40 @@ public class VelibCommand {
                 return "";
 
             case "addUser":
-                if (arguments.size() == 1){
-                    // get arguments
-                    String name = arguments.get(0);
-                    // add method to parse card type
-                    // velibNetwork
-                    // create the user
-                    User userToAdd = new User(name, 20.0, 20.0,"1234123412341234");
+                if (arguments.size() == 5 || arguments.size() == 6) {
+                    User userToAdd;
+                    String name;
+                    int shift;
+
+                    if (arguments.size() == 5) {
+                        name = arguments.get(0);
+                        shift = 0;
+                    } else { // 6 arguments = first name + last name
+                        name = arguments.get(0) + " " + arguments.get(1);
+                        shift = 1;
+                    }
+
+                    // get other parameters
+                    double latitude = Double.parseDouble(arguments.get(1 + shift));
+                    double longitude = Double.parseDouble(arguments.get(2 + shift));
+                    String creditCardNumber = arguments.get(3 + shift);
+                    // parse card type
+                    String registrationCardType = arguments.get(4 + shift);
+                    switch (registrationCardType.toLowerCase()) {
+                        case "vlibre":
+                            userToAdd = new User(name, latitude, longitude, creditCardNumber, new VlibreRegistrationCard());
+                            break;
+                        case "vmax":
+                            userToAdd = new User(name, latitude, longitude, creditCardNumber, new VmaxRegistrationCard());
+                            break;
+                        default:
+                        case "none":
+                            userToAdd = new User(name, latitude, longitude, creditCardNumber);
+                            break;
+                    }
                     MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
-                    return "Added user " + userToAdd.getName() + ", id = " + userToAdd.getId();
-                }
-                else {
+                    return "Added user " + userToAdd.getName() + " with id : " + userToAdd.getId();
+                } else {
                     return "Unknown command entered. Type help to display help.";
                 }
 
@@ -173,7 +196,7 @@ public class VelibCommand {
                 if (arguments.size() == 1){
                     try {
                         // Get arguments
-                        Integer stationId = Integer.parseInt(arguments.get(0));
+                        int stationId = Integer.parseInt(arguments.get(0));
 
                         if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
                             return "Unknown station";
@@ -203,7 +226,7 @@ public class VelibCommand {
                 if (arguments.size() == 1){
                     try {
                         // Get arguments
-                        Integer stationId = Integer.parseInt(arguments.get(0));
+                        int stationId = Integer.parseInt(arguments.get(0));
 
                         if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
                             return "Unknown station";
@@ -233,8 +256,8 @@ public class VelibCommand {
                 if (arguments.size() == 3){
                     try {
                         // Get arguments
-                        Integer userId = Integer.parseInt(arguments.get(0));
-                        Integer stationId = Integer.parseInt(arguments.get(1));
+                        int userId = Integer.parseInt(arguments.get(0));
+                        int stationId = Integer.parseInt(arguments.get(1));
                         String type = arguments.get(2);
 
                         if (userId >= MyVelibSystem.myVelibRecord.getUsers().size()){
@@ -279,8 +302,8 @@ public class VelibCommand {
                 if (arguments.size() == 3){
                     try {
                         // Get arguments
-                        Integer userId = Integer.parseInt(arguments.get(0));
-                        Integer stationId = Integer.parseInt(arguments.get(1));
+                        int userId = Integer.parseInt(arguments.get(0));
+                        int stationId = Integer.parseInt(arguments.get(1));
                         long timeInMinutes = Long.parseLong(arguments.get(2));
 
                         if (userId >= MyVelibSystem.myVelibRecord.getUsers().size()){
@@ -301,10 +324,10 @@ public class VelibCommand {
                                 // A free parking slot
                                 ParkingSlot parkingSlot = station.getFreeParkingSlot();
 
-                                Double totalChargeBefore = user.getTotalCharges();
+                                double totalChargeBefore = user.getTotalCharges();
                                 user.park(parkingSlot,LocalDateTime.now().plusMinutes(timeInMinutes));
-                                Double totalChargeAfter = user.getTotalCharges();
-                                Double cost = totalChargeAfter-totalChargeBefore;
+                                double totalChargeAfter = user.getTotalCharges();
+                                double cost = totalChargeAfter-totalChargeBefore;
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.ReturnBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has successfully returned his bicycle."
                                         + " Cost of the rent: " + cost + " $.";
