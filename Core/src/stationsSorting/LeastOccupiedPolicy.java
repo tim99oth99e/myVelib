@@ -10,10 +10,20 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * The type Least occupied policy.
+ */
 public class LeastOccupiedPolicy extends StationSortingPolicy {
+    /**
+     * Gets stations average occupation rate map.
+     *
+     * @param events   the events
+     * @param stations the stations
+     * @return the stations average occupation rate
+     */
     public Map<Integer, Double> getStationsAvgOccupationRate(ArrayList<Event> events, HashMap<Integer, Station> stations) {
         // < station id, number of operations >
-        Map<Integer, Double> numberOfOperations = new LinkedHashMap<>();
+        Map<Integer, Double> avgOccupationRates = new LinkedHashMap<>();
 
         // get first and last dates
         LocalDateTime startDateTime = events.get(0).getEventTime(); // what about before the first event ?
@@ -23,10 +33,10 @@ public class LeastOccupiedPolicy extends StationSortingPolicy {
         for (Station station : stations.values()) {
             // compute average usage
             double avgUsage = Record.computeAvgOccupationRate(station, startDateTime, endDateTime, events);
-            numberOfOperations.put(station.getId(), avgUsage);
+            avgOccupationRates.put(station.getId(), avgUsage);
         }
 
-        return numberOfOperations;
+        return avgOccupationRates;
     }
 
     public Map<Integer, Double> sortStations(ArrayList<Event> events, HashMap<Integer, Station> stations) {
