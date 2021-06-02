@@ -87,7 +87,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../ini4j-0.5.4-bin/ini4j-0.5.4/ini4j-0.5.4.jar!/" />
