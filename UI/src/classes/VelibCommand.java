@@ -112,7 +112,7 @@ public class VelibCommand {
                         "to station stationID at a given instant of time timeInMinute (if no parking bay is available\n" +
                         "should behave accordingly). This command should display the cost of the rent \n \n"
 
-                        + "displayStation<velibnetworkName, stationID> :" +
+                        + "displayStation<stationID> :" +
                         "\n \t to display the statistics (as of\n" +
                         "Section 2.4) of station stationID of a myVelib network velibnetwork. \n \n"
 
@@ -135,38 +135,42 @@ public class VelibCommand {
 
             case "addUser":
                 if (arguments.size() == 5 || arguments.size() == 6) {
-                    User userToAdd;
-                    String name;
-                    int shift;
+                    try {
+                        User userToAdd;
+                        String name;
+                        int shift;
 
-                    if (arguments.size() == 5) {
-                        name = arguments.get(0);
-                        shift = 0;
-                    } else { // 6 arguments = first name + last name
-                        name = arguments.get(0) + " " + arguments.get(1);
-                        shift = 1;
-                    }
+                        if (arguments.size() == 5) {
+                            name = arguments.get(0);
+                            shift = 0;
+                        } else { // 6 arguments = first name + last name
+                            name = arguments.get(0) + " " + arguments.get(1);
+                            shift = 1;
+                        }
 
-                    // get other parameters
-                    double latitude = Double.parseDouble(arguments.get(1 + shift));
-                    double longitude = Double.parseDouble(arguments.get(2 + shift));
-                    String creditCardNumber = arguments.get(3 + shift);
-                    // parse card type
-                    String registrationCardType = arguments.get(4 + shift);
-                    switch (registrationCardType.toLowerCase()) {
-                        case "vlibre":
-                            userToAdd = new User(name, latitude, longitude, creditCardNumber, new VlibreRegistrationCard());
-                            break;
-                        case "vmax":
-                            userToAdd = new User(name, latitude, longitude, creditCardNumber, new VmaxRegistrationCard());
-                            break;
-                        default:
-                        case "none":
-                            userToAdd = new User(name, latitude, longitude, creditCardNumber);
-                            break;
+                        // get other parameters
+                        double latitude = Double.parseDouble(arguments.get(1 + shift));
+                        double longitude = Double.parseDouble(arguments.get(2 + shift));
+                        String creditCardNumber = arguments.get(3 + shift);
+                        // parse card type
+                        String registrationCardType = arguments.get(4 + shift);
+                        switch (registrationCardType.toLowerCase()) {
+                            case "vlibre":
+                                userToAdd = new User(name, latitude, longitude, creditCardNumber, new VlibreRegistrationCard());
+                                break;
+                            case "vmax":
+                                userToAdd = new User(name, latitude, longitude, creditCardNumber, new VmaxRegistrationCard());
+                                break;
+                            default:
+                            case "none":
+                                userToAdd = new User(name, latitude, longitude, creditCardNumber);
+                                break;
+                        }
+                        MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
+                        return "Added user " + userToAdd.getName() + " with id : " + userToAdd.getId();
+                    } catch (Exception e) {
+                        return "Wrong argument entered. Type help to display help.";
                     }
-                    MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
-                    return "Added user " + userToAdd.getName() + " with id : " + userToAdd.getId();
                 } else {
                     return "Unknown command entered. Type help to display help.";
                 }
@@ -346,6 +350,32 @@ public class VelibCommand {
                     }
                 }
                 else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+
+            case "displayStation":
+                if (arguments.size() == 1) {
+                    try {
+                        int stationId = Integer.parseInt(arguments.get(0));
+                        Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                        return MyVelibSystem.myVelibRecord.computeStationBalance(station);
+                    } catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                } else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+
+            case "displayUser":
+                if (arguments.size() == 1) {
+                    try {
+                        int userId = Integer.parseInt(arguments.get(0));
+                        User user = MyVelibSystem.myVelibRecord.getUsers().get(userId);
+                        return MyVelibSystem.myVelibRecord.computeUserStatistics(user);
+                    } catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                } else {
                     return "Unknown command entered. Type help to display help.";
                 }
 

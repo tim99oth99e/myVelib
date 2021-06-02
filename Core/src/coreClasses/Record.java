@@ -98,26 +98,26 @@ public class Record {
      *
      * @param user the user
      */
-    public void printUserStatistics(User user) {
+    public String computeUserStatistics(User user) {
         int numberOfRides = user.getNumberOfRides();
         int totalRentTimeInMinutes = user.getTotalRentTimeInMinutes();
         double totalCharges =user.getTotalCharges();
         double timeCredit = user.getTimeCreditBalance();
 
         // change the way it is displayed
-        System.out.println(user.getName() + " statistics : \n\t" +
+        return user.getName() + " statistics : \n\t" +
                             "- number of rides : " + numberOfRides + ",\n\t" +
                             "- time spent on a bike : " + totalRentTimeInMinutes/60 + " hour(s) and "+ totalRentTimeInMinutes%60 +" minute(s),\n\t" +
                             "- total charges : " + totalCharges + " \u20AC,\n\t" +
-                            "- time-credit balance : " + timeCredit + " minute(s).");
+                            "- time-credit balance : " + timeCredit + " minute(s).";
     }
 
     /**
-     * Print a station's current balance of bikes.
+     * Computes a station's current balance of bikes.
      *
      * @param station the station
      */
-    public void printStationBalance(Station station){
+    public String computeStationBalance(Station station){
         int numberOfRent = 0;
         int numberOfReturn = 0;
         for (Event event : this.events) {
@@ -133,7 +133,7 @@ public class Record {
             }
         }
         int balance = numberOfReturn - numberOfRent;
-        System.out.println("Station balance : " + balance + " (+" + numberOfReturn + " return.s, -" + numberOfRent + " rent.s)");
+        return "Station balance : " + balance + " (+" + numberOfReturn + " return.s, -" + numberOfRent + " rent.s)";
     }
 
 

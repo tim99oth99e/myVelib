@@ -55,9 +55,9 @@ class RecordTest {
         record1.addEventIfNotExists(e1);
 
         // print statistics
-        record1.printUserStatistics(user1);
+        System.out.println(record1.computeUserStatistics(user1));
         System.out.println("");
-        record1.printStationBalance(station1);
+        System.out.println(record1.computeStationBalance(station1));
     }
 
     @Test
