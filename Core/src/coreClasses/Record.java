@@ -8,34 +8,63 @@ import java.util.*;
 
 import static src.enums.EventType.*;
 
+/**
+ * This class describes a record of users, stations and events for a velib network.
+ */
 public class Record {
+    /**
+     * hash map of { user id : user object }
+     */
     private HashMap<Integer, User> users;
+    /**
+     * hash map of { station id : station object }
+     */
     private HashMap<Integer, Station> stations;
+    /**
+     * Array list of events (eg. rent a bike, return a bike, ...)
+     */
     private ArrayList<Event> events;
 
     // constructors
 
+    /**
+     * Instantiates a new Record with empty lists.
+     */
     public Record() {
         this.users = new HashMap<>();
         this.stations = new HashMap<>();
         this.events = new ArrayList<>();
     }
 
+    /**
+     * Instantiates a new Record with users, stations and events.
+     *
+     * @param users    the users
+     * @param stations the stations
+     * @param events   the events
+     */
     public Record(HashMap<Integer, User> users, HashMap<Integer, Station> stations, ArrayList<Event> events) {
         this.users = users;
         this.stations = stations;
         this.events = events;
     }
 
-    // custom methods
+    /**
+     * Add user to the users HashMap if it does not exists yet.
+     *
+     * @param user the user to add
+     */
+// custom methods
     public void addUserIfNotExists(User user) {
         if (!users.containsValue(user)) {
             users.put(user.getId(), user);
         }
     }
 
-    /** Adds the station to the stations HashMap if it isn't already added
+    /**
+     * Adds the station to the stations HashMap if it isn't already added.
      *
+     * @param station the station
      */
     public void addStationIfNotExists(Station station) {
         if (!stations.containsValue(station)) {
@@ -43,6 +72,11 @@ public class Record {
         }
     }
 
+    /**
+     * Add an event to the list if it isn't already added.
+     *
+     * @param event the event
+     */
     public void addEventIfNotExists(Event event) {
         if (!events.contains(event)) {
 
@@ -60,7 +94,9 @@ public class Record {
 
 
     /**
-     * Prints statistics about a user
+     * Prints statistics about a user.
+     *
+     * @param user the user
      */
     public void printUserStatistics(User user) {
         int numberOfRides = user.getNumberOfRides();
@@ -76,6 +112,11 @@ public class Record {
                             "- time-credit balance : " + timeCredit + " minute(s).");
     }
 
+    /**
+     * Print a station's current balance of bikes.
+     *
+     * @param station the station
+     */
     public void printStationBalance(Station station){
         int numberOfRent = 0;
         int numberOfReturn = 0;
@@ -96,6 +137,15 @@ public class Record {
     }
 
 
+    /**
+     * Computes and returns the average occupation rate of a station between two dates.
+     *
+     * @param station the station
+     * @param ts      the start datetime
+     * @param te      the end datetime
+     * @param events  the events
+     * @return the average occupation rate
+     */
     public static double computeAvgOccupationRate(Station station, LocalDateTime ts, LocalDateTime te, ArrayList<Event> events) {
 
         double delta = ts.until(te, ChronoUnit.MINUTES);
@@ -158,39 +208,14 @@ public class Record {
         return avgOccupationRate;
     }
 
+    /**
+     * Gets a hashmap of stations sorted according to a specific policy.
+     *
+     * @param sortingPolicy the sorting policy
+     * @return the sorted stations
+     */
     public Map<Integer, Double> getSortedStations(StationSortingPolicy sortingPolicy) {
         return sortingPolicy.sortStations(this.events, this.stations);
-    }
-
-
-    public Map<Integer, Integer>  computeStationsOrder() {
-        // < station id, number of operations >
-        Map<Integer, Integer> numberOfOperations = new LinkedHashMap<>();
-        // fill the map with all the stations
-        for (Integer stationId: this.stations.keySet()) {
-            numberOfOperations.put(stationId, 0);
-        }
-        // add all operations to this map
-        for (Event e : events) {
-            // if the event is a rent or a park
-            if (e.getEventType() == RentBicycle || e.getEventType() == ReturnBicycle) {
-                int stationId = e.getStation().getId();
-                numberOfOperations.put(stationId, numberOfOperations.get(stationId) + 1);
-            }
-        }
-
-        // convert the map to list
-        List<Map.Entry<Integer, Integer>> stationsOperationsList = new ArrayList<>(numberOfOperations.entrySet());
-        // sort by values
-        stationsOperationsList.sort(Map.Entry.comparingByValue());
-
-        // convert back to map
-        Map<Integer, Integer> sortedStations = new LinkedHashMap<>();
-        for (Map.Entry<Integer, Integer> entry : stationsOperationsList) {
-            sortedStations.put(entry.getKey(), entry.getValue());
-        }
-
-        return sortedStations;
     }
 
 
@@ -202,28 +227,59 @@ public class Record {
                 "\t " + events.size() + " events.";
     }
 
+
     // getters & setters
 
+    /**
+     * Gets the users hashmap.
+     *
+     * @return the users hashmap
+     */
     public HashMap<Integer, User> getUsers() {
         return users;
     }
 
+    /**
+     * Sets the users hashmap.
+     *
+     * @param users the users hashmap
+     */
     public void setUsers(HashMap<Integer, User> users) {
         this.users = users;
     }
 
+    /**
+     * Gets the stations hashmap.
+     *
+     * @return the stations hashmap
+     */
     public HashMap<Integer, Station> getStations() {
         return stations;
     }
 
+    /**
+     * Sets stations hashmap.
+     *
+     * @param stations the stations hashmap
+     */
     public void setStations(HashMap<Integer, Station> stations) {
         this.stations = stations;
     }
 
+    /**
+     * Gets the events list.
+     *
+     * @return the events Arraylist
+     */
     public ArrayList<Event> getEvents() {
         return events;
     }
 
+    /**
+     * Sets the events list.
+     *
+     * @param events the events Arraylist
+     */
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
     }
