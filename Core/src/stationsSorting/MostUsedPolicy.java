@@ -44,4 +44,8 @@ public class MostUsedPolicy extends StationSortingPolicy {
         return this.sortHashMap(stationsScore, true);
     };
 
+    @Override
+    public String toString() {
+        return "most operations (renting and returning)";
+    }
 }

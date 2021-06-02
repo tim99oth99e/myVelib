@@ -44,4 +44,9 @@ public class LeastOccupiedPolicy extends StationSortingPolicy {
         Map<Integer, Double> stationsScore = getStationsAvgOccupationRate(events, stations);
         return this.sortHashMap(stationsScore, false);
     };
+
+    @Override
+    public String toString() {
+        return "smallest average occupation rate";
+    }
 }
