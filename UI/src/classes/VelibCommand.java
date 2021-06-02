@@ -57,6 +57,7 @@ public class VelibCommand {
                 parkingSlots.add(parkingSlot);
             }
         }
+
         // Generate numberOfBike randomly distributed index between 0 and numberOfStation*numberOfSlotPerStation
         List<Integer> randomParkingSlot = new ArrayList<>();
         for (int i = 0; i < numberOfStation*numberOfSlotPerStation; i++) {
@@ -67,7 +68,6 @@ public class VelibCommand {
             parkingSlots.get(randomParkingSlot.get(i)).setParkingSlotStatus(ParkingSlotStatus.Occupied);
             parkingSlots.get(randomParkingSlot.get(i)).setBicycle( new Bicycle(getRandomBicycleType()));
             // AJOUTER AU RECORD
-            System.out.println(stations);
         }
     }
 
@@ -124,7 +124,11 @@ public class VelibCommand {
 
                         + "display <velibnetworkName> :" +
                         "\n \t  to display the entire status (stations, parking bays,\n" +
-                        "users) of an a myVelib network velibnetworkName. \n \n";
+                        "users) of an a myVelib network velibnetworkName. \n \n"
+
+                        + "exit :" +
+                        "\n \t to exit the system. \n \n"
+                        ;
 
             case "":
                 return "";

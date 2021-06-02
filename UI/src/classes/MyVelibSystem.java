@@ -1,16 +1,10 @@
 package src.classes;
 
+import org.ini4j.*;
 import src.coreClasses.*;
-import src.enums.ParkingSlotStatus;
-import src.enums.StationStatus;
-import src.enums.TypeOfBicycle;
-import src.enums.TypeOfStation;
-import src.registrationCard.NoRegistrationCard;
-import src.registrationCard.VlibreRegistrationCard;
-import src.registrationCard.VmaxRegistrationCard;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.File;
+import java.util.*;
 
 public class MyVelibSystem {
     static Record myVelibRecord = new Record();
@@ -26,54 +20,57 @@ public class MyVelibSystem {
         finalization();
     }
 
-    private static void initialization() throws Exception {
-        // Code for Loading my_velib.ini  and the Systeme creation !
-        // Create bicycles of two different type
-        Bicycle mechanicalBicycle = new Bicycle(TypeOfBicycle.Mechanical);
-        Bicycle electricalBicycle = new Bicycle(TypeOfBicycle.Electrical);
+    private static <Ini> void initialization() throws Exception {
+        // Code for Loading my_velib.ini
+        try{
+            Wini ini = new Wini(new File("UI/src/classes/my_velib.ini"));
+            String nstations = ini.get("stations", "nstations", String.class);
+            String nslots = ini.get("stations", "nslots", String.class);
+            String s = ini.get("stations", "s", String.class);
+            String nbikes = ini.get("stations", "nbikes", String.class);
 
-        // Create free, occupied and out of order parking slot
-        ParkingSlot parkingSlotFree1 = new ParkingSlot(ParkingSlotStatus.Free, null);
-        ParkingSlot parkingSlotFree2 = new ParkingSlot(ParkingSlotStatus.Free, null);
-        ParkingSlot parkingSlotFree3 = new ParkingSlot(ParkingSlotStatus.Free, null);
-        ParkingSlot parkingSlotOccupiedMechanical1 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
-        ParkingSlot parkingSlotOccupiedMechanical2 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
-        ParkingSlot parkingSlotOccupiedMechanical3 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
-        ParkingSlot parkingSlotOccupiedMechanical4 = new ParkingSlot(ParkingSlotStatus.Occupied, mechanicalBicycle);
-        ParkingSlot parkingSlotOccupiedElectrical = new ParkingSlot(ParkingSlotStatus.Occupied, electricalBicycle);
-        ParkingSlot parkingSlotOutOfOrder1 = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
-        ParkingSlot parkingSlotOutOfOrder2 = new ParkingSlot(ParkingSlotStatus.OutOfOrder, null);
+            String namesString = ini.get("users", "names", String.class);
+            List<String> names = new ArrayList<String>(Arrays.asList(namesString.split(",")));
+            String latitudesString = ini.get("users", "latitudes", String.class);
+            List<String> latitudes = new ArrayList<String>(Arrays.asList(latitudesString.split(",")));
+            String longitudesString = ini.get("users", "longitudes", String.class);
+            List<String> longitudes = new ArrayList<String>(Arrays.asList(longitudesString.split(",")));
+            String creditCardNumbersString = ini.get("users", "creditCardNumbers", String.class);
+            List<String> creditCardNumbers = new ArrayList<String>(Arrays.asList(creditCardNumbersString.split(",")));
 
-        // Create 3 stations and fill them with parking slots :
-        Station station1 = new Station(6.3001, 1.4, StationStatus.OnService, TypeOfStation.Standard);
-        myVelibRecord.addStationIfNotExists(station1); // add station to Record
-        station1.addParkingSlot(parkingSlotFree1);
-        station1.addParkingSlot(parkingSlotOccupiedMechanical1);
-        station1.addParkingSlot(parkingSlotOccupiedMechanical2);
-        station1.addParkingSlot(parkingSlotOutOfOrder1);
+            //Code for the myVelib network creation
+            ArrayList<String> arguments =  new ArrayList<String>();
+            arguments.add(nstations);
+            arguments.add(nslots);
+            arguments.add(s);
+            arguments.add(nbikes);
 
-        Station station2 = new Station(6.3, 1.4, StationStatus.Offline, TypeOfStation.Plus);
-        myVelibRecord.addStationIfNotExists(station2); // add station to Record
-        station2.addParkingSlot(parkingSlotFree2);
-        station2.addParkingSlot(parkingSlotOccupiedMechanical3);
+            // Setting up the stations
+            VelibCommand velibCommandsetup = new VelibCommand("setup", arguments);
+            velibCommandsetup.eval();
 
-        Station station3 = new Station(10.0, 1.4, StationStatus.OnService, TypeOfStation.Standard);
-        myVelibRecord.addStationIfNotExists(station3); // add station to Record
-        station3.addParkingSlot(parkingSlotOutOfOrder2);
-        station3.addParkingSlot(parkingSlotOccupiedElectrical);
-        station3.addParkingSlot(parkingSlotOccupiedMechanical4);
-        station3.addParkingSlot(parkingSlotFree3);
+            // Setting up the users
+            ArrayList<User> users= new ArrayList<User>();
+            for (int i = 0; i < names.size(); i++) {
+                User user = new User(names.get(i), Double.parseDouble(latitudes.get(i)),Double.parseDouble(longitudes.get(i)),creditCardNumbers.get(i));
+                users.add(user);
 
-        // Create 3 users
-        User user1 = new User("Billy Gates", 0.0, 145.4, "1235384958374038",
-                new NoRegistrationCard());
-        myVelibRecord.addUserIfNotExists(user1);
-        User user2 = new User("Marcus Zuckerberg", 12.0, 15.4, "1235384939027403",
-                new VlibreRegistrationCard());
-        myVelibRecord.addUserIfNotExists(user2);
-        User user3 = new User("Larri Pages", 22.0, 100.4, "3538493204740384",
-                new VmaxRegistrationCard());
-        myVelibRecord.addUserIfNotExists(user3);
+            }
+
+            // Display informations
+            System.out.println("Successfully setted up a myVelib network from my_velib.ini.");
+            System.out.print("Number of station: " + nstations + "\n");
+            System.out.print("Number of parking slot per station: " +  nslots + "\n");
+            System.out.print("Side of the area: " +  s + "\n");
+            System.out.print("Total number of bicycle in the network: " +  nbikes + "\n");
+            System.out.print("Total number of user in the network: " + names.size() + "\n");
+
+
+        }catch(Exception e){
+            // To catch basically any error related to finding the file e.g
+            // (The system cannot find the file specified)
+            System.err.println(e.getMessage());
+        }
     }
 
     private static void readEvalPrintLoop() throws Exception {
@@ -118,11 +115,6 @@ public class MyVelibSystem {
             System.out.println("System.in was closed; exiting");
             return null;
         }
-
-        // ....
-        // Return the instantiated command with user in-line parameters, and the Current System instance
-        // ....
-
     }
 
     private static void finalization() {
