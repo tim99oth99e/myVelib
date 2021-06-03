@@ -1,8 +1,5 @@
 package src.classes;
-import src.coreClasses.Bicycle;
-import src.coreClasses.ParkingSlot;
-import src.coreClasses.Station;
-import src.coreClasses.User;
+import src.coreClasses.*;
 import src.enums.*;
 import src.event.Event;
 import src.registrationCard.VlibreRegistrationCard;
@@ -399,7 +396,7 @@ public class VelibCommand {
                         int stationId = Integer.parseInt(arguments.get(0));
                         if (MyVelibSystem.myVelibRecord.getStations().containsKey(stationId)) {
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
-                            return MyVelibSystem.myVelibRecord.computeStationBalance(station);
+                            return MyVelibSystem.myVelibRecord.computeStationBalance(station) + "\nAverage occupation rate : " + MyVelibSystem.myVelibRecord.getGlobalAvgOccupationRate(station);
                         } else {
                             return "Station not found";
                         }

@@ -136,6 +136,20 @@ public class Record {
         return "Station balance : " + balance + " (+" + numberOfReturn + " return.s, -" + numberOfRent + " rent.s)";
     }
 
+    /**
+     * Computes the average occupation rate on the max time period of a station.
+     *
+     * @param station the station
+     * @return the average occupation rate of that station
+     */
+    public double getGlobalAvgOccupationRate(Station station){
+        if (this.events.isEmpty()) {
+            return 0.0;
+        }
+        LocalDateTime startDateTime = this.events.get(0).getEventTime(); // what about before the first event ?
+        LocalDateTime endDateTime = this.events.get(this.events.size() - 1).getEventTime();
+        return Record.computeAvgOccupationRate(station, startDateTime, endDateTime, this.events);
+    }
 
     /**
      * Computes and returns the average occupation rate of a station between two dates.
