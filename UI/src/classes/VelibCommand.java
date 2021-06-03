@@ -9,6 +9,9 @@ import src.registrationCard.VlibreRegistrationCard;
 import src.registrationCard.VmaxRegistrationCard;
 
 import javax.swing.text.View;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -128,10 +131,48 @@ public class VelibCommand {
 
                         + "exit :" +
                         "\n \t to exit the system. \n \n"
+
+                        + "runTest <testScenarioFile.txt> :" +
+                        "\n \t to run the test scenario described in testScenarioFile.txt\n \n"
                         ;
 
             case "":
                 return "";
+
+            case "runTest":
+                if (arguments.size() == 1){
+                    try {
+                        // Get arguments
+                        String testScenario = arguments.get(0);
+
+                        File file = new File("./UI/src/test/"+testScenario);
+
+                        BufferedReader br = new BufferedReader(new FileReader(file));
+                        String st;
+
+                        while ((st = br.readLine()) != null) {
+                            //Catch the arguments
+                            String[] parts = st.split(" ");
+                            String command = parts[0];
+                            ArrayList<String> arguments = new ArrayList<String>();
+                            for (int i=1; i<parts.length; i++){
+                                arguments.add(parts[i]);
+                            }
+                            System.out.println(command.length());
+//                            System.out.println(arguments.size());
+                            // Executing the commands
+                            VelibCommand velibCommandsetup = new VelibCommand(command, arguments);
+                            velibCommandsetup.eval();
+                        }
+                    }
+                    catch (Exception e){
+                        return "Wrong argument entered. Type help to display help.";
+                    }
+                }
+                else {
+                    return "Unknown command entered. Type help to display help.";
+                }
+
 
             case "addUser":
                 if (arguments.size() == 5 || arguments.size() == 6) {
@@ -205,12 +246,13 @@ public class VelibCommand {
                     try {
                         // Get arguments
                         int stationId = Integer.parseInt(arguments.get(0));
-
+                        System.out.println("AAA");
                         if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
                             return "Unknown station";
                         }
                         else {
                             // The wanted station
+                            System.out.println("AAA");
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.Offline){
                                 station.setStationStatus(StationStatus.OnService);

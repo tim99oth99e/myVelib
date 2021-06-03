@@ -1,4 +1,1 @@
-setup
-AddUser Jean Bourgeois
-rentBike 1 1 mechanical
-
+online 1
