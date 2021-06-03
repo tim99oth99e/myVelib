@@ -47,12 +47,13 @@ public class VelibCommand {
     }
 
     public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
-        ArrayList<Station> stations= new ArrayList<>();
+//        ArrayList<Station> stations= new ArrayList<>();
         ArrayList<ParkingSlot> parkingSlots= new ArrayList<>();
         // Place stations uniformly on a square grid whose the side is of length sideLength
         for (int i = 0; i < numberOfStation; i++) {
             Station station = new Station(Math.random()*sideLength,Math.random()*sideLength,StationStatus.OnService, TypeOfStation.Standard);
-            stations.add(station);
+//            stations.add(station);
+            MyVelibSystem.myVelibRecord.addStationIfNotExists(station);
             // Create numberOfSlotPerStation free slots per stations
             for (int j = 0; j < numberOfSlotPerStation; j++) {
                 ParkingSlot parkingSlot = new ParkingSlot(ParkingSlotStatus.Free, null);
@@ -149,7 +150,6 @@ public class VelibCommand {
 
                         BufferedReader br = new BufferedReader(new FileReader(file));
                         String st;
-
 
                         while ((st = br.readLine()) != null) {
                             //Catch the arguments
@@ -397,8 +397,12 @@ public class VelibCommand {
                 if (arguments.size() == 1) {
                     try {
                         int stationId = Integer.parseInt(arguments.get(0));
-                        Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
-                        return MyVelibSystem.myVelibRecord.computeStationBalance(station);
+                        if (MyVelibSystem.myVelibRecord.getStations().containsKey(stationId)) {
+                            Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
+                            return MyVelibSystem.myVelibRecord.computeStationBalance(station);
+                        } else {
+                            return "Station not found";
+                        }
                     } catch (Exception e){
                         return "Wrong argument entered. Type help to display help.";
                     }
