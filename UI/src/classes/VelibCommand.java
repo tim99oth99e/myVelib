@@ -70,14 +70,13 @@ public class VelibCommand {
         for (int i = 0; i < numberOfBike; i++) {
             parkingSlots.get(randomParkingSlot.get(i)).setParkingSlotStatus(ParkingSlotStatus.Occupied);
             parkingSlots.get(randomParkingSlot.get(i)).setBicycle( new Bicycle(getRandomBicycleType()));
-            // AJOUTER AU RECORD
         }
     }
 
     // main method
     // executes the given command and returns a STATUS message
     public String eval() throws Exception {
-        switch (commandName) {
+        switch (commandName.toLowerCase()) {
             case "help":
                 return " A command consists of the command-name followed by a blank-separated list of (string) arguments:\n" +
                         "command-name <arg1> <arg2> ... <argN> \n \n " + "Commands available : \n \n"
@@ -139,7 +138,8 @@ public class VelibCommand {
             case "":
                 return "";
 
-            case "runTest":
+
+            case "runtest":
                 if (arguments.size() == 1){
                     try {
                         // Get arguments
@@ -150,6 +150,7 @@ public class VelibCommand {
                         BufferedReader br = new BufferedReader(new FileReader(file));
                         String st;
 
+
                         while ((st = br.readLine()) != null) {
                             //Catch the arguments
                             String[] parts = st.split(" ");
@@ -158,12 +159,11 @@ public class VelibCommand {
                             for (int i=1; i<parts.length; i++){
                                 arguments.add(parts[i]);
                             }
-                            System.out.println(command.length());
-//                            System.out.println(arguments.size());
-                            // Executing the commands
-                            VelibCommand velibCommandsetup = new VelibCommand(command, arguments);
-                            velibCommandsetup.eval();
+                            // Executing the command
+                            VelibCommand velibCommandSetup = new VelibCommand(command, arguments);
+                            System.out.println(velibCommandSetup.eval());;
                         }
+                        return "Test scenario successfully ran";
                     }
                     catch (Exception e){
                         return "Wrong argument entered. Type help to display help.";
@@ -174,7 +174,7 @@ public class VelibCommand {
                 }
 
 
-            case "addUser":
+            case "adduser":
                 if (arguments.size() == 5 || arguments.size() == 6) {
                     try {
                         User userToAdd;
@@ -246,13 +246,11 @@ public class VelibCommand {
                     try {
                         // Get arguments
                         int stationId = Integer.parseInt(arguments.get(0));
-                        System.out.println("AAA");
                         if (stationId >= MyVelibSystem.myVelibRecord.getStations().size()){
                             return "Unknown station";
                         }
                         else {
                             // The wanted station
-                            System.out.println("AAA");
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.Offline){
                                 station.setStationStatus(StationStatus.OnService);
@@ -302,7 +300,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "rentBike":
+            case "rentbike":
                 if (arguments.size() == 3){
                     try {
                         // Get arguments
@@ -348,7 +346,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "parkBike":
+            case "parkbike":
                 if (arguments.size() == 3){
                     try {
                         // Get arguments
@@ -395,7 +393,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "displayStation":
+            case "displaystation":
                 if (arguments.size() == 1) {
                     try {
                         int stationId = Integer.parseInt(arguments.get(0));
@@ -408,7 +406,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "displayUser":
+            case "displayuser":
                 if (arguments.size() == 1) {
                     try {
                         int userId = Integer.parseInt(arguments.get(0));

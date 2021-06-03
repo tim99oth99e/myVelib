@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.*;
 
 public class MyVelibSystem {
-    static Record myVelibRecord = new Record();
+    public static Record myVelibRecord = new Record();
 
     public static void main(String[] args) throws Exception {
         // Initialization of the Velib System
@@ -54,7 +54,6 @@ public class MyVelibSystem {
             for (int i = 0; i < names.size(); i++) {
                 User user = new User(names.get(i), Double.parseDouble(latitudes.get(i)),Double.parseDouble(longitudes.get(i)),creditCardNumbers.get(i));
                 users.add(user);
-
             }
 
             // Display informations
