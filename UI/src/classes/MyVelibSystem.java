@@ -1,14 +1,24 @@
 package src.classes;
-
 import org.ini4j.*;
 import src.coreClasses.*;
-
 import java.io.File;
 import java.util.*;
 
+/**
+ * This class contains the main methods for the myVelib CLUI.
+ */
 public class MyVelibSystem {
+    /**
+     * The myVelib record of users, stations and events for the myVelib network.
+     */
     public static Record myVelibRecord = new Record();
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws Exception the exception
+     */
     public static void main(String[] args) throws Exception {
         // Initialization of the Velib System
         initialization();
@@ -20,6 +30,9 @@ public class MyVelibSystem {
         finalization();
     }
 
+    /**
+     * Initialization of myVelib from my_velib.ini
+     */
     private static <Ini> void initialization() throws Exception {
         // Code for Loading my_velib.ini
         try{
@@ -73,6 +86,9 @@ public class MyVelibSystem {
         }
     }
 
+    /**
+     * Read the command, evaluate it and print the result.
+     */
     private static void readEvalPrintLoop() throws Exception {
         VelibCommand CMD = new VelibCommand();
 
@@ -93,7 +109,9 @@ public class MyVelibSystem {
 
         while(CMD.isNotExit());
     }
-
+    /**
+     * Read command from CLUI
+     */
     private static VelibCommand readFromConsole() {
         Scanner scanner = new Scanner(System.in);
         try {
@@ -117,11 +135,10 @@ public class MyVelibSystem {
         }
     }
 
+    /**
+     * Finalization
+     */
     private static void finalization() {
-        // Last chance for joining the last running threads (if there is !)
-        // ....
-        // Code for cleaning the system before leaving
-        // ....
         System.out.println("Finalization complete.");
     }
 

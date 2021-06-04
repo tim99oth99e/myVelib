@@ -14,26 +14,48 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This class handles commands from CLUI
+ */
 public class VelibCommand {
     private String commandName;
     private ArrayList<String> arguments;
 
-    // constructors
+    /**
+     * Instantiates a new Velib command.
+     *
+     * @param commandName the command name
+     * @param arguments   the arguments
+     */
+// constructors
     public VelibCommand(String commandName, ArrayList<String> arguments) {
         this.commandName = commandName;
         this.arguments = arguments;
     }
 
+    /**
+     * Instantiates a new Velib command.
+     */
     public VelibCommand() {
         this.commandName = null;
         this.arguments = null;
     }
 
-    // custom methods
+    /**
+     * Test if the user wants to exit the CLUI
+     *
+     * @return true if the user does not want to exit the CLUI, False otherwise
+     */
+// custom methods
     public boolean isNotExit(){
         return !commandName.equals("exit");
     }
 
+    /**
+     * Get random type of bicycle.
+     *
+     * @return the random type of bicycle
+     */
     public TypeOfBicycle getRandomBicycleType(){
         if (Math.random() < 0.5){
             return TypeOfBicycle.Mechanical;
@@ -43,6 +65,14 @@ public class VelibCommand {
         }
     }
 
+    /**
+     *  Setup a myVelib network.
+     *
+     * @param numberOfStation        the number of station
+     * @param numberOfSlotPerStation the number of slot per station
+     * @param sideLength             the side length
+     * @param numberOfBike           the number of bike
+     */
     public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
 //        ArrayList<Station> stations= new ArrayList<>();
         ArrayList<ParkingSlot> parkingSlots= new ArrayList<>();
@@ -71,7 +101,13 @@ public class VelibCommand {
         }
     }
 
-    // main method
+    /**
+     * Evaluate the command the user entered in the CLUI and act accordingly.
+     *
+     * @return the result string
+     * @throws Exception the exception
+     */
+// main method
     // executes the given command and returns a STATUS message
     public String eval() throws Exception {
         switch (commandName.toLowerCase()) {
@@ -430,18 +466,38 @@ public class VelibCommand {
 
     // getters and setters
 
+    /**
+     * Gets command name.
+     *
+     * @return the command name
+     */
     public String getCommandName() {
         return commandName;
     }
 
+    /**
+     * Sets command name.
+     *
+     * @param commandName the command name
+     */
     public void setCommandName(String commandName) {
         this.commandName = commandName;
     }
 
+    /**
+     * Gets arguments.
+     *
+     * @return the arguments
+     */
     public ArrayList<String> getArguments() {
         return arguments;
     }
 
+    /**
+     * Sets arguments.
+     *
+     * @param arguments the arguments
+     */
     public void setArguments(ArrayList<String> arguments) {
         this.arguments = arguments;
     }
