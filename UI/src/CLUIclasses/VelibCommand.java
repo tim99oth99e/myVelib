@@ -143,7 +143,7 @@ public class VelibCommand {
                         "to station stationID at a given instant of time timeInMinute (if no parking bay is available\n" +
                         "should behave accordingly). This command should display the cost of the rent \n \n"
 
-                        + "displayStation<stationID> :" +
+                        + "displayStation <stationID> :" +
                         "\n \t to display the statistics (as of\n" +
                         "Section 2.4) of station stationID of a myVelib network velibnetwork. \n \n"
 
@@ -411,7 +411,7 @@ public class VelibCommand {
                                 // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.ReturnBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has successfully returned his bicycle."
-                                        + " Cost of the rent: " + cost + " $.";
+                                        + " Cost of the rent: " + cost + " €.";
                             }
                             else {
                                 return "No free parking slot available at station " + station.getId() + ".";

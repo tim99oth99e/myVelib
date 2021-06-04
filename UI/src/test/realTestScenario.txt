@@ -1,0 +1,21 @@
+setup
+addUser Thomas Edison 12.212 20.2 1234891732489123 vlibre
+addUser Rosa Parks 67.212 20.2 1234891732489123 none
+addUser Lyndon Johnson 23.245 25.23 1234891732489123 vmax
+addUser Richard Branson 35.223 12.24 1234123432489123 vlibre
+addUser Leonardo DiCaprio 53.345 53.343 1234123432489123 none
+
+display
+
+rentBike 1 1 mechanical
+rentBike 2 2 electrical
+rentBike 3 3 mechanical
+returnbike 1 1 112
+returnbike 2 1 64
+rentBike 2 1 electrical
+returnbike 2 1 37
+
+displayStation 1
+
+displayUser 2
+
