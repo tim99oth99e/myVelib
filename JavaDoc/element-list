@@ -1,1 +1,9 @@
+src.classes
 src.coreClasses
+src.enums
+src.event
+src.exception
+src.registrationCard
+src.ridePlanning
+src.stationsSorting
+src.test

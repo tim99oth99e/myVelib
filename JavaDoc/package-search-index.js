@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"src.coreClasses"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"src.classes"},{"l":"src.coreClasses"},{"l":"src.enums"},{"l":"src.event"},{"l":"src.exception"},{"l":"src.registrationCard"},{"l":"src.ridePlanning"},{"l":"src.stationsSorting"},{"l":"src.test"}]
