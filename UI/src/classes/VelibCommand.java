@@ -420,6 +420,17 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
+            case "display":
+                int nbUsers = MyVelibSystem.myVelibRecord.getUsers().size();
+                int nbStations = MyVelibSystem.myVelibRecord.getStations().size();
+                int nbParkingSlots = 0;
+                // count the parking slots
+                for (Station s: MyVelibSystem.myVelibRecord.getStations().values()) {
+                    nbParkingSlots += s.getParkingSlotHashMap().size();
+                }
+
+                return "myVelib network composed of :\n\t- " + nbUsers + " users,\n\t- " + nbStations + " stations,\n\t- " + nbParkingSlots + " parking slots.";
+
             case "exit":
                 return "Exiting the system.";
 

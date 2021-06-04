@@ -38,7 +38,7 @@ public class MyVelibSystem {
             String creditCardNumbersString = ini.get("users", "creditCardNumbers", String.class);
             List<String> creditCardNumbers = new ArrayList<String>(Arrays.asList(creditCardNumbersString.split(",")));
 
-            //Code for the myVelib network creation
+            // Code for the myVelib network creation
             ArrayList<String> arguments =  new ArrayList<String>();
             arguments.add(nstations);
             arguments.add(nslots);
@@ -54,6 +54,7 @@ public class MyVelibSystem {
             for (int i = 0; i < names.size(); i++) {
                 User user = new User(names.get(i), Double.parseDouble(latitudes.get(i)),Double.parseDouble(longitudes.get(i)),creditCardNumbers.get(i));
                 users.add(user);
+                MyVelibSystem.myVelibRecord.addUserIfNotExists(user);
             }
 
             // Display informations
