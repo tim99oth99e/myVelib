@@ -36,12 +36,16 @@ public class MyVelibSystem {
     private static <Ini> void initialization() throws Exception {
         // Code for Loading my_velib.ini
         try{
+            // Read in the my_velib.ini file
             Wini ini = new Wini(new File("UI/src/classes/my_velib.ini"));
+
+            // Get arguments about stations
             String nstations = ini.get("stations", "nstations", String.class);
             String nslots = ini.get("stations", "nslots", String.class);
             String s = ini.get("stations", "s", String.class);
             String nbikes = ini.get("stations", "nbikes", String.class);
 
+            // Get arguments about users
             String namesString = ini.get("users", "names", String.class);
             List<String> names = new ArrayList<String>(Arrays.asList(namesString.split(",")));
             String latitudesString = ini.get("users", "latitudes", String.class);
@@ -70,7 +74,7 @@ public class MyVelibSystem {
                 MyVelibSystem.myVelibRecord.addUserIfNotExists(user);
             }
 
-            // Display informations
+            // Display information
             System.out.println("Successfully setted up a myVelib network from my_velib.ini.");
             System.out.print("Number of station: " + nstations + "\n");
             System.out.print("Number of parking slot per station: " +  nslots + "\n");

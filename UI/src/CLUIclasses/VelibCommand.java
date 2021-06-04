@@ -71,7 +71,6 @@ public class VelibCommand {
      * @param numberOfBike           the number of bike
      */
     public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
-//        ArrayList<Station> stations= new ArrayList<>();
         ArrayList<ParkingSlot> parkingSlots= new ArrayList<>();
         // Place stations uniformly on a square grid whose the side is of length sideLength
         for (int i = 0; i < numberOfStation; i++) {
@@ -236,6 +235,7 @@ public class VelibCommand {
                                 userToAdd = new User(name, latitude, longitude, creditCardNumber);
                                 break;
                         }
+                        // Update the record
                         MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
                         return "Added user " + userToAdd.getName() + " with id : " + userToAdd.getId();
                     } catch (Exception e) {
@@ -283,6 +283,7 @@ public class VelibCommand {
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.Offline){
                                 station.setStationStatus(StationStatus.OnService);
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOnline,station));
                                 return "Station number " + stationId   + " is now online";
                             }
@@ -313,6 +314,7 @@ public class VelibCommand {
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.OnService){
                                 station.setStationStatus(StationStatus.Offline);
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOffline,station));
                                 return "Station number " + stationId   + " is now offline";
                             }
@@ -359,6 +361,7 @@ public class VelibCommand {
                                 // A parking slot with electrical bicycle
                                 ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical);
                                 user.rent(parkingSlot,LocalDateTime.now());
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName() + " has a " + type + " bicycle.";
                             }
@@ -405,6 +408,7 @@ public class VelibCommand {
                                 user.park(parkingSlot,LocalDateTime.now().plusMinutes(timeInMinutes));
                                 double totalChargeAfter = user.getTotalCharges();
                                 double cost = totalChargeAfter-totalChargeBefore;
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.ReturnBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has successfully returned his bicycle."
                                         + " Cost of the rent: " + cost + " $.";
