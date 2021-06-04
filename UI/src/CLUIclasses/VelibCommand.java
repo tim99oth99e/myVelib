@@ -1,18 +1,15 @@
-package src.classes;
+package src.CLUIclasses;
 import src.coreClasses.*;
 import src.enums.*;
 import src.event.Event;
 import src.registrationCard.VlibreRegistrationCard;
 import src.registrationCard.VmaxRegistrationCard;
 
-import javax.swing.text.View;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class handles commands from CLUI

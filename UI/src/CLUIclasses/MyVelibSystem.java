@@ -1,4 +1,4 @@
-package src.classes;
+package src.CLUIclasses;
 import org.ini4j.*;
 import src.coreClasses.*;
 import java.io.File;
