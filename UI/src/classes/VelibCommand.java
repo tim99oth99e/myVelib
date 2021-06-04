@@ -79,14 +79,13 @@ public class VelibCommand {
                 return " A command consists of the command-name followed by a blank-separated list of (string) arguments:\n" +
                         "command-name <arg1> <arg2> ... <argN> \n \n " + "Commands available : \n \n"
 
-                        + "setup <velibnetworkName> : " +
-                        "\n \t to create a myVelib network with given name and\n" +
-                        "consisting of 10 stations each of which has 10 parking slots and such that stations\n" +
+                        + "setup : " +
+                        "\n \t to create a myVelib network consisting of 10 stations each of which has 10 parking slots and such that stations\n" +
                         "are arranged on a square grid whose of side 4km and initially populated with a 75%\n" +
                         "bikes randomly distributed over the 10 stations\n \n"
 
-                        + "setup <name> <nstations> <nslots> <s> <nbikes> :" +
-                        "\n  \t to create a myVelib network with given name and consisting of nstations stations each of which has nslots\n" +
+                        + "setup  <nstations> <nslots> <s> <nbikes> :" +
+                        "\n  \t to create a myVelib network consisting of nstations stations each of which has nslots\n" +
                         "parking slots and such that stations are arranged in as uniform as possible manner\n" +
                         "over an squared area of side s. Furthermore the network should\n" +
                         "be initially populated with a nbikes bikes randomly distributed over the nstations stations\n \n"
@@ -116,13 +115,13 @@ public class VelibCommand {
                         "\n \t to display the statistics (as of\n" +
                         "Section 2.4) of station stationID of a myVelib network velibnetwork. \n \n"
 
-                        + "displayUser<velibnetworkName, userID> :" +
-                        "\n \t to display the statistics (as of Section 2.4) of user userID of a myVelib network velibnetwork.\n \n"
+                        + "displayUser <userID> :" +
+                        "\n \t to display the statistics (as of Section 2.4) of user userID of the myVelib network.\n \n"
 
-                        + "sortStation<velibnetworkName, sortpolicy> :" +
+                        + "sortStation <sortpolicy> :" +
                         "\n \t to display the stations in increasing order w.r.t. to the sorting policy (as of Section 2.4) of user sortpolicy. \n \n"
 
-                        + "display <velibnetworkName> :" +
+                        + "display :" +
                         "\n \t  to display the entire status (stations, parking bays,\n" +
                         "users) of an a myVelib network velibnetworkName. \n \n"
 
@@ -343,7 +342,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "parkbike":
+            case "returnbike":
                 if (arguments.size() == 3){
                     try {
                         // Get arguments

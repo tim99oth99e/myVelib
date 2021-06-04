@@ -54,6 +54,7 @@ public class MyVelibSystem {
             for (int i = 0; i < names.size(); i++) {
                 User user = new User(names.get(i), Double.parseDouble(latitudes.get(i)),Double.parseDouble(longitudes.get(i)),creditCardNumbers.get(i));
                 users.add(user);
+                MyVelibSystem.myVelibRecord.addUserIfNotExists(user);
             }
 
             // Display informations
