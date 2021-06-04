@@ -1,3 +1,0 @@
-setup
-addUser Jean Chaumont 12.2 20.2 1234891732489123 vlibre
-online 1

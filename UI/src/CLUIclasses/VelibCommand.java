@@ -103,7 +103,6 @@ public class VelibCommand {
      * @return the result string
      * @throws Exception the exception
      */
-// main method
     // executes the given command and returns a STATUS message
     public String eval() throws Exception {
         switch (commandName.toLowerCase()) {
@@ -174,7 +173,7 @@ public class VelibCommand {
                         // Get arguments
                         String testScenario = arguments.get(0);
 
-                        File file = new File("./UI/src/test/"+testScenario);
+                        File file = new File("./UI/src/eval/"+testScenario);
 
                         BufferedReader br = new BufferedReader(new FileReader(file));
                         String st;
@@ -354,7 +353,7 @@ public class VelibCommand {
                                 // A parking slot with mechanical bicycle
                                 ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Mechanical);
                                 user.rent(parkingSlot,LocalDateTime.now());
-                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle, station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has a " + type + " bicycle.";
                             }
                             else if (type.equals("electrical") && station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical) != null && station.getStationStatus() == StationStatus.OnService) {
@@ -362,7 +361,7 @@ public class VelibCommand {
                                 ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical);
                                 user.rent(parkingSlot,LocalDateTime.now());
                                 // Update the record
-                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
+                                MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle, station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName() + " has a " + type + " bicycle.";
                             }
                             else {

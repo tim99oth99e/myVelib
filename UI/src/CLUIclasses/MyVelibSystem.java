@@ -37,7 +37,7 @@ public class MyVelibSystem {
         // Code for Loading my_velib.ini
         try{
             // Read in the my_velib.ini file
-            Wini ini = new Wini(new File("UI/src/CLUIclasses/my_velib.ini"));
+            Wini ini = new Wini(new File("UI/src/eval/my_velib.ini"));
 
             // Get arguments about stations
             String nstations = ini.get("stations", "nstations", String.class);
