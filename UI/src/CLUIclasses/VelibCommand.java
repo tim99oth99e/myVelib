@@ -1,39 +1,58 @@
-package src.classes;
+package src.CLUIclasses;
 import src.coreClasses.*;
 import src.enums.*;
 import src.event.Event;
 import src.registrationCard.VlibreRegistrationCard;
 import src.registrationCard.VmaxRegistrationCard;
 
-import javax.swing.text.View;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This class handles commands from CLUI
+ */
 public class VelibCommand {
     private String commandName;
     private ArrayList<String> arguments;
 
-    // constructors
+    /**
+     * Instantiates a new Velib command.
+     *
+     * @param commandName the command name
+     * @param arguments   the arguments
+     */
+// constructors
     public VelibCommand(String commandName, ArrayList<String> arguments) {
         this.commandName = commandName;
         this.arguments = arguments;
     }
 
+    /**
+     * Instantiates a new Velib command.
+     */
     public VelibCommand() {
         this.commandName = null;
         this.arguments = null;
     }
 
-    // custom methods
+    /**
+     * Test if the user wants to exit the CLUI
+     *
+     * @return true if the user does not want to exit the CLUI, False otherwise
+     */
+// custom methods
     public boolean isNotExit(){
         return !commandName.equals("exit");
     }
 
+    /**
+     * Get random type of bicycle.
+     *
+     * @return the random type of bicycle
+     */
     public TypeOfBicycle getRandomBicycleType(){
         if (Math.random() < 0.5){
             return TypeOfBicycle.Mechanical;
@@ -43,8 +62,15 @@ public class VelibCommand {
         }
     }
 
+    /**
+     *  Setup a myVelib network.
+     *
+     * @param numberOfStation        the number of station
+     * @param numberOfSlotPerStation the number of slot per station
+     * @param sideLength             the side length
+     * @param numberOfBike           the number of bike
+     */
     public void setup(Integer numberOfStation,Integer  numberOfSlotPerStation,Double sideLength,Integer numberOfBike){
-//        ArrayList<Station> stations= new ArrayList<>();
         ArrayList<ParkingSlot> parkingSlots= new ArrayList<>();
         // Place stations uniformly on a square grid whose the side is of length sideLength
         for (int i = 0; i < numberOfStation; i++) {
@@ -71,7 +97,13 @@ public class VelibCommand {
         }
     }
 
-    // main method
+    /**
+     * Evaluate the command the user entered in the CLUI and act accordingly.
+     *
+     * @return the result string
+     * @throws Exception the exception
+     */
+// main method
     // executes the given command and returns a STATUS message
     public String eval() throws Exception {
         switch (commandName.toLowerCase()) {
@@ -79,14 +111,13 @@ public class VelibCommand {
                 return " A command consists of the command-name followed by a blank-separated list of (string) arguments:\n" +
                         "command-name <arg1> <arg2> ... <argN> \n \n " + "Commands available : \n \n"
 
-                        + "setup <velibnetworkName> : " +
-                        "\n \t to create a myVelib network with given name and\n" +
-                        "consisting of 10 stations each of which has 10 parking slots and such that stations\n" +
+                        + "setup : " +
+                        "\n \t to create a myVelib network consisting of 10 stations each of which has 10 parking slots and such that stations\n" +
                         "are arranged on a square grid whose of side 4km and initially populated with a 75%\n" +
                         "bikes randomly distributed over the 10 stations\n \n"
 
-                        + "setup <name> <nstations> <nslots> <s> <nbikes> :" +
-                        "\n  \t to create a myVelib network with given name and consisting of nstations stations each of which has nslots\n" +
+                        + "setup  <nstations> <nslots> <s> <nbikes> :" +
+                        "\n  \t to create a myVelib network consisting of nstations stations each of which has nslots\n" +
                         "parking slots and such that stations are arranged in as uniform as possible manner\n" +
                         "over an squared area of side s. Furthermore the network should\n" +
                         "be initially populated with a nbikes bikes randomly distributed over the nstations stations\n \n"
@@ -116,13 +147,13 @@ public class VelibCommand {
                         "\n \t to display the statistics (as of\n" +
                         "Section 2.4) of station stationID of a myVelib network velibnetwork. \n \n"
 
-                        + "displayUser<velibnetworkName, userID> :" +
-                        "\n \t to display the statistics (as of Section 2.4) of user userID of a myVelib network velibnetwork.\n \n"
+                        + "displayUser <userID> :" +
+                        "\n \t to display the statistics (as of Section 2.4) of user userID of the myVelib network.\n \n"
 
-                        + "sortStation<velibnetworkName, sortpolicy> :" +
+                        + "sortStation <sortpolicy> :" +
                         "\n \t to display the stations in increasing order w.r.t. to the sorting policy (as of Section 2.4) of user sortpolicy. \n \n"
 
-                        + "display <velibnetworkName> :" +
+                        + "display :" +
                         "\n \t  to display the entire status (stations, parking bays,\n" +
                         "users) of an a myVelib network velibnetworkName. \n \n"
 
@@ -204,6 +235,7 @@ public class VelibCommand {
                                 userToAdd = new User(name, latitude, longitude, creditCardNumber);
                                 break;
                         }
+                        // Update the record
                         MyVelibSystem.myVelibRecord.addUserIfNotExists(userToAdd);
                         return "Added user " + userToAdd.getName() + " with id : " + userToAdd.getId();
                     } catch (Exception e) {
@@ -251,6 +283,7 @@ public class VelibCommand {
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.Offline){
                                 station.setStationStatus(StationStatus.OnService);
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOnline,station));
                                 return "Station number " + stationId   + " is now online";
                             }
@@ -281,6 +314,7 @@ public class VelibCommand {
                             Station station = MyVelibSystem.myVelibRecord.getStations().get(stationId);
                             if (station.getStationStatus() == StationStatus.OnService){
                                 station.setStationStatus(StationStatus.Offline);
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.StationTurnsOffline,station));
                                 return "Station number " + stationId   + " is now offline";
                             }
@@ -327,6 +361,7 @@ public class VelibCommand {
                                 // A parking slot with electrical bicycle
                                 ParkingSlot parkingSlot = station.getParkingSlotWithOneBike(TypeOfBicycle.Electrical);
                                 user.rent(parkingSlot,LocalDateTime.now());
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.RentBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName() + " has a " + type + " bicycle.";
                             }
@@ -343,7 +378,7 @@ public class VelibCommand {
                     return "Unknown command entered. Type help to display help.";
                 }
 
-            case "parkbike":
+            case "returnbike":
                 if (arguments.size() == 3){
                     try {
                         // Get arguments
@@ -373,6 +408,7 @@ public class VelibCommand {
                                 user.park(parkingSlot,LocalDateTime.now().plusMinutes(timeInMinutes));
                                 double totalChargeAfter = user.getTotalCharges();
                                 double cost = totalChargeAfter-totalChargeBefore;
+                                // Update the record
                                 MyVelibSystem.myVelibRecord.addEventIfNotExists(new Event(LocalDateTime.now(), EventType.ReturnBicycle,station));
                                 return MyVelibSystem.myVelibRecord.getUsers().get(userId).getName()  + " has successfully returned his bicycle."
                                         + " Cost of the rent: " + cost + " $.";
@@ -442,18 +478,38 @@ public class VelibCommand {
 
     // getters and setters
 
+    /**
+     * Gets command name.
+     *
+     * @return the command name
+     */
     public String getCommandName() {
         return commandName;
     }
 
+    /**
+     * Sets command name.
+     *
+     * @param commandName the command name
+     */
     public void setCommandName(String commandName) {
         this.commandName = commandName;
     }
 
+    /**
+     * Gets arguments.
+     *
+     * @return the arguments
+     */
     public ArrayList<String> getArguments() {
         return arguments;
     }
 
+    /**
+     * Sets arguments.
+     *
+     * @param arguments the arguments
+     */
     public void setArguments(ArrayList<String> arguments) {
         this.arguments = arguments;
     }

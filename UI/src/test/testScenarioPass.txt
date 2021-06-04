@@ -1,0 +1,11 @@
+setup
+setup 5 10 14.2 45
+addUser Jean Chaumont 12.2 20.2 1234891732489123 vlibre
+offline 1
+online 1
+rentBike 1 1 mechanical
+returnBike 1 1 120
+displayStation 1
+displayUser 1
+display
+exit

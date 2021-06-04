@@ -1,0 +1,12 @@
+setup 4
+addUser Jean Chaumont 12.2 20.2 vlibre
+addUser Jean Chaumont
+offline
+online
+rentBike 1 1 mech
+rentBike
+returnBike 1 1 -6
+returnBike
+displayStation
+displayUser 
+exit
